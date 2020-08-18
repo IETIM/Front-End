@@ -1,4 +1,4 @@
-#index{
+#registro{
     width:100%;
     height: 100%;
     background:SlateBlue;
@@ -7,14 +7,14 @@
     justify-content: center;
 }
 
-#index div{
+#registro div{
     width: 1000px;
     height: 600px;
     background:white ;
     border:3px solid black;
     border-radius: 10px;
 }
-#index div div{
+#registro div div{
     width: 100%;
     height: 50%;
     display: flex;
@@ -22,12 +22,21 @@
     justify-content: center;
     border: none;
 }
-#index div div a{
-    padding: 10px;
-    background: SlateBlue;
-    color:white;
+
+#registro div #campos{
+    display: flex;
+    flex-direction: column;
+
 }
-#index div div div{
-    width: 10px;
-    height: 10px;
+
+#registro div #campos div{
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+}
+
+.button{
+    background:SlateBlue;
+    border: 1px solid black;
+    color:white;
 }

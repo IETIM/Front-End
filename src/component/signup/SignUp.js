@@ -7,17 +7,17 @@ function Password(props){
     const [show,setShow] = useState(false);
     return(
         <div>
-        <div>Contraseña: </div>
-        <div>
+        <div style={{width:"80px"}}>Contraseña: </div>
+        <div style={{width:"200px"}}>
             {!show && <input onChange={(e)=> props.onChange(e)} value={props.value} type="password"></input>}
             {show && <input value={props.value} onChange={(e)=> props.onChange(e)} type="text"></input>}
         </div>
-        <div>
+        <div style={{width:"40px"}}>
             <button className="button" onClick={()=> setShow(!show)}>
                 <span className="material-icons">{show && "visibility_off"} {!show && "visibility"}</span>
             </button>
         </div>
-        <div>
+        <div style={{width:"4px"}}>
             {props.value!=null && regex.test(props.value) && <span style={{color:"green"}} className="material-icons">check</span>}
             {props.value!=null && !regex.test(props.value) && <span style={{color:"red"}} className="material-icons">close</span>}
         </div>
@@ -29,8 +29,8 @@ function RetryPassword(props){
     const [show,setShow] = useState(false);
     const [text,setText] = useState(null);
     return(<div>
-        <div>Confirma la contraseña: </div>
-        <div>
+        <div style={{width:"80px"}}>Confirma la contraseña: </div>
+        <div style={{width:"200px"}}>
 
             {!show && <input onChange={(e)=>{
                 props.validate(props.password!==null && e.target.value!==null && props.password===e.target.value);
@@ -44,12 +44,12 @@ function RetryPassword(props){
                 }} type="text"></input>}
 
         </div>
-        <div>
+        <div style={{width:"40px"}}>
             <button className="button" onClick={()=> setShow(!show)}>
                 <span className="material-icons">{show && "visibility_off"} {!show && "visibility"}</span>
             </button>
         </div>
-        <div>
+        <div style={{width:"4px"}}>
             {props.password!==null && text!==null && props.password===text && <span style={{color:"green"}} className="material-icons">check</span>}
             {props.password!==null && text!==null && props.password!==text && <span style={{color:"red"}} className="material-icons">close</span>}
         </div>
@@ -59,20 +59,20 @@ function RetryPassword(props){
 function Email(props){
     return(
         <div>
-            <div>Correo:</div>
-            <div><input type="text" value={props.value} onChange={(e)=> props.onChange(e)}/></div>
-            <div></div>
-            <div></div>
+            <div style={{width:"80px"}}>Correo:</div>
+            <div style={{width:"200px"}}><input type="text" value={props.value} onChange={(e)=> props.onChange(e)}/></div>
+            <div style={{width:"40px"}}></div>
+            <div style={{width:"4px"}}></div>
         </div>
     )
 }
 
 function UserName(props){
     return(<div>
-        <div>Nombre:</div>
-        <div><input type="text" value={props.username} onChange={(e)=>props.onChange(e)}></input></div>
-        <div></div>
-        <div></div>
+        <div style={{width:"80px"}}>Nombre:</div>
+        <div style={{width:"200px"}}><input type="text" value={props.username} onChange={(e)=>props.onChange(e)}></input></div>
+        <div style={{width:"40px"}}></div>
+        <div style={{width:"5px"}}></div>
 
     </div>)
 }
@@ -93,9 +93,11 @@ export default function SignUp(){
     const [user,setUser] = useState(null);
     const [password,setPassword] = useState(null);
     const [confirm,setConfirm] = useState(false);
+
     if(localStorage.getItem("password")!=null){
         return(<Redirect to="/app"/>)
     }
+
     return(<div id="registro">
         <div>
             <div style={{fontSize:"90px"}}>

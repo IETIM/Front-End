@@ -8,9 +8,9 @@ export default function Main(){
             <div>
                 <div>Logo</div>
                 <div>
-                    <Link path="/login">Inciar sesion</Link>
+                    <Link to="/login">Inciar sesion</Link>
                     <div></div>
-                    <Link path="/registro">Registro</Link>
+                    <Link to="/signup">Registro</Link>
                 </div>
             </div>
         </div>

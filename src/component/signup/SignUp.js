@@ -17,7 +17,7 @@ function Password(props){
                 <span className="material-icons">{show && "visibility_off"} {!show && "visibility"}</span>
             </button>
         </div>
-        <div style={{width:"4px"}}>
+        <div style={{width:"15px"}}>
             {props.value!=null && regex.test(props.value) && <span style={{color:"green"}} className="material-icons">check</span>}
             {props.value!=null && !regex.test(props.value) && <span style={{color:"red"}} className="material-icons">close</span>}
         </div>
@@ -49,7 +49,7 @@ function RetryPassword(props){
                 <span className="material-icons">{show && "visibility_off"} {!show && "visibility"}</span>
             </button>
         </div>
-        <div style={{width:"4px"}}>
+        <div style={{width:"15px"}}>
             {props.password!==null && text!==null && props.password===text && <span style={{color:"green"}} className="material-icons">check</span>}
             {props.password!==null && text!==null && props.password!==text && <span style={{color:"red"}} className="material-icons">close</span>}
         </div>

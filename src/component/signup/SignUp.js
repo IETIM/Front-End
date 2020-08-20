@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {Redirect} from 'react-router-dom';
+import axios from 'axios';
 import './SignUp.css';
 
 function Password(props){
@@ -85,7 +86,18 @@ function login(user,password,verify){
         localStorage.setItem("username",user);
         localStorage.setItem("password",password);
     }
+    
 }
+
+function register(correo,user,password){
+    const newUser = {"correo":correo,"name":user,"password":password};
+    axios.post(`https://ieti-deep-backend.herokuapp.com/register`, newUser)
+      .then(res => {
+          console.log("OK");
+      })
+ 
+  }
+
 
 
 export default function SignUp(){
@@ -110,7 +122,8 @@ export default function SignUp(){
                 <RetryPassword password={password} validate={(bool)=> setConfirm(bool)}/>
                 <div>
                     <button className="button" onClick={()=>{
-                        login(user,password,confirm);
+                        register(email,user,password);
+                        //login(user,password,confirm);
                         setEmail(null);
                     }}><b>Registro</b></button>
                 </div>

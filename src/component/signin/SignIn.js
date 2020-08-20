@@ -3,6 +3,8 @@ import "./SignIn.css";
 import axios from 'axios';
 import { Spring } from "react-spring/renderprops";
 
+
+
 export class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +18,7 @@ export class SignIn extends React.Component {
     return (
       <Spring from={{opacity:0,marginTop:-500}} to={{opacity:1,marginTop:0}} config={{delay:200,duration:500}}>
         {(props) => (
+          <body className="login">
           <div style={props}>
             <div className="auth-wrapper">
               <div className="auth-inner">
@@ -64,6 +67,7 @@ export class SignIn extends React.Component {
                   </div>
 
                   <button
+                    id = "login"
                     type="submit"
                     className="btn btn-primary btn-block"
                     disabled={!this.validateForm}
@@ -77,6 +81,7 @@ export class SignIn extends React.Component {
               </div>
             </div>
           </div>
+          </body>
         )}
       </Spring>
     );

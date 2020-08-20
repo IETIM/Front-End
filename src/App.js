@@ -4,7 +4,7 @@ import './App.css';
 import Main from './component/Main/Main';
 import SignUp from './component/signup/SignUp';
 import { SignIn } from './component/signin/SignIn';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import UserProfile from './component/Profile/UserProfile'
 
 function App() {
   return (
@@ -23,7 +23,10 @@ function App() {
             render={()=>
                 <SignIn/>
                 } exact/>
-        
+        <Route path="/userprofile"
+            render={()=>
+                <UserProfile/>
+                } exact/>
 
     </Switch>
    </BrowserRouter>

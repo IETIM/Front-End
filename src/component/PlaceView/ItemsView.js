@@ -31,6 +31,7 @@ export default class ItemsView extends React.Component{
                     return (<div key={"row-"+i} style={{width:'100%',height:'160',display:'flex',flexDirection:'row'}}>
                         {[0,1,2,4].map((col)=>{
                            return  (3*row+col<this.state.data.length && <CardItem 
+                            key={"Card-"+row+"-"+col}
                             title={this.state.data[3*row+col].name.toUpperCase()}
                             descripcion={this.state.data[3*row+col].descripcion}></CardItem>);
                         })}

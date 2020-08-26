@@ -20,6 +20,7 @@ export default class PlaceView extends React.Component{
         this.state.funUpdate(category);
     }
     setFunUpdate(fun){
+        console.log("set function");
         this.state.funUpdate=fun;
         this.setState(this.state);
     }
@@ -32,7 +33,7 @@ export default class PlaceView extends React.Component{
                 </Toolbar>
             </AppBar>
             <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'row',margin:'0px',padding:'0px'}}>
-                <div style={{width:'25%',height:'100%',background:'white',margin:'0px',padding:'0px'}}>
+                <div style={{width:'25%',height:'100%',background:'white',margin:'0px',padding:'0px',border:'1px solid black'}}>
                     <center><Typography gutterBottom variant="h5" component="h2">Conoce mas:</Typography></center>
                     <div style={{width:'10px',height:'30px'}}></div>
                     <CategoryView select={(cad)=>this.setCategory(cad)}></CategoryView>

@@ -1,12 +1,14 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import CardItem from './CardItem';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 export default class ItemsView extends React.Component{
     constructor(props){
         super(props);
         this.state = {selected:'',data:[{name:'Local 1',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 1ra'},{name:'local 2',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 2da'},{name:'local 3',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 3ra'},{name:'Local 4',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 4ta'},{name:'local 5',descripcion:"Sabores de la cocina colombian",dirreccion:'cra 5ta'}]};
         this.setSelected = this.setSelected.bind(this);
         this.props.setFun(this.setSelected);
+        console.log("Creo ItemsView");
     }
 
     setSelected(selected){
@@ -15,9 +17,14 @@ export default class ItemsView extends React.Component{
         this.setState(this.state);
     }
     render(){
-        console.log(this.state.selected);
+        //console.log(this.state.selected);
         if(this.state.selected==''){
-            return (<div>Seleccione una categoria</div>)
+            return (<div style={{width:'100%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+                <div style={{width:'50%',height:'50%'}}>
+                    <center><KeyboardReturnIcon style={{width:'100px',height:'100px',color:'green'}}/></center>
+                    <Typography gutterBottom variant="h5" component="h2">Selecciona una categoria a la izquierda e inicia a navegar.
+                    </Typography></div>
+            </div>)
         }
         var li = [];
         var lon = this.state.data.length/4;
@@ -43,5 +50,9 @@ export default class ItemsView extends React.Component{
 
     componentWillMount(){
 
+    }
+
+    componentDidMount(){
+        console.log("entro");
     }
 }

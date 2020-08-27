@@ -14,60 +14,62 @@ import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import { Todo } from "../todo/Todo";
 import { withStyles } from "@material-ui/core/styles";
 
 const drawerWidth = 240;
 
 const useStyles = (theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+      marginLeft: drawerWidth,
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
-  }
+    padding: theme.spacing(3),
+  },
 });
 
 export class Catalog extends React.Component {
   constructor(props) {
     super(props);
     this.state = { mobileOpen: false };
-    console.log(props==undefined);
-    
+    console.log(props == undefined);
   }
 
   render() {
     const { window } = this.props;
-    const  {classes}  = this.props;
+    const { classes } = this.props;
     console.log("clases::........");
     console.log(this.classes);
 
     const handleDrawerToggle = () => {
       this.setState({ mobileOpen: !this.state.mobileOpen });
     };
+    
 
     const drawer = (
       <div>
@@ -75,7 +77,7 @@ export class Catalog extends React.Component {
         <Divider />
         <List>
           {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text}  component="a" href="#lol">
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -129,10 +131,10 @@ export class Catalog extends React.Component {
               open={this.state.mobileOpen}
               onClose={handleDrawerToggle}
               classes={{
-                paper: classes.drawerPaper
+                paper: classes.drawerPaper,
               }}
               ModalProps={{
-                keepMounted: true // Better open performance on mobile.
+                keepMounted: true, // Better open performance on mobile.
               }}
             >
               {drawer}
@@ -141,7 +143,7 @@ export class Catalog extends React.Component {
           <Hidden xsDown implementation="css">
             <Drawer
               classes={{
-                paper: classes.drawerPaper
+                paper: classes.drawerPaper,
               }}
               variant="permanent"
               open
@@ -152,36 +154,117 @@ export class Catalog extends React.Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
-            rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
-            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare
-            suspendisse sed nisi lacus sed viverra tellus. Purus sit amet
-            volutpat consequat mauris. Elementum eu facilisis sed odio morbi.
-            Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt
-            ornare massa eget egestas purus viverra accumsan in. In hendrerit
-            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam
-            aliquam sem et tortor. Habitant morbi tristique senectus et.
-            Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean
-            euismod elementum nisi quis eleifend. Commodo viverra maecenas
-            accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography>
+
+          <Grid container spacing={1}>
+            <Grid container spacing={1} direction="row" justify="center" alignItems="baseline">
+            
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 0"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 1"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 2"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 3"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 4"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              
+            <Grid item xs="auto">
+                <Todo
+                  text="Prueba 0"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 1"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 2"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 3"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 4"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 1"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 2"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 3"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+              <Grid item xs="auto">
+                <Todo
+                  text="Prueba 4"
+                  priority="69"
+                  dueDate={new Date()}
+                />
+              </Grid>
+             
+            </Grid>
+            <a name="lol">
+            <Typography variant="h6" noWrap>
+              Referencia a nueva categoria
+            </Typography>
+            </a>
+          </Grid>
         </main>
       </div>
     );

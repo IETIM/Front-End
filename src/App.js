@@ -5,6 +5,7 @@ import Main from './component/Main/Main';
 import SignUp from './component/signup/SignUp';
 import { SignIn } from './component/signin/SignIn';
 import UserProfile from './component/Profile/UserProfile'
+import { SellerDashboard } from './component/SellerDashboard/SellerDashboard';
 
 function App() {
   return (
@@ -27,6 +28,11 @@ function App() {
             render={()=>
                 <UserProfile/>
                 } exact/>
+        <Route path="/sellerdashboard"
+            render={()=>
+                <SellerDashboard/>
+                } exact/>
+        
 
     </Switch>
    </BrowserRouter>

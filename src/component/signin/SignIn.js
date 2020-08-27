@@ -26,10 +26,10 @@ export class SignIn extends React.Component {
                   <h3>Sign In</h3>
 
                   <div className="form-group">
-                    <label>Email address</label>
+                    <span>Email address: </span>
                     <input
                       name="username"
-                      className="form-control"
+                      className="login"
                       placeholder="Enter email"
                       value={this.state.username}
                       onChange={this.handleChange}

@@ -73,3 +73,32 @@
   .forgot-password a {
     color: #167bff;
   }
+
+
+  input.login{
+    border-radius: 15px;
+    border: 1px solid #b7b7b7;
+    padding: 5px 5px 5px 10px;
+    font-size: 12px;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+  }
+  input.login:focus{
+    outline: none;
+    border: 1px solid #64d488;
+  }
+  input.login::-webkit-input-placeholder{
+    color: #bebebe;
+  }
+  input.login::-moz-placeholder{
+    color: #bebebe;
+  }
+  input.login:-ms-input-placeholder{
+    color: #bebebe;
+  }
+  input.login::-ms-input-placeholder{
+    color: #bebebe;
+  }
+  input.login::placeholder{
+    color: #bebebe;
+  }

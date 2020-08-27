@@ -1,8 +1,7 @@
 import React from 'react';
 import { Navegacion } from './Navegacion';
 import { ProductGrid } from './ProductsGrid';
-
-
+import { SellerInfo } from './SellerInfo';
 
 export class SellerDashboard extends React.Component{
 
@@ -11,20 +10,14 @@ export class SellerDashboard extends React.Component{
     }
 
     render(){
-
-
-        return <div style={{height:"100%", width: "100%", display:"flex", flexDirection: "row",backgroundImage: 'linear-gradient(135deg, #08185B, #949CBC)'}} >
-            <div style={{height:"100%",width:"25%"}}>
-                <div style={{width:"100%",height:"170px"}}></div>
-                <Navegacion/></div>
-
-
+        return <div style={{height:"100%", width: "100%", display:"flex", flexDirection: "row"}} >
+            <div style={{height:"25%",width:"25%"}}>
+                <div style={{width:"100%",height:"30%"}}>                    
+                </div>
+                <div style={{height:"450px",width:"100%", paddingLeft:"10%", paddingRight:"10%"}}><SellerInfo/></div>
+            </div>
+            
             <div style={{height:"100%",width:"75%" }}><ProductGrid/></div>
-
-
-
-
-
         </div>;
     }
 

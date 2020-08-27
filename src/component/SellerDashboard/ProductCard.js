@@ -14,6 +14,7 @@ const useStyles = makeStyles({
       width:'25%',
       borderBottom:'1px solid black',
       borderRight:'1px solid black',
+      padding:"15px"
     },
     media: {
       height: 140,

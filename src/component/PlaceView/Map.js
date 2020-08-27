@@ -26,12 +26,12 @@ export default class MapPlace extends React.Component{
                 </GoogleMap>
                 ));
             return(
-                <React.Fragment>
+                <div style={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}}>
                 <Map
                     isMarkerShown
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `300px`,width:'100%'}} />}
+                    containerElement={<div style={{ height: `300px`,width:'90%'}} />}
                     mapElement={<div style={{ height: `100%` }} />}>
                         <Marker style={{background:'gray'}} 
                             onClick={()=>this.updatePlace({name:"Yo",link:null})} 
@@ -43,7 +43,7 @@ export default class MapPlace extends React.Component{
                     <div style={{width:'100%',height:'30px',background:'green'}} id="dataPlace">
                         
                     </div>
-                    </React.Fragment>);
+                    </div>);
         }
     }
 
@@ -56,10 +56,10 @@ export default class MapPlace extends React.Component{
         //Actualiza coordenadas
         this.state.lat=pos.coords.latitude;
         this.state.lng=pos.coords.longitude;
-        this.state.near.push({lat:pos.coords.latitude+0.09,lng:pos.coords.longitude,name:"Restaurante A"});
-        this.state.near.push({lat:pos.coords.latitude-0.1,lng:pos.coords.longitude,name:"Restaurante B"});
-        this.state.near.push({lat:pos.coords.latitude,lng:pos.coords.longitude+0.04,name:"Restaurante C"});
-        this.state.near.push({lat:pos.coords.latitude+0.05,lng:pos.coords.longitude-0.07,name:"Restaurante D"});
+        this.state.near.push({lat:pos.coords.latitude+0.09,lng:pos.coords.longitude,name:"Local 1"});
+        this.state.near.push({lat:pos.coords.latitude-0.1,lng:pos.coords.longitude,name:"Local 2"});
+        this.state.near.push({lat:pos.coords.latitude,lng:pos.coords.longitude+0.04,name:"Local 3"});
+        this.state.near.push({lat:pos.coords.latitude+0.05,lng:pos.coords.longitude-0.07,name:"Local 4"});
         this.setState(this.state);
 
     }

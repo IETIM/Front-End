@@ -11,9 +11,8 @@ import logo from './../../logo.svg';
 
 const useStyles = makeStyles({
   root: {
-    width:'25%',
-    borderBottom:'1px solid black',
-    borderRight:'1px solid black',
+    width:'94%',
+    border:'1px solid black',
   },
   media: {
     height: 140,

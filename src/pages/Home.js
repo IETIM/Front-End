@@ -1,9 +1,12 @@
 import React from 'react'
 import '../degradados.css';
+import AppBar from '../component/appbar/AppBar';
 
 export default function Home() {
     return (
         <div>
+            <AppBar />
+            <div style = {{height: '80px', width: '100%'}}></div>
             <div className = 'home'>
                 <header>
                     <h1> Bienvenido! </h1>

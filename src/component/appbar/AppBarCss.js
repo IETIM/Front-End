@@ -9,7 +9,8 @@ export const AppBarCss = makeStyles(() => ({
         justifyContent: 'start',
         alignItems: 'center',
         width: '100%',
-        position: 'fixed'
+        position: 'fixed',
+        zIndex: 1000000
     }
 
 }));

@@ -48,12 +48,10 @@ function App() {
             
         } exact/>
 
-    </Switch>
-
-    <AppBar/>
             <Route path="/home" exact component = {Home}/>
             <Route path="/products" exact component = {Products}/>
             <Route path="/reports" exact component = {Reports}/>
+    </Switch>
    </BrowserRouter>
   );
 }

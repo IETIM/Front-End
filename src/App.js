@@ -7,6 +7,7 @@ import UserProfile from './component/Profile/UserProfile'
 import PlaceView from './component/PlaceView/PlaceView';
 import CategoryView from './component/PlaceView/CategoryView';
 import { Place } from '@material-ui/icons';
+import { SellerDashboard } from './component/SellerDashboard/SellerDashboard';
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
             render={()=>
                 <UserProfile/>
                 } exact/>
+        <Route path="/sellerdashboard"
+            render={()=>
+                <SellerDashboard/>
+                } exact/>
+        
 
     </Switch>
    </BrowserRouter>

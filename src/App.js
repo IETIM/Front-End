@@ -9,11 +9,17 @@ import CategoryView from './component/PlaceView/CategoryView';
 import { Place } from '@material-ui/icons';
 import { SellerDashboard } from './component/SellerDashboard/SellerDashboard';
 import Catalog from './component/catalog/Catalog';
+import Home from './pages/Home';
+import Reports from './pages/Reports';
+import Products from './pages/Products';
+import AppBar from './component/appbar/AppBar';
+
 
 function App() {
   return (
    <BrowserRouter>
     <Switch>
+    
 
         <Route path="/" 
             render={()=><PlaceView/>} exact/>
@@ -43,6 +49,11 @@ function App() {
         } exact/>
 
     </Switch>
+
+    <AppBar/>
+            <Route path="/home" exact component = {Home}/>
+            <Route path="/products" exact component = {Products}/>
+            <Route path="/reports" exact component = {Reports}/>
    </BrowserRouter>
   );
 }

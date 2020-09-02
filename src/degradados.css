@@ -1,0 +1,14 @@
+.home, .products, .reports {
+    min-height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(135deg, #08185B, #949CBC);
+}
+
+header {
+    border: solid black 1px;
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    background-image: linear-gradient(135deg, #08185B, #949CBC);
+    color: white;
+}

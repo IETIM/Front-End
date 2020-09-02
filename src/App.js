@@ -5,6 +5,9 @@ import Main from './component/Main/Main';
 import SignUp from './component/signup/SignUp';
 import { SignIn } from './component/signin/SignIn';
 import UserProfile from './component/Profile/UserProfile'
+import PlaceView from './component/PlaceView/PlaceView';
+import CategoryView from './component/PlaceView/CategoryView';
+import { Place } from '@material-ui/icons';
 
 function App() {
   return (
@@ -12,7 +15,7 @@ function App() {
     <Switch>
 
         <Route path="/" 
-            render={()=><Main/>} exact/>
+            render={()=><PlaceView/>} exact/>
 
         <Route path="/signup" 
             render={()=><SignUp/>} exact/>

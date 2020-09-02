@@ -1,145 +1,59 @@
 import React from 'react';
-import './UserProfile.css';
+import {Mytext} from './Mytext';
+import {Image} from './Image';
+import './Image.css'
 
-const ImgUpload =({
-  onChange,
-  src,
-})=>{
-  return(
-    <label for="photo-upload" className="custom-file-upload fas">
-      <div className="img-wrap img-upload" >
-        <img for="photo-upload" src={src}/>
-      </div>
-      <input id="photo-upload" type="file" onChange={onChange}/> 
-    </label>
-  );
-}
-const Name =({
-  onChange,
-  value
-})=>{
-  return(
-    <div className="field">
-      <span>
-        name:
-      </span>
-      <input type="text" onChange={onChange} maxlength="25" value={value} placeholder="Alexa" required/> 
-    </div>
-  );
-}
-const Status =({
-  onChange,
-  value
-})=>{
-  return(
-    <div className="field">
-      <span>
-        status:
-      </span>
-      <input type="text" onChange={onChange} maxlength="35" value={value}placeholder="It's a nice day!" required/> 
-    </div>
-  );
-}
-const Profile =({
-  onSubmit,
-  src,
-  name,
-  status,
-})=>{
-  return(
-   <div className="card">
-    <form onSubmit={onSubmit}>
-      <h1>Profile Card</h1>
-      <label className="custom-file-upload fas">
-        <div className="img-wrap" >
-          <img for="photo-upload" src={src}/>
-        </div>
-      </label>
-      <div className="name">{name}</div>
-      <div className="status">{status}</div>
-      <button type="submit" className="edit profile">Edit Profile </button>
-    </form>
-   </div>
-  );
-}
-      
-const Edit =({
-  onSubmit,
-  children,
-})=>{
-  return(
-    <div className="card">
-      <form onSubmit={onSubmit}>
-        <h1>Profile Card</h1>
-        {children}
-        <button type="submit" className="save profile">Save </button>
-      </form>
-    </div>
-  );
-}
-
-class UserProfile extends React.Component {
+export default class UserProfile extends React.Component {
   constructor(props) {
-    super(props);
-     this.state = {
-       file: '',
-       imagePreviewUrl: 'https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true',
-       name:'',
-       status:'',
-       active: 'edit'
-    };
-  }
-  photoUpload (e) {
-    e.preventDefault();
-    const reader = new FileReader();
-    const file = e.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    }
-    reader.readAsDataURL(file);
-  }
-  editName (e) {
-    const name = e.target.value;
-    this.setState({
-      name,
-    });
-  }
-  editStatus (e) {
-    const status = e.target.value;
-    this.setState({
-      status,
-    });
-  }
-  handleSubmit(e) {
-    e.preventDefault();
-    let activeP = this.state.active === 'edit' ? 'profile' : 'edit';
-    this.setState({
-      active: activeP,
-    })
-  }
-  
-  render() {
-    const {imagePreviewUrl, 
-           name, 
-           status, 
-           active} = this.state;
-    return (
-      <body className="profile">
-        <div>
-          {(active === 'edit')  
-            ?<Edit onSubmit={(e)=>this.handleSubmit(e)}>
-                <ImgUpload onChange={(e)=>this.photoUpload(e)} src={imagePreviewUrl}/>
-                <Name onChange={(e)=>this.editName(e)} value={name}/>
-                <Status onChange={(e)=>this.editStatus(e)} value={status}/>
-              </Edit>
-            :<Profile onSubmit={(e)=>this.handleSubmit(e)} src={imagePreviewUrl} name={name} status={status}/>}
-        </div>
-      </body>
-    )
-  }
-}
+    super(props)
 
-export default UserProfile;
+  }
+
+  render(){
+
+    return(
+      <div style={{display:'flex',alignItems:'center',justifyContent:'center', height:'100%',width:'100%',backgroundImage: 'linear-gradient(135deg, #08185B, #949CBC)'}}>
+        
+        <div style={{height:'500px',background:'white'}}>
+          <div className='slide-in' style={{width:'100%', height:'45%',background:'#90caf9',borderBottomLeftRadius:'10px',borderBottomRightRadius:'10px',animation:'slide'}}>
+              <Image>
+                
+              </Image>
+          </div>
+          <Mytext 
+          id="username" 
+          field="username"
+          title="Username"> 
+          </Mytext>
+          <Mytext
+
+          id="email" 
+          field="email"
+          title="E-mail">
+            
+          </Mytext>
+
+          <Mytext
+          id="address" 
+          field="address"
+          title="Address">
+
+          </Mytext >  
+          <Mytext
+          id="creditsCard" 
+          field="creditsCard" 
+          title="CreditCard Number"> 
+
+          </Mytext>
+          <Mytext
+          id="cellphone" 
+          field="cellphone"
+          title="Cellphone">
+          </Mytext>
+          </div>
+          
+      </div>
+    );
+  }
+ 
+}

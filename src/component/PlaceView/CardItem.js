@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import logo from './../../logo.svg';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,13 @@ const useStyles = makeStyles({
   },
 });
 export default function CardItem(props){
+
+    const [id,setId] = React.useState(null);
     const classes = useStyles();
+    if (id != null){
+      return <Redirect to="/catalog"> </Redirect>
+    }
+  
     return(  <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -37,7 +44,7 @@ export default function CardItem(props){
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={()=>setId(0)}>
             Ver
           </Button>
         </CardActions>

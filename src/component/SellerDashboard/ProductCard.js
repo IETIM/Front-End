@@ -11,13 +11,10 @@ import logo from './../../logo.svg';
 
 const useStyles = makeStyles({
     root: {
-      width:'25%',
-      borderBottom:'1px solid black',
-      borderRight:'1px solid black',
-      padding:"15px"
+      maxWidth: 345
     },
     media: {
-      height: 140,
+      height: 100,
     },
   });
   export default function ProductCard(props){
@@ -26,8 +23,9 @@ const useStyles = makeStyles({
           <CardActionArea>
             <CardMedia
               className={classes.media}
+              alt="Nombre del producto"
               image={logo}
-              title="Contemplative Reptile"
+              title="Nombre del producto"
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">

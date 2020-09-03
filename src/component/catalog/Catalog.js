@@ -14,9 +14,11 @@ import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { Link, animateScroll as scroll } from "react-scroll";
+
 import { Todo } from "../todo/Todo";
 import { withStyles } from "@material-ui/core/styles";
+import { ListProduct } from "./ListProduct";
 
 const drawerWidth = 240;
 
@@ -61,6 +63,9 @@ export class Catalog extends React.Component {
   }
 
   render() {
+    const testList =[{name:"food",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
+                      {name:"cars",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
+                      {name:"lapices",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]}]
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");
@@ -69,20 +74,29 @@ export class Catalog extends React.Component {
     const handleDrawerToggle = () => {
       this.setState({ mobileOpen: !this.state.mobileOpen });
     };
-    
 
     const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}  component="a" href="#lol">
+          {testList.map((categories) => (
+            <Link
+            activeClass="active"
+            to={categories.name}
+            spy={true}
+            smooth={true}
+            offset={-70}
+            duration={500}
+          >
+            <ListItem button>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {2% 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={categories.name} />
+              
             </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
@@ -154,117 +168,8 @@ export class Catalog extends React.Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-
-          <Grid container spacing={1}>
-            <Grid container spacing={1} direction="row" justify="center" alignItems="baseline">
-            
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 0"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 1"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 2"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 3"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 4"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              
-            <Grid item xs="auto">
-                <Todo
-                  text="Prueba 0"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 1"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 2"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 3"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 4"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 1"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 2"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 3"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-              <Grid item xs="auto">
-                <Todo
-                  text="Prueba 4"
-                  priority="69"
-                  dueDate={new Date()}
-                />
-              </Grid>
-             
-            </Grid>
-            <a name="lol">
-            <Typography variant="h6" noWrap>
-              Referencia a nueva categoria
-            </Typography>
-            </a>
-          </Grid>
+            <ListProduct categories={testList}/>
+          {/* Aqui hay que poner la lista de product con los porps que son las categorias */}
         </main>
       </div>
     );

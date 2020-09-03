@@ -1,0 +1,53 @@
+
+.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-in {
+    100% { -webkit-transform: translateX(0%); }
+}
+
+
+  .img-wrap{
+      
+    position: relative;
+    width : 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin : auto;
+
+    /*border-radius: 50%;*/
+  }
+
+  .img-upload:before{
+    content: "\f093";
+    font-size: 90px;
+    position: absolute;
+    padding-top: 80px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    text-align: center;
+    color: #63d3a6;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    opacity: 0;
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+    background-color: #fff;
+  }
+  .img-upload:hover:before{
+   opacity: 1;
+  }
+  img {
+    width: auto;
+    height: 100%;
+  }

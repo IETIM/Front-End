@@ -16,6 +16,21 @@ import AppBar from './component/appbar/AppBar';
 
 
 function App() {
+
+    const profile = () => (
+        <UserProfile/>
+        );
+    const Login = () => (
+        <SignIn/>
+        );
+
+    if (localStorage.getItem("username") === null){
+        console.log("hola");
+        localStorage.setItem("username","chan");
+        localStorage.setItem("password","chan123");
+        localStorage.setItem("isloggedin",false);
+    }
+
   return (
    <BrowserRouter>
     <Switch>
@@ -33,10 +48,12 @@ function App() {
             render={()=>
                 <SignIn/>
                 } exact/>
+
         <Route path="/userprofile"
-            render={()=>
-                <UserProfile/>
-                } exact/>
+                    render={()=>
+                        <UserProfile/>
+                        } exact/>
+        
         <Route path="/sellerdashboard"
             render={()=>
                 <SellerDashboard/>

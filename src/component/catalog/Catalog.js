@@ -1,5 +1,5 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
+import AppBar from "../appbar/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -86,7 +86,7 @@ export class Catalog extends React.Component {
             to={categories.name}
             spy={true}
             smooth={true}
-            offset={-70}
+            offset={-90}
             duration={500}
           >
             <ListItem button>
@@ -118,23 +118,10 @@ export class Catalog extends React.Component {
 
     return (
       <div className={classes.root}>
+         <AppBar />
+
+       <div style = {{height: '7  0px'}}></div>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
-              Responsive drawer
-            </Typography>
-          </Toolbar>
-        </AppBar>
         <nav className={classes.drawer} aria-label="mailbox folders">
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Hidden smUp implementation="css">

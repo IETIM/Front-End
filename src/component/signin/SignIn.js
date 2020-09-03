@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./SignIn.css";
 import axios from 'axios';
 import { Spring } from "react-spring/renderprops";
+import UserProfile from '../Profile/UserProfile';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -15,6 +17,9 @@ export class SignIn extends React.Component {
   }
 
   render() {
+    if (localStorage.getItem("isloggedin")){
+      return <Redirect to="/userprofile"/>
+    }
     return (
       <Spring from={{opacity:0,marginTop:-500}} to={{opacity:1,marginTop:0}} config={{delay:200,duration:500}}>
         {(props) => (
@@ -67,6 +72,7 @@ export class SignIn extends React.Component {
                   </div>
 
                   <button
+      
                     id = "login"
                     type="submit"
                     className="btn btn-primary btn-block"
@@ -99,8 +105,15 @@ export class SignIn extends React.Component {
     this.setState(() => ({
       username: newItem.username,
       password: newItem.password,
+      
     }));
     console.log(newItem);
+    if (localStorage.getItem("username") === this.state.username && localStorage.getItem("password") === this.state.password){
+      console.log("ENTREEE");
+      localStorage.setItem("isloggedin",true);
+      this.setState(this.state);
+    }
+    
     axios.post(`https://ieti-deep-backend.herokuapp.com/login`, newItem)
       .then(res => {
           console.log("LOL");

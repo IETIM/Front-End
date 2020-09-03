@@ -2,6 +2,7 @@ import React from 'react';
 import {Mytext} from './Mytext';
 import {Image} from './Image';
 import './Image.css'
+import { Redirect } from 'react-router-dom';
 
 export default class UserProfile extends React.Component {
   constructor(props) {
@@ -10,7 +11,10 @@ export default class UserProfile extends React.Component {
   }
 
   render(){
-
+    if (!localStorage.getItem("isloggedin")){
+      return <Redirect to="/login"> </Redirect>
+    }
+    
     return(
       <div style={{display:'flex',alignItems:'center',justifyContent:'center', height:'100%',width:'100%',backgroundImage: 'linear-gradient(135deg, #08185B, #949CBC)'}}>
         

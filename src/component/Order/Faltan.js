@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 import DatesOrders from './DatesOrders';
 
-export default function Atendido(props){
+export default function Faltan(props){
+    const [ban,setBan] = React.useState(false);
     var atendidos = [];
     var total =0;
     var dates = [];
@@ -12,7 +12,7 @@ export default function Atendido(props){
         return ban;
     } 
     props.orders.forEach((order)=>{
-        if(order.status=="complete"){
+        if(order.status=="ready"){
             atendidos.push(order);
             order.totalPrice=0;
             order.items.forEach((item)=>order.totalPrice+=item.price);
@@ -22,11 +22,15 @@ export default function Atendido(props){
     });    
     console.log(dates);
     return(<div style={{width:'100%',height:'100%',overflowY:'scroll'}}>
-        <h1>Atendidos</h1>
+        <h1>Faltantes</h1>
         <br></br>
         <b>Total Ganancias: </b>{total}
         <br></br>
         <br></br>
-           {dates.map((date)=> <DatesOrders date={date} orders={atendidos}/>)}
+           {dates.map((date)=> <DatesOrders updateOrden={(item)=>{
+               props.updateOrden(item);
+               setBan(!ban);
+               }} date={date} orders={atendidos}/>)}
         </div>)
+
 }

@@ -71,7 +71,8 @@ class DrawerLeft extends React.Component{
     render(){
       const { window }=this.props;
       const { classes } = this.props;
-
+      const tendero=this.props.tendero
+      
       const drawer = (
         <div>
           <div className={classes.toolbar} />
@@ -79,20 +80,20 @@ class DrawerLeft extends React.Component{
           <List>
               <ListItem>
                 <ListItemIcon><Avatar alt="Nombre tendero" src={logo} /></ListItemIcon>
-                <ListItemText primary={"Nombre del tendero"} />
+                <ListItemText primary={tendero.nombre} />
               </ListItem>
               <ListItem>
 
               <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                <ListItemText primary={"Nombre de la tienda"} />
+                <ListItemText primary={tendero.nombreTienda} />
               </ListItem>
               <ListItem>
               <ListItemIcon><RoomIcon/></ListItemIcon>
-                <ListItemText primary={"Dirección de la tienda"} />
+                <ListItemText primary={tendero.direccion} />
               </ListItem>
               <ListItem>
               <ListItemIcon><WhatsAppIcon/></ListItemIcon>
-                <ListItemText primary={"Número de contacto"} />
+                <ListItemText primary={tendero.telefono} />
               </ListItem>
           </List>
           <Divider />
@@ -105,7 +106,7 @@ class DrawerLeft extends React.Component{
                 <ListItemIcon><ShoppingCartIcon/> </ListItemIcon>
                 <ListItemText primary={"Ver pedidos"} />
               </ListItem>
-              <ListItem button key={"Añadir producto"}>
+              <ListItem button key={"Añadir producto"} onClick={this.props.handleNewProductModal} >
                 <ListItemIcon><AddBoxIcon/> </ListItemIcon>
                 <ListItemText primary={"Añadir producto"} />
               </ListItem>

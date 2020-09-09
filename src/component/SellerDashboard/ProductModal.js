@@ -26,7 +26,7 @@ import { ProductForm } from './ProductForm';
 })
 
 
- class UpdateProductModal extends React.Component{
+ class ProductModal extends React.Component{
 
     constructor(props){
         super(props)
@@ -43,10 +43,10 @@ import { ProductForm } from './ProductForm';
             
             <div className={classes.paper}  style={{textAlign:"center"} } tabIndex="-1" >
                 <form  onSubmit={this.handleSubmit}>
-                <h3>Actualizar producto</h3>
+                <h3>{this.props.verb} producto</h3>
 
                 <ProductForm handleChange={this.handleChange} nombre={this.state.nombre} 
-                            precio={this.state.precio} descripcion={this.state.descripcion} required={false}></ProductForm>
+                            precio={this.state.precio} descripcion={this.state.descripcion} required={this.props.required}></ProductForm>
     
                 <br/>
                 <br/>
@@ -58,7 +58,7 @@ import { ProductForm } from './ProductForm';
                             className="submit"
                             >
                             
-                    Actualizar 
+                    {this.props.verb} 
                 </Button>
                 <br/>
             
@@ -75,8 +75,8 @@ import { ProductForm } from './ProductForm';
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.handleUpdateProduct({nombre: this.state.nombre,precio: this.state.precio,descripcion: this.state.descripcion})
+        this.props.handleProduct({nombre: this.state.nombre,precio: this.state.precio,descripcion: this.state.descripcion})
     }
 
 }
-export default withStyles(useStyles, { withTheme: true })(UpdateProductModal);
+export default withStyles(useStyles, { withTheme: true })(ProductModal);

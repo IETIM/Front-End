@@ -4,8 +4,7 @@ import DrawerLeft from './DrawerLeft';
 import { InsertEmoticonSharp } from '@material-ui/icons';
 import DialogContent from '@material-ui/core/DialogContent';
 import { Modal } from '@material-ui/core';
-import AddProductModal from './AddProductModal';
-import UpdateProductModal from './UpdateProductModal';
+import ProductModal from './ProductModal';
 
 
 const items=[{nombre:"nombre1",precio:100,descripcion:"producto1"}
@@ -36,13 +35,13 @@ export class SellerDashboard extends React.Component{
                 <Modal open={this.state.openProductModal}
                 onClose={this.handleNewProductModal}
                 >
-                <AddProductModal handleNewProduct={this.handleNewProduct}/>
+                <ProductModal handleProduct={this.handleNewProduct} required={true} verb={"Añadir"}/>
                 </Modal>
 
                 <Modal open={this.state.openUpdateModal}
                 onClose={this.handleUpdateProductModal}
                 >
-                <UpdateProductModal handleUpdateProduct={this.handleUpdateProduct}/>
+                <ProductModal handleProduct={this.handleUpdateProduct} required={false} verb={"Actualizar"}/>
                 </Modal>
                 <DrawerLeft main={<ProductGrid productos={items} handleUpdateProductModal={this.handleUpdateProductModal} />} tendero={tendero} handleNewProductModal={this.handleNewProductModal}/>
                 </div>}

@@ -22,11 +22,5 @@ export const SidebarData = [
         path: '/userprofile',
         icon: <IoIcons.IoIosPaper/>,
         cName: 'nav-textV1'
-    },
-    {
-        title: "Cerrar Sesión",
-        path: '/signout',
-        icon: <CgIcons.CgLogOff />, //<CgIcons.CgLogOff>  CgLogOut
-        cName: 'nav-textV1'
     }
 ]

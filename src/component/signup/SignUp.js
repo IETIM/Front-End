@@ -221,7 +221,15 @@ export default function Register(props) {
                             </Button>
                             <br></br>
                             <br></br>
-                            <Link to ="/"> Sign In</Link>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className="submit"
+                                href = "login"                             
+                            >
+                                Sign In
+                            </Button>
                         </form>
                     </Paper>
                 </main>  

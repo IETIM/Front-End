@@ -31,7 +31,7 @@ export default class PlaceView extends React.Component{
     
 
     render(){
-        return(<div style={{width:'100%',height:'100%',background:'orange',margin:'0px',padding:'0px'}}>            
+        return(<div style={{width:'100%',height:'100%',margin:'0px',padding:'0px'}}>            
             <AppBar />
 
             <div style = {{height: '80px', width: '100%'}}></div>

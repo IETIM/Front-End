@@ -12,13 +12,7 @@ import AppBar from '../appbar/AppBar';
 export default class PlaceView extends React.Component{
     constructor(props){
         super(props);
-        if (localStorage.getItem("username") === null){
-            console.log("hola");
-            localStorage.setItem("username","chan");
-            localStorage.setItem("password","chan123");
-            localStorage.setItem("isloggedin",false);
-        }
-        
+       
         this.state = {funUpdate:null};
         this.setFunUpdate = this.setFunUpdate.bind(this);
         this.setCategory = this.setCategory.bind(this);

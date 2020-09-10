@@ -77,7 +77,6 @@ export default function CustomizedAccordions(props) {
         <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="name"> New Username </InputLabel>
                 <Input 
-                    placeholder = "New Username"
                     id="name" 
                     name="name" 
                     autoComplete="name" 
@@ -88,10 +87,12 @@ export default function CustomizedAccordions(props) {
       </Accordion>
       <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>{localStorage.getItem("email")}</Typography>
-          <div style ={{position:'absolute',right:'10px'}}>
+          
+            <Typography>{localStorage.getItem("email")}</Typography>
+          
+          
                 <EditIcon/>
-            </div>
+            
         </AccordionSummary>
         <AccordionDetails>
         <FormControl margin="normal" required fullWidth>
@@ -108,7 +109,7 @@ export default function CustomizedAccordions(props) {
       <Accordion square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
         <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
         <div style ={{left:'0px',width:'50%'}}> 
-  <Typography>{localStorage.getItem("cellphone")}</Typography> </div>
+    <Typography>{localStorage.getItem("cellphone")}</Typography> </div>
           <div style ={{position:'absolute',right:'10px'}}>
                 <EditIcon/>
             </div>
@@ -117,7 +118,7 @@ export default function CustomizedAccordions(props) {
             <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="cell">New Cellphone</InputLabel>
                 <Input 
-                    id="cell" 
+                    id="cell"   
                     name="cell" 
                     autoComplete="cell" 
                     onChange={props.handleChangeCell}
@@ -127,8 +128,28 @@ export default function CustomizedAccordions(props) {
       </Accordion>
       <Accordion square expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
         <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
+        <div style ={{left:'0px',width:'50%'}}> 
+    <Typography>{localStorage.getItem("address")}</Typography> </div>
+          <div style ={{position:'absolute',right:'10px'}}>
+                <EditIcon/>
+            </div>
+        </AccordionSummary>
+        <AccordionDetails>
+            <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="address">New Address</InputLabel>
+                <Input 
+                    id="address"   
+                    name="address" 
+                    autoComplete="address" 
+                    onChange={props.handleChangeAdd}
+                    autoFocus />
+            </FormControl>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion square expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
+        <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
         <div style ={{left:'0px',width:'50%'}}>
-          <Typography type="password">{props.password}</Typography> </div>
+  <Typography type="password">{localStorage.getItem("password")}</Typography> </div>
           <div style ={{position:'absolute',right:'10px'}}>
                 <EditIcon/>
             </div>
@@ -146,15 +167,16 @@ export default function CustomizedAccordions(props) {
             </FormControl>
         </AccordionDetails>
       </Accordion>
-      <br/>
+
       <Button onClick = {() => props.handleSave()}
-        variant="contained"
-        color="primary"
-        size="large"
-        startIcon={<SaveIcon />}
-      >
-        Save
-      </Button>
+              variant="contained"
+              color="primary"
+              size="large"
+              startIcon={<SaveIcon />}
+          >
+            Save
+          </Button>
+     
 
     </div>
   );

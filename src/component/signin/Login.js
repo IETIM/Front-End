@@ -38,7 +38,7 @@ export class Login extends React.Component{
 
     handleSend() {
         if(localStorage.getItem("users")==null){
-            localStorage.setItem("users",JSON.stringify([{"username":"chan","email":"chan@mail.com","password":"chan123","cellphone":"3221778"}]));
+            localStorage.setItem("users",JSON.stringify([{"username":"chan","email":"chan@mail.com","password":"chan123","cellphone":"3221778","address":"kr 10 call 22-30"}]));
         } 
         var listUsers = JSON.parse(localStorage.getItem("users"));
         var logged = false;
@@ -49,6 +49,7 @@ export class Login extends React.Component{
                 localStorage.setItem("email",listUsers[i].email);
                 localStorage.setItem("password",listUsers[i].password);
                 localStorage.setItem("cellphone",listUsers[i].cellphone);
+                localStorage.setItem("address",listUsers[i].address);
                 logged = true;   
             }
         }

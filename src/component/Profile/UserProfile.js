@@ -76,37 +76,40 @@ export default class UserProfile extends React.Component {
     }
     
     return(
+      <div>
+        <AppBar />
 
+        <div style = {{height: '100px', width: '100%'}}></div>
 
-
-      <div style={{heigt:'50%',display:"flex", flexDirection:"column", alignItems:"center",justifyContent:"center"}}>
-        <Image>
-                  
-        </Image>
-
-        <br/>
-        <br/>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}>
+        <div style={{heigt:'50%',display:"flex", flexDirection:"column", alignItems:"center",justifyContent:"center"}}>
           
-          <Acordion
-              username = {this.state.username}
-              email = {this.state.email}
-              password = {this.state.password}
-              cellphone = {this.state.cellphone}
-              handleChangeName = {this.handleChangeName}
-              handleChangeMail = {this.handleChangeMail}
-              handleChangePassword = {this.handleChangePassword}
-              handleChangeCell = {this.handleChangeCell}
-              handleChangeAdd = {this.handleChangeAdd}
-              handleChangeTienda = {this.handleChangeTienda}
-              handleSave = {this.handleSave}
-          > 
-          </Acordion>
+          <Image>
+                    
+          </Image>
+
+          <br/>
+          <br/>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}>
+            
+            <Acordion
+                username = {this.state.username}
+                email = {this.state.email}
+                password = {this.state.password}
+                cellphone = {this.state.cellphone}
+                handleChangeName = {this.handleChangeName}
+                handleChangeMail = {this.handleChangeMail}
+                handleChangePassword = {this.handleChangePassword}
+                handleChangeCell = {this.handleChangeCell}
+                handleChangeAdd = {this.handleChangeAdd}
+                handleChangeTienda = {this.handleChangeTienda}
+                handleSave = {this.handleSave}
+            > 
+            </Acordion>
+
+          </div>
 
         </div>
-
       </div>
-
   
     );
     /*return(

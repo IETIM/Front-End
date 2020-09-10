@@ -5,10 +5,16 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './SidebarPage.css';
 import { IconContext } from 'react-icons';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 
 function SidebarPage (){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
+
+    const logout = () => {    
+        localStorage.removeItem("IsLoggedIn");
+    }
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -34,6 +40,12 @@ function SidebarPage (){
                                     </li>
                                 );
                             })}
+                            <li key = "cerrarSesion" className = "nav-textV1">
+                                <Link to = "/" onClick = {logout}>
+                                    <ExitToAppIcon />  
+                                    <span> Cerrar Sesión </span>
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
                 </IconContext.Provider>

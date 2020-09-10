@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import logo from './../../logo.svg';
+import ModalViewProduct from './ModalViewProduct';
 
 const useStyles = makeStyles({
     root: {
@@ -43,9 +44,7 @@ const useStyles = makeStyles({
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
-              Ver
-            </Button>
+            <ModalViewProduct componente={this}></ModalViewProduct>
             <Button size="small" color="primary"> Añadir al carro</Button>
           </CardActions>
         </Card>);

@@ -58,14 +58,60 @@ const useStyles = (theme) => ({
 export class Catalog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mobileOpen: false };
+    this.state = { mobileOpen: false, productsCart: []};
     console.log(props == undefined);
+    this.addProduc = this.addProduc.bind(this);
+    this.removeAllProductsCart = this.removeAllProductsCart.bind(this);
+    this.removeProduct = this.removeProduct.bind(this);
+    this.sumAmount = this.sumAmount.bind(this);
   }
 
+
+  addProduc(name, price) {
+    var listTemp = this.state.productsCart;
+    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
+    this.setState({
+      productsCart: listTemp
+    })    
+  }
+
+  removeProduct(id) {
+    var listTemp = this.state.productsCart;
+    for (var i = 0; i < listTemp.length; i++) {
+      const item = listTemp[i];
+      if (item.id == id) {
+        listTemp.splice(i, 1);
+        break;
+      }
+    }
+    this.setState({
+      productsCart: listTemp
+    })    
+  }
+  removeAllProductsCart() {
+    this.setState({
+      productsCart: []
+    }) 
+  }
+
+  sumAmount(id, num) {
+    var listTemp = this.state.productsCart;
+    for (var i = 0; i < listTemp.length; i++) {
+      const item = listTemp[i];
+      if (item.id == id) {
+        item.amount += num;
+        break;
+      }
+    }
+    this.setState({
+      productsCart: listTemp
+    }) 
+  } 
+
   render() {
-    const testList =[{name:"food",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
-                      {name:"cars",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
-                      {name:"lapices",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]}]
+    const testList =[{name:"food",products:[{name:"Limón",price:"2.000",description:"_"},{name:"Pasta",price:"2.000",description:"_"},{name:"Arroz",price:"2.000",description:"_"},{name:"Salchicha",price:"2.000",description:"_"},{name:"Platano",price:"2.000",description:"_"},{name:"Papa",price:"2.000",description:"_"},{name:"Huevos",price:"2.000",description:"_"},{name:"Chicharron",price:"2.000",description:"_"},{name:"Cafe",price:"2.000",description:"_"},{name:"Lentejas",price:"2.000",description:"_"}]},
+                      {name:"cars",products:[{name:"Chevrolet x2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]},
+                      {name:"lapices",products:[{name:"Lápiz #2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]}]
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");
@@ -77,6 +123,7 @@ export class Catalog extends React.Component {
 
     const drawer = (
       <div>
+        <div style = {{height: '80px', width: '100%'}}></div>
         <div className={classes.toolbar} />
         <Divider />
         <List>
@@ -116,9 +163,15 @@ export class Catalog extends React.Component {
     const container =
       window !== undefined ? () => window().document.body : undefined;
 
+      
     return (
       <div className={classes.root}>
-         <AppBar />
+         <AppBar 
+              sumAmount = {this.sumAmount}
+              removeProduct = {this.removeProduct}
+              productsCart = {this.state.productsCart} 
+              removeAllProductsCart = {this.removeAllProductsCart}
+          />
 
        <div style = {{height: '7  0px'}}></div>
         <CssBaseline />
@@ -155,7 +208,7 @@ export class Catalog extends React.Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-            <ListProduct categories={testList}/>
+            <ListProduct categories={testList} addProduc = {this.addProduc}/>
           {/* Aqui hay que poner la lista de product con los porps que son las categorias */}
         </main>
       </div>

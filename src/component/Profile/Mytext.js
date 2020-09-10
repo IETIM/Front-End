@@ -7,16 +7,14 @@ export class Mytext extends React.Component {
         super(props);
         this.state = {isEditable : false,person:""};
         this.state.person = {username:"johan",email:"johan@mail.com",creditsCard:"1233-3231-23313",cellphone:"2323232",address:"Kr 9 .."};   
-        this.handleChangeField = this.handleChangeField.bind(this);
-        this.handleChangeEditable = this.handleChangeEditable.bind(this);
     }
 
-    handleChangeField(e) {
+    handleChangeField = (e) => {
         this.state.person[this.props.field] = e.target.value;
         this.setState(this.state)
     }
 
-    handleChangeEditable() {
+    handleChangeEditable = () => {
         this.state.isEditable = !this.state.isEditable;
         this.setState(this.state)
     }

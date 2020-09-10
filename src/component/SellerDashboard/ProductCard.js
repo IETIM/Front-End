@@ -8,10 +8,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import logo from './../../logo.svg';
+import ModalViewProduct from '../catalog/ModalViewProduct';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 345
+      maxWidth: 180
     },
     media: {
       height: 100,
@@ -19,6 +20,8 @@ const useStyles = makeStyles({
   });
   export default function ProductCard(props){
       const classes = useStyles();
+
+      
       return(  <Card className={classes.root}>
           <CardActionArea>
             <CardMedia
@@ -29,18 +32,16 @@ const useStyles = makeStyles({
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                 {props.title}
+                 {props.nombre}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  Precio: {props.descripcion}
+                  Precio: {"$ "+props.precio}
               </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
-              Ver
-            </Button>
-            <Button size="small" color="primary"> Actualizar</Button>
+          <ModalViewProduct imagen={logo} nombre={props.nombre} precio={props.precio} descripcion={props.descripcion}></ModalViewProduct>
+            <Button size="small" color="primary" onClick={()=>{props.handleUpdateProductModal(props.index)}}> Actualizar</Button>
           </CardActions>
         </Card>);
   }

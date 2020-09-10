@@ -21,7 +21,7 @@ import RoomIcon from '@material-ui/icons/Room';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Avatar from '@material-ui/core/Avatar';
 import logo from './../../logo.svg';
-
+import {Redirect} from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -69,9 +69,15 @@ class DrawerLeft extends React.Component{
 
 
     render(){
+
+      if (!localStorage.getItem("IsLoggedIn")){
+        return <Redirect to="/login"> </Redirect>
+      }
+
       const { window }=this.props;
       const { classes } = this.props;
-
+      const tendero=this.props.tendero
+      
       const drawer = (
         <div>
           <div className={classes.toolbar} />
@@ -79,33 +85,33 @@ class DrawerLeft extends React.Component{
           <List>
               <ListItem>
                 <ListItemIcon><Avatar alt="Nombre tendero" src={logo} /></ListItemIcon>
-                <ListItemText primary={"Nombre del tendero"} />
+                <ListItemText primary={localStorage.getItem("username")} />
               </ListItem>
               <ListItem>
 
               <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                <ListItemText primary={"Nombre de la tienda"} />
+                <ListItemText primary={localStorage.getItem("tienda")} />
               </ListItem>
               <ListItem>
               <ListItemIcon><RoomIcon/></ListItemIcon>
-                <ListItemText primary={"Dirección de la tienda"} />
+                <ListItemText primary={localStorage.getItem ("address")} />
               </ListItem>
               <ListItem>
               <ListItemIcon><WhatsAppIcon/></ListItemIcon>
-                <ListItemText primary={"Número de contacto"} />
+                <ListItemText primary={localStorage.getItem("cellphone")} />
               </ListItem>
           </List>
           <Divider />
           <List>
-              <ListItem button key={"Update"}>
+              <ListItem button key={"Update"} onClick={()=>{this.props.handleRedirect("/userprofile")}}>
                 <ListItemIcon><SettingsApplicationsIcon/> </ListItemIcon>
                 <ListItemText primary={"Actualizar datos"} />
               </ListItem>
-              <ListItem button key={"Pedidos"}>
+              <ListItem button key={"Pedidos"} onClick={()=>{this.props.handleRedirect("/orders")}}>
                 <ListItemIcon><ShoppingCartIcon/> </ListItemIcon>
                 <ListItemText primary={"Ver pedidos"} />
               </ListItem>
-              <ListItem button key={"Añadir producto"}>
+              <ListItem button key={"Añadir producto"} onClick={this.props.handleNewProductModal} >
                 <ListItemIcon><AddBoxIcon/> </ListItemIcon>
                 <ListItemText primary={"Añadir producto"} />
               </ListItem>

@@ -3,7 +3,6 @@ import ProductCard from './ProductCard'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid'
 import { withStyles} from '@material-ui/core/styles';
-import {ProductsRow} from './ProductsRow';
 
 
 
@@ -27,21 +26,19 @@ const useStyles = theme => ({
     render(){
         const { classes } = this.props;
 
-        const testList=[{nombre:"nombre1",precio:"$100",imagen:"product.png"}
-        ,{nombre:"nombre1",precio:"$99",imagen:"product.png"}
-        ,{nombre:"nombre1",precio:"$98",imagen:"product.png"},
-        {nombre:"nombre1",precio:"$97",imagen:"product.png"},
-        {nombre:"nombre1",precio:"$96",imagen:"product.png"}]
-        const rows=testList.length/4;
-        const cols=8
-        let lis=[]
-        const tamaño=12;
-        let temp=[]
-
+        const list= this.props.productos      
         return<div style={{height:"100%",width:"100%", flexGrow: "1"}}>
-            
+      
         <Grid container spacing={1} >
-         <ProductsRow  productos={testList}/>          
+              <Grid container item  spacing={2}>
+              {list.map((producto,index)=>{
+                  return <Grid key={"producto"+index}  item >
+                  <ProductCard nombre= {producto.nombre} precio={producto.precio} index={index} 
+                              descripcion = {producto.descripcion}
+                              handleUpdateProductModal={this.props.handleUpdateProductModal}/>
+                  </Grid>
+                  })}
+              </Grid>
         </Grid>
         
       </div>

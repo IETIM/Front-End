@@ -33,7 +33,8 @@ const useStyles = theme => ({
               <Grid container item  spacing={2}>
               {list.map((producto,index)=>{
                   return <Grid key={"producto"+index}  item >
-                  <ProductCard nombre={producto.nombre} precio={producto.precio} index={index} 
+                  <ProductCard nombre= {producto.nombre} precio={producto.precio} index={index} 
+                              descripcion = {producto.descripcion}
                               handleUpdateProductModal={this.props.handleUpdateProductModal}/>
                   </Grid>
                   })}

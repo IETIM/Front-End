@@ -16,7 +16,8 @@ export default class UserProfile extends React.Component {
                   email:localStorage.getItem("email"),
                   password : localStorage.getItem("password"), 
                   cellphone: localStorage.getItem("cellphone"),
-                  address : localStorage.getItem("address")}
+                  address : localStorage.getItem("address"),
+                  tienda : localStorage.getItem("tienda")}
 
   }
 
@@ -25,6 +26,13 @@ export default class UserProfile extends React.Component {
       username : e.target.value
     });
   }
+
+  handleChangeTienda = (e) =>{
+    this.setState({
+      tienda : e.target.value
+    });
+  }
+
 
   handleChangeMail = (e) =>{
     this.setState({
@@ -56,6 +64,7 @@ export default class UserProfile extends React.Component {
       localStorage.setItem("password",this.state.password);
       localStorage.setItem("cellphone",this.state.cellphone);
       localStorage.setItem("address",this.state.address);
+      localStorage.setItem("tienda",this.state.tienda);
       this.setState(this.state);
       
   }
@@ -89,6 +98,7 @@ export default class UserProfile extends React.Component {
               handleChangePassword = {this.handleChangePassword}
               handleChangeCell = {this.handleChangeCell}
               handleChangeAdd = {this.handleChangeAdd}
+              handleChangeTienda = {this.handleChangeTienda}
               handleSave = {this.handleSave}
           > 
           </Acordion>

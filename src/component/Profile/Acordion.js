@@ -129,6 +129,26 @@ export default function CustomizedAccordions(props) {
       <Accordion square expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
         <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
         <div style ={{left:'0px',width:'50%'}}> 
+    <Typography>{localStorage.getItem("tienda")}</Typography> </div>
+          <div style ={{position:'absolute',right:'10px'}}>
+                <EditIcon/>
+            </div>
+        </AccordionSummary>
+        <AccordionDetails>
+            <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="tienda">New Store Name</InputLabel>
+                <Input 
+                    id="tienda"   
+                    name="tienda" 
+                    autoComplete="tienda" 
+                    onChange={props.handleChangeTienda}
+                    autoFocus />
+            </FormControl>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion square expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
+        <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
+        <div style ={{left:'0px',width:'50%'}}> 
     <Typography>{localStorage.getItem("address")}</Typography> </div>
           <div style ={{position:'absolute',right:'10px'}}>
                 <EditIcon/>
@@ -146,8 +166,8 @@ export default function CustomizedAccordions(props) {
             </FormControl>
         </AccordionDetails>
       </Accordion>
-      <Accordion square expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
-        <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
+      <Accordion square expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
+        <AccordionSummary aria-controls="panel6d-content" id="panel6d-header">
         <div style ={{left:'0px',width:'50%'}}>
   <Typography type="password">{localStorage.getItem("password")}</Typography> </div>
           <div style ={{position:'absolute',right:'10px'}}>

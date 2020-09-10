@@ -14,6 +14,8 @@ function AppBar (props){
                 <div className = {classes.sidebarpage}> 
                     <SidebarPage />
                     <ShoppingCart 
+                        sumAmount = {props.sumAmount}
+                        removeProduct = {props.removeProduct}
                         removeAllProductsCart = {props.removeAllProductsCart}
                         productsCart = {props.productsCart == null ? []: props.productsCart}/>    
                 </div>

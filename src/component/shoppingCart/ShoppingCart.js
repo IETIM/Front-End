@@ -11,12 +11,12 @@ import Divider from '@material-ui/core/Divider';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
-
+        
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -34,11 +34,24 @@ function SidebarPage (props){
                             {props.productsCart.map((item, index) => {
                                 return (
                                     <div>
+                                        
                                         <div key = {item.name + "_" + index} className = "nav-textV1">                                        
                                                 <FaIcons.FaCartPlus />
                                                 <span style = {{color: 'white'}}> {item.name} </span>
                                                 <span style = {{float: 'right', color: 'white'}}> $ {item.price} </span>
-                                                 
+                                                
+                                                <div style = {{position: 'absolute', right: '-70px'}}>
+                                                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 
+                                                    style = {{width: '10%'}}>
+                                                    <Button> 
+                                                        {item.amount == 1 ? 
+                                                             <DeleteIcon onClick = {() => props.removeProduct(item.id)}/> 
+                                                            :  <RemoveIcon onClick = {() => props.sumAmount(item.id, -1)}/>}
+                                                    </Button>
+                                                    <Button>{item.amount}</Button>
+                                                    <Button><AddIcon onClick = {() => props.sumAmount(item.id, 1)}/></Button>
+                                                </ButtonGroup>
+                                                </div>
                                         </div>
                                         <Divider style = {{background: 'white'}}/>
                                     </div>

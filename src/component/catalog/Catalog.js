@@ -62,12 +62,28 @@ export class Catalog extends React.Component {
     console.log(props == undefined);
     this.addProduc = this.addProduc.bind(this);
     this.removeAllProductsCart = this.removeAllProductsCart.bind(this);
+    this.removeProduct = this.removeProduct.bind(this);
+    this.sumAmount = this.sumAmount.bind(this);
   }
 
 
   addProduc(name, price) {
     var listTemp = this.state.productsCart;
-    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price});
+    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
+    this.setState({
+      productsCart: listTemp
+    })    
+  }
+
+  removeProduct(id) {
+    var listTemp = this.state.productsCart;
+    for (var i = 0; i < listTemp.length; i++) {
+      const item = listTemp[i];
+      if (item.id == id) {
+        listTemp.splice(i, 1);
+        break;
+      }
+    }
     this.setState({
       productsCart: listTemp
     })    
@@ -78,6 +94,19 @@ export class Catalog extends React.Component {
     }) 
   }
 
+  sumAmount(id, num) {
+    var listTemp = this.state.productsCart;
+    for (var i = 0; i < listTemp.length; i++) {
+      const item = listTemp[i];
+      if (item.id == id) {
+        item.amount += num;
+        break;
+      }
+    }
+    this.setState({
+      productsCart: listTemp
+    }) 
+  } 
 
   render() {
     const testList =[{name:"food",products:[{name:"Limón",price:"2.000",description:"_"},{name:"Pasta",price:"2.000",description:"_"},{name:"Arroz",price:"2.000",description:"_"},{name:"Salchicha",price:"2.000",description:"_"},{name:"Platano",price:"2.000",description:"_"},{name:"Papa",price:"2.000",description:"_"},{name:"Huevos",price:"2.000",description:"_"},{name:"Chicharron",price:"2.000",description:"_"},{name:"Cafe",price:"2.000",description:"_"},{name:"Lentejas",price:"2.000",description:"_"}]},
@@ -133,12 +162,12 @@ export class Catalog extends React.Component {
     const container =
       window !== undefined ? () => window().document.body : undefined;
 
-    console.log("----------------------MY PRINT -------------------");
-    console.log(this.state.productsCart);
-
+      
     return (
       <div className={classes.root}>
          <AppBar 
+              sumAmount = {this.sumAmount}
+              removeProduct = {this.removeProduct}
               productsCart = {this.state.productsCart} 
               removeAllProductsCart = {this.removeAllProductsCart}
           />

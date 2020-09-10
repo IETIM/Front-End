@@ -30,6 +30,12 @@ function App() {
         localStorage.setItem("password","chan123");
         localStorage.setItem("isloggedin",false);
     }
+    if(localStorage.getItem("nombreTendero")===null){
+        localStorage.setItem("nombreTendero","Pepito Perez")
+        localStorage.setItem("nombreTienda","Variedades pepito")
+        localStorage.setItem("direccion","avenida 123 calle 321")
+        localStorage.setItem("telefono","1234567890")
+    }
 
   return (
    <BrowserRouter>

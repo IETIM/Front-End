@@ -5,6 +5,7 @@ import { InsertEmoticonSharp } from '@material-ui/icons';
 import DialogContent from '@material-ui/core/DialogContent';
 import { Modal } from '@material-ui/core';
 import ProductModal from './ProductModal';
+import { Redirect } from 'react-router-dom';
 
 
 const items=[{nombre:"nombre1",precio:100,descripcion:"producto1"}
@@ -13,25 +14,30 @@ const items=[{nombre:"nombre1",precio:100,descripcion:"producto1"}
         {nombre:"nombre4",precio:97,descripcion:"producto4"},
         {nombre:"nombre5",precio:96,descripcion:"producto5"}]
 
-const tendero= { nombre:"Pepito Perez", nombreTienda:"Variedades pepito", direccion:"avenida 123 calle 321", telefono:"1234567890"}
 
 export class SellerDashboard extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state={openProductModal:false, openUpdateModal:false,indexToUpdate:""}
+        this.state={openProductModal:false, openUpdateModal:false,indexToUpdate:"",path:""}
         this.handleNewProductModal=this.handleNewProductModal.bind(this)
         this.handleNewProduct=this.handleNewProduct.bind(this)
         this.handleUpdateProductModal=this.handleUpdateProductModal.bind(this)
         this.handleUpdateProduct=this.handleUpdateProduct.bind(this)
+        this.handleRedirect=this.handleRedirect.bind(this)
+
 
 
     }
 
     render(){
+        if(this.state.path!=""){
+            return <Redirect to={this.state.path} />
+        }
         return <div style={{height:"100%", width: "100%", display:"flex", flexDirection: "row"}} >
             {
                 <div>
+                
                 <Modal open={this.state.openProductModal}
                 onClose={this.handleNewProductModal}
                 >
@@ -43,11 +49,18 @@ export class SellerDashboard extends React.Component{
                 >
                 <ProductModal handleProduct={this.handleUpdateProduct} required={false} verb={"Actualizar"}/>
                 </Modal>
-                <DrawerLeft main={<ProductGrid productos={items} handleUpdateProductModal={this.handleUpdateProductModal} />} tendero={tendero} handleNewProductModal={this.handleNewProductModal}/>
+                <DrawerLeft main={<ProductGrid productos={items} handleUpdateProductModal={this.handleUpdateProductModal} />}
+                             handleNewProductModal={this.handleNewProductModal}
+                             handleRedirect={this.handleRedirect}/>
                 </div>}
         </div>;
     }
+    handleRedirect(pathToRedirect){
+        this.setState({
+            path:pathToRedirect
+        })
 
+    }
     handleNewProductModal(){
         this.setState(prevstate=>({
             openProductModal: !prevstate.openProductModal

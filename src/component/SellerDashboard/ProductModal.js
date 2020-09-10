@@ -44,24 +44,18 @@ import { ProductForm } from './ProductForm';
             <div className={classes.paper}  style={{textAlign:"center"} } tabIndex="-1" >
                 <form  onSubmit={this.handleSubmit}>
                 <h3>{this.props.verb} producto</h3>
-
                 <ProductForm handleChange={this.handleChange} nombre={this.state.nombre} 
                             precio={this.state.precio} descripcion={this.state.descripcion} required={this.props.required}></ProductForm>
-    
                 <br/>
                 <br/>
-
-
                 <Button type="submit"
                             variant="contained"
                             color="primary"
                             className="submit"
                             >
-                            
                     {this.props.verb} 
                 </Button>
                 <br/>
-            
             </form>
             </div>         
             

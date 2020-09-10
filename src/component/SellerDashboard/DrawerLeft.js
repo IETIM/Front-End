@@ -80,29 +80,29 @@ class DrawerLeft extends React.Component{
           <List>
               <ListItem>
                 <ListItemIcon><Avatar alt="Nombre tendero" src={logo} /></ListItemIcon>
-                <ListItemText primary={tendero.nombre} />
+                <ListItemText primary={localStorage.getItem("nombreTendero")} />
               </ListItem>
               <ListItem>
 
               <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                <ListItemText primary={tendero.nombreTienda} />
+                <ListItemText primary={localStorage.getItem("nombreTienda")} />
               </ListItem>
               <ListItem>
               <ListItemIcon><RoomIcon/></ListItemIcon>
-                <ListItemText primary={tendero.direccion} />
+                <ListItemText primary={localStorage.getItem ("direccion")} />
               </ListItem>
               <ListItem>
               <ListItemIcon><WhatsAppIcon/></ListItemIcon>
-                <ListItemText primary={tendero.telefono} />
+                <ListItemText primary={localStorage.getItem("telefono")} />
               </ListItem>
           </List>
           <Divider />
           <List>
-              <ListItem button key={"Update"}>
+              <ListItem button key={"Update"} onClick={()=>{this.props.handleRedirect("/update")}}>
                 <ListItemIcon><SettingsApplicationsIcon/> </ListItemIcon>
                 <ListItemText primary={"Actualizar datos"} />
               </ListItem>
-              <ListItem button key={"Pedidos"}>
+              <ListItem button key={"Pedidos"} onClick={()=>{this.props.handleRedirect("/pedidos")}}>
                 <ListItemIcon><ShoppingCartIcon/> </ListItemIcon>
                 <ListItemText primary={"Ver pedidos"} />
               </ListItem>

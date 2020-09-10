@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
 import SignUp from './component/signup/SignUp';
-import  SignIn  from './component/signin/SignIn';
 import UserProfile from './component/Profile/UserProfile'
 import PlaceView from './component/PlaceView/PlaceView';
 import CategoryView from './component/PlaceView/CategoryView';
@@ -13,7 +12,9 @@ import Home from './pages/Home';
 import Reports from './pages/Reports';
 import Products from './pages/Products';
 import AppBar from './component/appbar/AppBar';
+import Login from './component/signin/Login';
 import Order from './component/Order/Order';
+
 
 
 function App() {
@@ -21,16 +22,16 @@ function App() {
     const profile = () => (
         <UserProfile/>
         );
-    const Login = () => (
-        <SignIn/>
-        );
+    /*const Login = () => (
+        <Login/>
+        );*/
 
-    if (localStorage.getItem("username") === null){
+    /*if (localStorage.getItem("username") === null){
         console.log("hola");
         localStorage.setItem("username","chan");
         localStorage.setItem("password","chan123");
         localStorage.setItem("isloggedin",false);
-    }
+    }*/
 
   return (
    <BrowserRouter>
@@ -47,7 +48,7 @@ function App() {
 
         <Route path="/login"
             render={()=>
-                <SignIn/>
+                <Login/>
                 } exact/>
 
         <Route path="/userprofile"

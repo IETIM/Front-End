@@ -1,5 +1,7 @@
-import React from 'react'
-import './Image.css'
+import React from 'react';
+import './Image.css';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 
 const ImgUpload =({
@@ -7,11 +9,13 @@ const ImgUpload =({
     src,
   })=>{
     return(
+
       <label for="photo-upload" className="custom-file-upload fas">
         <div className="img-wrap img-upload" >
           <img for="photo-upload" src={src}/>
         </div>
-        <input id="photo-upload" type="file" onChange={onChange}/> 
+        
+        <input id="photo-upload" style={{display:'none'}} type="file" onChange={onChange}/> 
       </label>
     );
   }
@@ -49,8 +53,11 @@ export class Image extends React.Component{
             //autoFocus
             //type="file"
             //onChange= {(e)=>this.handleImageChange(e)}>
-            <ImgUpload onChange={(e)=>this.handleImageChange(e)} src={imagePreviewUrl}/>
-            //</Input>
+              
+              <div style={{display:"flex", alignItems:"center",justifyContent:"center", width : "50%" }}>
+                <ImgUpload onChange={(e)=>this.handleImageChange(e)} src={imagePreviewUrl}/>
+              </div>
+             
         );
     }
 

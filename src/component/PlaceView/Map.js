@@ -35,7 +35,7 @@ export default class MapPlace extends React.Component{
                     mapElement={<div style={{ height: `100%` }} />}>
                         <Marker style={{background:'gray'}} 
                             onClick={()=>this.updatePlace({name:"Yo",link:null})} 
-                            icon={{strokeColor:'blue',url:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png",scale:4}}
+                            icon={{strokeColor:'blue',url:"https://maps.google.com/mapfiles/ms/icons/blue-dot.png",scale:4}}
                             position={{lat:this.state.lat,lng:this.state.lng}}/>
 
                         {this.state.near.map((place)=> <Marker onClick={()=>this.updatePlace({name:place.name,link:null})} position={{lat:place.lat,lng:place.lng}}/>)}

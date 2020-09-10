@@ -61,23 +61,28 @@ export class Catalog extends React.Component {
     this.state = { mobileOpen: false, productsCart: []};
     console.log(props == undefined);
     this.addProduc = this.addProduc.bind(this);
+    this.removeAllProductsCart = this.removeAllProductsCart.bind(this);
   }
 
 
   addProduc(name, price) {
     var listTemp = this.state.productsCart;
-    listTemp.push({"name": name, "price": price});
+    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price});
     this.setState({
       productsCart: listTemp
-    })
-    
+    })    
+  }
+  removeAllProductsCart() {
+    this.setState({
+      productsCart: []
+    }) 
   }
 
 
   render() {
-    const testList =[{name:"food",products:[{name:"Limón",price:"2",description:"_"},{name:"Pasta",price:"2",description:"_"},{name:"Arroz",price:"2",description:"_"},{name:"Salchicha",price:"2",description:"_"},{name:"Platano",price:"2",description:"_"},{name:"Papa",price:"2",description:"_"},{name:"Huevos",price:"2",description:"_"},{name:"Chicharron",price:"2",description:"_"},{name:"Cafe",price:"2",description:"_"},{name:"Lentejas",price:"2",description:"_"}]},
-                      {name:"cars",products:[{name:"Chevrolet x2",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
-                      {name:"lapices",products:[{name:"Lápiz #2",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]}]
+    const testList =[{name:"food",products:[{name:"Limón",price:"2.000",description:"_"},{name:"Pasta",price:"2.000",description:"_"},{name:"Arroz",price:"2.000",description:"_"},{name:"Salchicha",price:"2.000",description:"_"},{name:"Platano",price:"2.000",description:"_"},{name:"Papa",price:"2.000",description:"_"},{name:"Huevos",price:"2.000",description:"_"},{name:"Chicharron",price:"2.000",description:"_"},{name:"Cafe",price:"2.000",description:"_"},{name:"Lentejas",price:"2.000",description:"_"}]},
+                      {name:"cars",products:[{name:"Chevrolet x2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]},
+                      {name:"lapices",products:[{name:"Lápiz #2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]}]
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");
@@ -133,7 +138,10 @@ export class Catalog extends React.Component {
 
     return (
       <div className={classes.root}>
-         <AppBar productsCart = {this.state.productsCart}/>
+         <AppBar 
+              productsCart = {this.state.productsCart} 
+              removeAllProductsCart = {this.removeAllProductsCart}
+          />
 
        <div style = {{height: '7  0px'}}></div>
         <CssBaseline />

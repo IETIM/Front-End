@@ -13,7 +13,9 @@ function AppBar (props){
             <>                
                 <div className = {classes.sidebarpage}> 
                     <SidebarPage />
-                    <ShoppingCart productsCart = {props.productsCart == null ? []: props.productsCart}/>    
+                    <ShoppingCart 
+                        removeAllProductsCart = {props.removeAllProductsCart}
+                        productsCart = {props.productsCart == null ? []: props.productsCart}/>    
                 </div>
                     
             </>

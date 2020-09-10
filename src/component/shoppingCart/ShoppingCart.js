@@ -7,6 +7,11 @@ import { IconContext } from 'react-icons';
 import Button from '@material-ui/core/Button';
 import * as FaIcons from 'react-icons/fa';
 import {ShoppingData} from './ShoppingData';
+import Divider from '@material-ui/core/Divider';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
 
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
@@ -23,24 +28,29 @@ function SidebarPage (props){
                         <ul className = 'nav-menu-itemsV2'>
                             <li className = "navbar-toggleV2">
                                 <Link to = "#" className = "menu-barsV2" style = {{marginLeft: 'calc(100% - 4rem)'}}>
-                                    <AiIcons.AiOutlineClose/>
+                                    <AiIcons.AiOutlineClose onClick = {showSidebar}/>
                                 </Link>
                             </li>
                             {props.productsCart.map((item, index) => {
                                 return (
-                                    <li key = {item.name + "_" + index} className = "nav-textV1">
-                                        
-                                            <FaIcons.FaCartPlus />
-                                            <span style = {{color: 'white'}}> {item.name} </span>
-                                        
-                                    </li>
+                                    <div>
+                                        <div key = {item.name + "_" + index} className = "nav-textV1">                                        
+                                                <FaIcons.FaCartPlus />
+                                                <span style = {{color: 'white'}}> {item.name} </span>
+                                                <span style = {{float: 'right', color: 'white'}}> $ {item.price} </span>
+                                                 
+                                        </div>
+                                        <Divider style = {{background: 'white'}}/>
+                                    </div>
                                 );
                             })}
                             
                             {/*<button style = {{height: '40px', width: '100%', borderRadius: '4px', marginTop: '100%', position: 'inline-block'}}>
                             Validar 
                         </button> */}
-                            <Button variant="contained" color="secondary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>
+                            <Button variant="contained" color="secondary" 
+                                style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}
+                                onClick = {() => props.removeAllProductsCart()}>
                             Vaciar Carrito
                             </Button>
                             <Button variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>

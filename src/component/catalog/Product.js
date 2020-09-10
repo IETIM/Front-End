@@ -38,13 +38,10 @@ const useStyles = makeStyles({
               <Typography variant="body2" color="textSecondary" component="p">
                   Precio: {props.price}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                  Categoria: {props.description}
-              </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <ModalViewProduct componente={this}></ModalViewProduct>
+            <ModalViewProduct imagen={logo} nombre={props.name} precio={props.price} descripcion={props.description}></ModalViewProduct>
             <Button size="small" color="primary"> Añadir al carro</Button>
           </CardActions>
         </Card>);

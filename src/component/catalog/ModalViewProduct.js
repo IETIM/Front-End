@@ -6,6 +6,16 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { InputLabel,Button, TextField,Select, FormControl } from '@material-ui/core';
 import { Fab } from "@material-ui/core";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import logo from './../../logo.svg';
+
+
 
 function getModalStyle() {
     const top = 50 ;
@@ -20,13 +30,18 @@ function getModalStyle() {
 
 const useStyles = (theme) => ({
   paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    position: "fixed",
   },
+  media: {
+    height: 300,
+  },
+  root: {
+    width:"600px",
+    margin: "auto",
+  borderBottom:'1px solid black',
+  borderRight:'1px solid black',
+  padding:"15px"
+},
 });
 
 class ModalViewProduct extends React.Component {
@@ -59,10 +74,29 @@ class ModalViewProduct extends React.Component {
           aria-describedby="simple-modal-description"
         >
           
-              <div style={getModalStyle()} className={classes.paper}>
-              <h3>Hola Mundo!</h3>
+    <div style={getModalStyle()} className={classes.paper}>    
+        <Card className={classes.root}>
+            <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image={this.props.imagen}
+              title="Contemplative Reptile"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                 {this.props.nombre}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                  Precio: {this.props.precio}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                  Descripción: {this.props.descripcion}
+              </Typography>
+            </CardContent>
+            </CardActionArea>
+         
+        </Card>
             </div>
-          
         </Modal>
       </div>
     );

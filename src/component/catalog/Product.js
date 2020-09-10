@@ -46,7 +46,7 @@ const useStyles = makeStyles({
             <Button size="small" color="primary">
               Ver
             </Button>
-            <Button size="small" color="primary"> Añadir al carro</Button>
+            <Button size="small" color="primary" onClick = {() => props.addProduc(props.name, props.price)}> Añadir al carro</Button>
           </CardActions>
         </Card>);
   }

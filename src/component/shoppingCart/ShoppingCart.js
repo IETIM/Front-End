@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import './ShoppingCart.css';
 import { IconContext } from 'react-icons';
 import Button from '@material-ui/core/Button';
-
+import * as FaIcons from 'react-icons/fa';
 import {ShoppingData} from './ShoppingData';
 
-function SidebarPage (){
+function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
 
@@ -20,19 +20,19 @@ function SidebarPage (){
                     </Link>
 
                     <nav className = {sidebar ? 'nav-menuV2 active': 'nav-menuV2'} style = {{overflow: 'scroll'}}>
-                        <ul className = 'nav-menu-itemsV2' onClick = {showSidebar}>
+                        <ul className = 'nav-menu-itemsV2'>
                             <li className = "navbar-toggleV2">
                                 <Link to = "#" className = "menu-barsV2" style = {{marginLeft: 'calc(100% - 4rem)'}}>
                                     <AiIcons.AiOutlineClose/>
                                 </Link>
                             </li>
-                            {ShoppingData.map((item, index) => {
+                            {props.productsCart.map((item, index) => {
                                 return (
-                                    <li key = {index} className = {item.cName}>
-                                        <Link to = {item.path}>
-                                            {item.icon}
-                                            <span> {item.title} </span>
-                                        </Link>
+                                    <li key = {item.name + "_" + index} className = "nav-textV1">
+                                        
+                                            <FaIcons.FaCartPlus />
+                                            <span style = {{color: 'white'}}> {item.name} </span>
+                                        
                                     </li>
                                 );
                             })}

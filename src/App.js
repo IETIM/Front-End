@@ -13,6 +13,8 @@ import Reports from './pages/Reports';
 import Products from './pages/Products';
 import AppBar from './component/appbar/AppBar';
 import Login from './component/signin/Login';
+import Order from './component/Order/Order';
+
 
 
 function App() {
@@ -64,6 +66,8 @@ function App() {
                  <Catalog/>
             
         } exact/>
+
+        <Route path="/orders" render={()=><Order/>}></Route>
 
             <Route path="/home" exact component = {Home}/>
             <Route path="/products" exact component = {Products}/>

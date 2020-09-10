@@ -63,9 +63,9 @@ export class Catalog extends React.Component {
   }
 
   render() {
-    const testList =[{name:"food",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
-                      {name:"cars",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
-                      {name:"lapices",products:[{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]}]
+    const testList =[{name:"food",products:[{name:"itema",price:"2",description:"Esta es una descripcón mas amplia del producto, ofrece nuevas funcionlidades como un modal para ver este tipo de descripciones y aclaraciones"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"},{name:"itema",price:"2",description:"_"},{name:"itemb",price:"2",description:"_"}]},
+                      {name:"cars",products:[{name:"itema",price:"2",description:"Esta es una descripcón mas amplia del producto, ofrece nuevas funcionlidades como un modal para ver este tipo de descripciones y aclaraciones"},{name:"itemb",price:"2",description:"_"}]},
+                      {name:"lapices",products:[{name:"itema",price:"2",description:"Esta es una descripcón mas amplia del producto, ofrece nuevas funcionlidades como un modal para ver este tipo de descripciones y aclaraciones"},{name:"itemb",price:"2",description:"_"}]}]
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");

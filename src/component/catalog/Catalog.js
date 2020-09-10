@@ -123,6 +123,7 @@ export class Catalog extends React.Component {
 
     const drawer = (
       <div>
+        <div style = {{height: '80px', width: '100%'}}></div>
         <div className={classes.toolbar} />
         <Divider />
         <List>

@@ -21,7 +21,7 @@ import RoomIcon from '@material-ui/icons/Room';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Avatar from '@material-ui/core/Avatar';
 import logo from './../../logo.svg';
-
+import {Redirect} from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -69,6 +69,11 @@ class DrawerLeft extends React.Component{
 
 
     render(){
+
+      if (!localStorage.getItem("IsLoggedIn")){
+        return <Redirect to="/login"> </Redirect>
+      }
+
       const { window }=this.props;
       const { classes } = this.props;
       const tendero=this.props.tendero
@@ -80,29 +85,29 @@ class DrawerLeft extends React.Component{
           <List>
               <ListItem>
                 <ListItemIcon><Avatar alt="Nombre tendero" src={logo} /></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("nombreTendero")} />
+                <ListItemText primary={localStorage.getItem("username")} />
               </ListItem>
               <ListItem>
 
               <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("nombreTienda")} />
+                <ListItemText primary={localStorage.getItem("tienda")} />
               </ListItem>
               <ListItem>
               <ListItemIcon><RoomIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem ("direccion")} />
+                <ListItemText primary={localStorage.getItem ("address")} />
               </ListItem>
               <ListItem>
               <ListItemIcon><WhatsAppIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("telefono")} />
+                <ListItemText primary={localStorage.getItem("cellphone")} />
               </ListItem>
           </List>
           <Divider />
           <List>
-              <ListItem button key={"Update"} onClick={()=>{this.props.handleRedirect("/update")}}>
+              <ListItem button key={"Update"} onClick={()=>{this.props.handleRedirect("/userprofile")}}>
                 <ListItemIcon><SettingsApplicationsIcon/> </ListItemIcon>
                 <ListItemText primary={"Actualizar datos"} />
               </ListItem>
-              <ListItem button key={"Pedidos"} onClick={()=>{this.props.handleRedirect("/pedidos")}}>
+              <ListItem button key={"Pedidos"} onClick={()=>{this.props.handleRedirect("/orders")}}>
                 <ListItemIcon><ShoppingCartIcon/> </ListItemIcon>
                 <ListItemText primary={"Ver pedidos"} />
               </ListItem>

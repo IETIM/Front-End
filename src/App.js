@@ -14,7 +14,7 @@ import Products from './pages/Products';
 import AppBar from './component/appbar/AppBar';
 import Login from './component/signin/Login';
 import Order from './component/Order/Order';
-
+import Payment from './component/Payment/Payment'
 
 
 function App() {
@@ -56,6 +56,7 @@ function App() {
             render={()=>
                 <Login/>
                 } exact/>
+        <Route path="/pay" component={Payment}></Route>
 
         <Route path="/userprofile"
                     render={()=>

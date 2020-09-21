@@ -1,4 +1,5 @@
 import React from 'react';
+import AppBar from "../appbar/AppBar";
 
 export default class ValidateCart extends React.Component {
 
@@ -10,9 +11,13 @@ export default class ValidateCart extends React.Component {
     render() {    
         return (
             <div>
-                <header>
-                    <h1> Validar Productos </h1>
-                </header>
+                <AppBar/>
+                <div style = {{height: '80px', width: '100%'}}></div>
+                <div>
+                    <header>
+                        <h1> Validar Productos </h1>
+                    </header>
+                </div>
             </div>
         );
     }

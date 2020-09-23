@@ -188,6 +188,7 @@ export default class ValidateCart extends React.Component {
                       Validar Carrito
                   </Button>             
                 </div>
+                
             </div>
         );
     }

@@ -12,7 +12,7 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import paella from './static/paella.jpg';
+import paella from './static/images/paella.jpg';
 
 const useStylesAlt = makeStyles((theme) => ({
     root: {
@@ -71,23 +71,11 @@ function NestedGrid() {
         </Grid>
       );
     }
-    function FormRow() {
-      return (
-        <React.Fragment>
-          <Grid item xs={2}>
-            <Paper className={classes2.paper}>item</Paper>
-          </Grid>
 
-        </React.Fragment>
-      );
-    }
   
     return (
       <div className={classes2.root}>
         <Grid container spacing={1}>
-          <Grid container item xs={12} spacing={3}>
-            <FormRow/>
-          </Grid>
           <Grid container item xs={12} spacing={3}>
             <RecipeReviewCard/>
           </Grid>

@@ -10,7 +10,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import './Login.css'
 import { Redirect, Link, withRouter } from 'react-router-dom';
+import Axios from 'axios';
 
+
+const url = "https://ieti-deep-backend.herokuapp.com";
 
 
 export class Login extends React.Component{
@@ -37,33 +40,26 @@ export class Login extends React.Component{
     }
 
     handleSend() {
-        if(localStorage.getItem("users")==null){
-            localStorage.setItem("users",JSON.stringify([{"username":"chan","email":"chan@mail.com","password":"chan123","cellphone":"3221778","tienda":"Variedades pepito","address":"kr 10 call 22-30"}]));
-        } 
-        var listUsers = JSON.parse(localStorage.getItem("users"));
-        var logged = false;
-        for (var i = 0; i < listUsers.length; i++){
-            if (listUsers[i].email == this.state.email && listUsers[i].password == this.state.password ){
-                localStorage.setItem("IsLoggedIn",true);
-                localStorage.setItem("username",listUsers[i].username);
-                localStorage.setItem("email",listUsers[i].email);
-                localStorage.setItem("password",listUsers[i].password);
-                localStorage.setItem("cellphone",listUsers[i].cellphone);
-                localStorage.setItem("address",listUsers[i].address);
-                localStorage.setItem("tienda",listUsers[i].tienda);
-                logged = true;   
-            }
-        }
-        if (!logged){
-            alert("Incorrect User or password ")
-        }else {
-            window.location.href = "/";
-        }
+        
+        Axios.post(url+"/login",{username:this.state.email,password:this.state.password})
+        .then((data)=>{
+            //alert("Recibio");
+            localStorage.setItem("IsLoggedIn",true);
+            localStorage.setItem("token",data.token);
+            this.state.password="";
+            this.setState(this.state);
+
+        }).catch((err)=>{
+            console.log(err);
+            alert("No se pudo iniciar sesion");
+        });
         
     }
     
     render(){
-    
+        if(localStorage.getItem("IsLoggedIn")){
+            return <Redirect to="/"></Redirect>
+        }
         return (
             <React.Fragment>
                 <CssBaseline />

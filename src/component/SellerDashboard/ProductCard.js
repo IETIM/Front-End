@@ -37,6 +37,9 @@ const useStyles = makeStyles({
               <Typography variant="body2" color="textSecondary" component="p">
                   Precio: {"$ "+props.precio}
               </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                  Existencias: {props.existencias}
+              </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>

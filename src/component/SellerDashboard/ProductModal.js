@@ -30,7 +30,7 @@ import { ProductForm } from './ProductForm';
 
     constructor(props){
         super(props)
-        this.state={nombre:"",precio:"",descripcion:"" }
+        this.state={nombre:"",precio:"",descripcion:"" ,existencias:""}
         this.handleChange=this.handleChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
 
@@ -45,7 +45,8 @@ import { ProductForm } from './ProductForm';
                 <form  onSubmit={this.handleSubmit}>
                 <h3>{this.props.verb} producto</h3>
                 <ProductForm handleChange={this.handleChange} nombre={this.state.nombre} 
-                            precio={this.state.precio} descripcion={this.state.descripcion} required={this.props.required}></ProductForm>
+                            precio={this.state.precio} descripcion={this.state.descripcion} 
+                            existencias={this.state.existencias} required={this.props.required}></ProductForm>
                 <br/>
                 <br/>
                 <Button type="submit"
@@ -69,7 +70,7 @@ import { ProductForm } from './ProductForm';
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.handleProduct({nombre: this.state.nombre,precio: this.state.precio,descripcion: this.state.descripcion})
+        this.props.handleProduct({nombre: this.state.nombre,precio: this.state.precio,descripcion: this.state.descripcion,existencias:this.state.existencias})
     }
 
 }

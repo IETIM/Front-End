@@ -92,6 +92,7 @@ class ModalViewProduct extends React.Component {
               <Typography variant="body2" color="textSecondary" component="p">
                   Descripción: {this.props.descripcion}
               </Typography>
+              <center><Button onClick={()=>this.handleClose()}>Cerrar</Button></center>
             </CardContent>
             </CardActionArea>
          

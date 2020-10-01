@@ -12,6 +12,7 @@ import Reports from './pages/Reports';
 import Products from './pages/Products';
 import Login from './component/signin/Login';
 import Order from './component/Order/Order';
+import ValidateCart from './component/validateCart/ValidateCart';
 
 
 
@@ -52,6 +53,12 @@ function App() {
         <Route path="/catalog"
             render={()=>
                  <Catalog/>
+            
+        } exact/>
+
+        <Route path="/validateCart"
+            render={()=>
+                 <ValidateCart/>
             
         } exact/>
 

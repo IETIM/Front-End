@@ -8,11 +8,11 @@ import ProductModal from './ProductModal';
 import { Redirect } from 'react-router-dom';
 
 
-const items=[{nombre:"nombre1",precio:100,descripcion:"producto1"}
-        ,{nombre:"nombre2",precio:99,descripcion:"producto2"}
-        ,{nombre:"nombre3",precio:98,descripcion:"producto3"},
-        {nombre:"nombre4",precio:97,descripcion:"producto4"},
-        {nombre:"nombre5",precio:96,descripcion:"producto5"}]
+const items=[{nombre:"nombre1",precio:100,descripcion:"producto1",existencias:10}
+        ,{nombre:"nombre2",precio:99,descripcion:"producto2",existencias:9}
+        ,{nombre:"nombre3",precio:98,descripcion:"producto3",existencias:8},
+        {nombre:"nombre4",precio:97,descripcion:"producto4",existencias:7},
+        {nombre:"nombre5",precio:96,descripcion:"producto5",existencias:6}]
 
 
 export class SellerDashboard extends React.Component{
@@ -88,6 +88,10 @@ export class SellerDashboard extends React.Component{
         if(product.descripcion!=""){
             items[this.state.indexToUpdate].descripcion=product.descripcion
         }
+        if(product.existencias!=""){
+            items[this.state.indexToUpdate].existencias=product.existencias
+        }
+
         this.setState({
             openUpdateModal:false
         })

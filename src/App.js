@@ -14,6 +14,7 @@ import Products from './pages/Products';
 import AppBar from './component/appbar/AppBar';
 import Login from './component/signin/Login';
 import Order from './component/Order/Order';
+import ValidateCart from './component/validateCart/ValidateCart';
 
 
 
@@ -70,6 +71,12 @@ function App() {
         <Route path="/catalog"
             render={()=>
                  <Catalog/>
+            
+        } exact/>
+
+        <Route path="/validateCart"
+            render={()=>
+                 <ValidateCart/>
             
         } exact/>
 

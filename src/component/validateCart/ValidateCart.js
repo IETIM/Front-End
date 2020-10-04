@@ -185,9 +185,7 @@ export default class ValidateCart extends React.Component {
                   <NestedGrid items = {this.state.productsCart} deleteProduct = {this.deleteProduct}></NestedGrid>
                 
                   <br></br><br></br><br></br>
-                  <Button variant="contained" color="primary" style = {{height: '40px', borderRadius: '4px', position: 'inline-block'}}>
-                      Validar Carrito
-                  </Button>             
+            
                 </div>
 
                 <PaymentForm/>

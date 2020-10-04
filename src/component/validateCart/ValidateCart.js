@@ -187,7 +187,7 @@ export default class ValidateCart extends React.Component {
                   <br></br><br></br><br></br>
             
                 </div>
-
+              
                 <PaymentForm/>
                 
             </div>

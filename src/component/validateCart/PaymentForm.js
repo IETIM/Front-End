@@ -27,32 +27,37 @@ export class PaymentForm extends React.Component{
                         <main className="layout">
                             <Paper className="paper">                                
                                 <Typography variant="h2">Confirmar Pago</Typography>
-                                <div className="form">
-                                    
-                                        <div style = {{width: '50%', fontSize: '20px'}}> Precio </div>                                    
-                                        <TextField
+                                <form className="form" onSubmit={() => alert("Gracias por su compra")}>
+                                    <FormControl fullWidth>
+                                        <div style = {{fontSize: '20px'}}> Precio </div>                                    
+                                        <TextField    
+                                            fullWidth                                        
                                             disabled
-                                            id="outlined-disabled"
+                                            id="idTextPrecio"
                                             defaultValue="$ 5.000"
                                             variant="outlined"
-                                            style = {{width: '100%'}}
                                             helperText="Precio total de la compra"
                                         />
+                                    </FormControl>
                                         <br></br>                                
                                         <br></br>
-                                        <div style = {{width: '50%', fontSize: '20px'}}> Método de Pago </div>
-                                        <Select required variant="outlined" defaultValue="" id="grouped-select" style = {{width: '100%'}}>
+                                    <FormControl fullWidth required>
+                                        <div style = {{fontSize: '20px'}}> Método de Pago </div>
+                                        <Select variant="outlined" defaultValue="" id="grouped-select" style = {{width: '100%'}}>
                                             <ListSubheader>Físico</ListSubheader>
-                                            <MenuItem>Pago contra entrega</MenuItem>
-                                            <MenuItem>En tienda </MenuItem>
+                                            <MenuItem value = "PagoCEntrega">Pago contra entrega</MenuItem>
+                                            <MenuItem value = "EnTienda">En tienda </MenuItem>
                                             <ListSubheader>Virtual</ListSubheader>
-                                            <MenuItem>Paypal</MenuItem>
+                                            <MenuItem value = "Paypal">Paypal</MenuItem>
                                         </Select>
-                                        
+                                    </FormControl>                                        
                                         <br></br>
                                         <br></br>
-                                        <div style = {{width: '50%', fontSize: '20px'}}> Moneda </div>
+                                    <FormControl fullWidth>
+                                        <div hidden = {false}>
+                                        <div style = {{width: '100%', fontSize: '20px'}}> Moneda </div>
                                         <TextField
+                                            required                                            
                                             id="idTipoMoneda"
                                             select
                                             variant="outlined"                                            
@@ -63,9 +68,34 @@ export class PaymentForm extends React.Component{
                                             <MenuItem value="JPY"> (JPY) Yen </MenuItem>
                                             <MenuItem value="GBP"> (GBP) Libra esterlina </MenuItem>
                                             <MenuItem value="COP"> (COP) Peso Colombiano </MenuItem>
-                                        </TextField> 
-                                        
-
+                                        </TextField>                                                                                
+                                        </div>
+                                    </FormControl>
+                                    <br></br>
+                                        <br></br>
+                                    <FormControl fullWidth>
+                                        <div style = {{fontSize: '20px'}}> Intención </div>                                    
+                                        <TextField
+                                            disabled
+                                            id="dTextItencion"
+                                            defaultValue="Rebaja 7%"
+                                            variant="outlined"
+                                            style = {{width: '100%'}}
+                                            helperText="Rebaja de la compra"
+                                        />
+                                    </FormControl>
+                                        <br></br>                                
+                                        <br></br>
+                                    <FormControl fullWidth>
+                                        <div style = {{fontSize: '20px'}}> Descripción </div>                                    
+                                        <TextField
+                                            id="dTextDescripcion"
+                                            defaultValue=""
+                                            variant="outlined"
+                                            style = {{width: '100%'}}
+                                            helperText="Rebaja de la compra"
+                                        />
+                                    </FormControl>
                                     <br></br>
                                     <br></br>
                                     <Button
@@ -77,7 +107,7 @@ export class PaymentForm extends React.Component{
                                     >
                                         Confirmar Compra
                                     </Button>
-                                </div>
+                                </form>
                             </Paper>
                         </main>
                     </React.Fragment>

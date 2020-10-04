@@ -15,8 +15,18 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 export class PaymentForm extends React.Component{
 
     constructor(props) {
-        super(props);          
+        super(props);
+        this.state = {paypal: true}
+        this.handleMethod = this.handleMethod.bind(this);        
     }    
+
+    handleMethod(e) {
+        var flag = true;
+        if (e.target.value === "Paypal") {        
+            flag = false;
+        }
+        this.setState({paypal: flag});
+    }
 
     render(){
 
@@ -34,7 +44,7 @@ export class PaymentForm extends React.Component{
                                             fullWidth                                        
                                             disabled
                                             id="idTextPrecio"
-                                            defaultValue="$ 5.000"
+                                            defaultValue={"$ " + this.props.price}
                                             variant="outlined"
                                             helperText="Precio total de la compra"
                                         />
@@ -43,36 +53,42 @@ export class PaymentForm extends React.Component{
                                         <br></br>
                                     <FormControl fullWidth required>
                                         <div style = {{fontSize: '20px'}}> Método de Pago </div>
-                                        <Select variant="outlined" defaultValue="" id="grouped-select" style = {{width: '100%'}}>
+                                        <Select 
+                                            variant="outlined" 
+                                            defaultValue="" 
+                                            id="grouped-select" 
+                                            onChange = {this.handleMethod}
+                                            >
                                             <ListSubheader>Físico</ListSubheader>
                                             <MenuItem value = "PagoCEntrega">Pago contra entrega</MenuItem>
                                             <MenuItem value = "EnTienda">En tienda </MenuItem>
                                             <ListSubheader>Virtual</ListSubheader>
                                             <MenuItem value = "Paypal">Paypal</MenuItem>
                                         </Select>
-                                    </FormControl>                                        
-                                        <br></br>
-                                        <br></br>
-                                    <FormControl fullWidth>
-                                        <div hidden = {false}>
-                                        <div style = {{width: '100%', fontSize: '20px'}}> Moneda </div>
-                                        <TextField
-                                            required                                            
-                                            id="idTipoMoneda"
-                                            select
-                                            variant="outlined"                                            
-                                            style = {{width: '100%'}}
-                                        > 
-                                            <MenuItem value="USD"> (USD) Dólar Estadounidense </MenuItem>
-                                            <MenuItem value="EUR"> (EUR) Euro </MenuItem>
-                                            <MenuItem value="JPY"> (JPY) Yen </MenuItem>
-                                            <MenuItem value="GBP"> (GBP) Libra esterlina </MenuItem>
-                                            <MenuItem value="COP"> (COP) Peso Colombiano </MenuItem>
-                                        </TextField>                                                                                
-                                        </div>
-                                    </FormControl>
+                                    </FormControl>  
                                     <br></br>
-                                        <br></br>
+                                    <br></br>                                                                              
+                                    <div hidden = {this.state.paypal}>
+                                    <FormControl fullWidth>
+                                        
+                                            <div style = {{fontSize: '20px'}}> Moneda </div>
+                                            <TextField
+                                                required = {!this.state.paypal}                                        
+                                                id="idTipoMoneda"
+                                                select
+                                                variant="outlined"                                            
+                                                style = {{width: '100%'}}
+                                            > 
+                                                <MenuItem value="USD"> (USD) Dólar Estadounidense </MenuItem>
+                                                <MenuItem value="EUR"> (EUR) Euro </MenuItem>
+                                                <MenuItem value="JPY"> (JPY) Yen </MenuItem>
+                                                <MenuItem value="GBP"> (GBP) Libra esterlina </MenuItem>
+                                                <MenuItem value="COP"> (COP) Peso Colombiano </MenuItem>
+                                            </TextField>                                                                                
+                                            <br></br>                                                   
+                                    </FormControl>
+                                    </div>                        
+                                    
                                     <FormControl fullWidth>
                                         <div style = {{fontSize: '20px'}}> Intención </div>                                    
                                         <TextField

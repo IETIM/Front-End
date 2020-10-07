@@ -7,8 +7,7 @@ function AppBar (props){
 
     const classes = AppBarCss();
 
-    console.log("---------------------- PRINT APPBAR -------------------");
-    console.log(props.productsCart);
+    
     return( 
             <>                
                 <div className = {classes.sidebarpage}> 

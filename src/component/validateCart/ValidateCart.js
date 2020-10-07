@@ -156,7 +156,7 @@ export default class ValidateCart extends React.Component {
                                     {id: 4, name:"Chocolate",price:"4000",description:"Barra de chocolate Hershey's", ruta: chocolate},
                                     {id: 5, name:"Cafe",price:"4300",description:"Cinco libras de café sello rojo.", ruta: cafe},
                                     {id: 6, name:"Zapatos",price:"70000",description:"Zapatos formales para hombre.", ruta: zapatos},
-                                    {id: 7, name:"Paella",price:"14000",description:"Paella es tamaño grande.", ruta: paella},
+                                    {id: 7, name:"Paella",price:"14000",description:"Paella de tamaño grande.", ruta: paella},
                                     {id: 8, name:"Lentejas",price:"3000",description:"Una libra de lentejas. ", ruta: lentejas}]};        
 
         this.deleteProduct = this.deleteProduct.bind(this);
@@ -197,7 +197,7 @@ export default class ValidateCart extends React.Component {
                 <div style = {{height: '80px', width: '100%'}}></div>
                 <div style = {{textAlign: 'center'}}>
                     <header>
-                        <h1> Validar Productos </h1>
+                        <h1 style = {{fontSize: "40px"}}> Validar Productos </h1>
                     </header>
                 </div>
                 <div style = {{paddingLeft: '50px', paddingRight: '50px'}}>

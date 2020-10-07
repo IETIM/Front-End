@@ -26,6 +26,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PaymentForm from './PaymentForm';
 
 const useStylesAlt = makeStyles((theme) => ({
     root: {
@@ -104,7 +105,7 @@ function NestedGrid(props) {
                 
             }            
             title= {props.name}
-            subheader= {"$ " + props.price}
+            subheader= {"$ " + props.format(props.price)}
           />
           <AlertDialog open ={open} handleClickOpen = {handleClickOpen} handleClose = {handleClose}
             deleteProduct = {props.deleteProduct} id = {props.id}/>
@@ -136,7 +137,8 @@ function NestedGrid(props) {
                     price = {item.price} 
                     description = {item.description} 
                     ruta = {item.ruta}
-                    deleteProduct = {props.deleteProduct}/>
+                    deleteProduct = {props.deleteProduct}
+                    format = {props.format}/>
             )}
           </Grid>
         </Grid>
@@ -148,16 +150,17 @@ export default class ValidateCart extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {productsCart: [{id: 1, name:"Limón",price:"1.000",description:"Cuatro limones.", ruta: limon},
-                                    {id: 2, name:"Arroz",price:"10.800",description:"Cinco kilos de arroz ROA.", ruta: arroz},
-                                    {id: 3, name:"Huevos",price:"2.000",description:"Una docena de huevos.", ruta: huevos},
-                                    {id: 4, name:"Chocolate",price:"4.000",description:"Barra de chocolate Hershey's", ruta: chocolate},
-                                    {id: 5, name:"Cafe",price:"4.300",description:"Cinco libras de café sello rojo.", ruta: cafe},
-                                    {id: 6, name:"Zapatos",price:"70.000",description:"Zapatos formales para hombre.", ruta: zapatos},
-                                    {id: 7, name:"Paella",price:"14.000",description:"Paella es tamaño grande.", ruta: paella},
-                                    {id: 8, name:"Lentejas",price:"3.000",description:"Una libra de lentejas. ", ruta: lentejas}]};        
+        this.state = {productsCart: [{id: 1, name:"Limón",price:"1000",description:"Cuatro limones.", ruta: limon},
+                                    {id: 2, name:"Arroz",price:"10800",description:"Cinco kilos de arroz ROA.", ruta: arroz},
+                                    {id: 3, name:"Huevos",price:"2000",description:"Una docena de huevos.", ruta: huevos},
+                                    {id: 4, name:"Chocolate",price:"4000",description:"Barra de chocolate Hershey's", ruta: chocolate},
+                                    {id: 5, name:"Cafe",price:"4300",description:"Cinco libras de café sello rojo.", ruta: cafe},
+                                    {id: 6, name:"Zapatos",price:"70000",description:"Zapatos formales para hombre.", ruta: zapatos},
+                                    {id: 7, name:"Paella",price:"14000",description:"Paella de tamaño grande.", ruta: paella},
+                                    {id: 8, name:"Lentejas",price:"3000",description:"Una libra de lentejas. ", ruta: lentejas}]};        
 
-        this.deleteProduct = this.deleteProduct.bind(this);                                    
+        this.deleteProduct = this.deleteProduct.bind(this);
+        this.calculatePrice = this.calculatePrice.bind(this);
     }
 
     deleteProduct(id) {
@@ -169,6 +172,23 @@ export default class ValidateCart extends React.Component {
       this.setState({productsCart: newList})
     }
 
+    calculatePrice() {
+      var totalPrice = 0;
+      this.state.productsCart.map((product) => {
+        totalPrice += parseInt(product.price);
+      });
+      return this.format(totalPrice .toString());
+    }
+
+
+    format = (input) => {
+      var num = input.replace(/\./g,'');
+      num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+      num = num.split('').reverse().join('').replace(/^[\.]/,'');    
+      return num;
+    }
+
+
     render() {    
         
         return (
@@ -177,17 +197,17 @@ export default class ValidateCart extends React.Component {
                 <div style = {{height: '80px', width: '100%'}}></div>
                 <div style = {{textAlign: 'center'}}>
                     <header>
-                        <h1> Validar Productos </h1>
+                        <h1 style = {{fontSize: "40px"}}> Validar Productos </h1>
                     </header>
                 </div>
                 <div style = {{paddingLeft: '50px', paddingRight: '50px'}}>
-                  <NestedGrid items = {this.state.productsCart} deleteProduct = {this.deleteProduct}></NestedGrid>
+                  <NestedGrid format = {this.format} items = {this.state.productsCart} deleteProduct = {this.deleteProduct}></NestedGrid>
                 
                   <br></br><br></br><br></br>
-                  <Button variant="contained" color="primary" style = {{height: '40px', borderRadius: '4px', position: 'inline-block'}}>
-                      Validar Carrito
-                  </Button>             
+            
                 </div>
+            
+                <PaymentForm price = {this.calculatePrice()}/>
                 
             </div>
         );

@@ -19,8 +19,11 @@ import { withStyles,useTheme} from "@material-ui/core/styles";
 import DefaultView from './DefaultView';
 import Atendido from './Atendido';
 import Faltan from './Faltan';
+import Axios from 'axios';
 
 const drawerWidth = 240;
+
+const url = "https://ieti-deep-backend.herokuapp.com";
 
 const useStyles = (theme) => ({
   root: {
@@ -185,7 +188,7 @@ class Order extends React.Component{
 
     componentWillMount(){
 
-      Axios.get(url+"/"+this.props.name+"/order",{"headers":{
+      Axios.get(url+"/orders/"+this.props.name+"/orders",{"headers":{
         Authorization:localStorage.getItem("token")
       }})
       .then((data)=>this.setState({orders:data}))

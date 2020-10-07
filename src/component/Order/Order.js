@@ -182,6 +182,15 @@ class Order extends React.Component{
         )
 
     }
+
+    componentWillMount(){
+
+      Axios.get(url+"/"+this.props.name+"/order",{"headers":{
+        Authorization:localStorage.getItem("token")
+      }})
+      .then((data)=>this.setState({orders:data}))
+      .catch((e)=>alert("No se pudo cargar los datos"));
+    }
 }
 export default withStyles(useStyles)(Order);
 

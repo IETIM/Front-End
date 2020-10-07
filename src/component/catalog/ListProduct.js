@@ -2,6 +2,7 @@ import React from 'react';
 import Product from './Product'
 import  {Category}  from './Category';
 import Grid from "@material-ui/core/Grid";
+import { Divider } from '@material-ui/core';
 
 export class ListProduct extends React.Component {
 
@@ -19,7 +20,9 @@ export class ListProduct extends React.Component {
                 );
             })
             return (
+                <div>
                 <Category key={i} name={category.name} products={product}/>
+                </div>
             );
         });
 

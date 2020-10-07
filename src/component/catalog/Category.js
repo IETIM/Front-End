@@ -15,8 +15,8 @@ export class Category extends React.Component {
     return (
       <a name={this.props.name} id={this.props.name}>
         <Grid container spacing={1}>
-          <Typography variant="h6" noWrap>
-            {this.props.name}
+          <Typography gutterBottom variant="h5" noWrap>
+            {this.props.name.toUpperCase()}
           </Typography>
 
           <Grid

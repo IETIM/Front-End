@@ -2,6 +2,9 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import CardItem from './CardItem';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import Axios from 'axios';
+
+const url = "https://ieti-deep-backend.herokuapp.com";
 
 export default class ItemsView extends React.Component{
     constructor(props){
@@ -16,6 +19,7 @@ export default class ItemsView extends React.Component{
         console.log(selected);
         this.state.selected = selected;
         this.setState(this.state);
+        this.componentWillMount();
     }
     render(){
         //console.log(this.state.selected);
@@ -58,7 +62,11 @@ export default class ItemsView extends React.Component{
     }
 
     componentWillMount(){
-
+        if(this.state.selected!=''){
+            Axios.get(url+"/shops?type="+this.state.selected)
+                .then((data)=>this.setState({data:data}))
+                .catch((err)=>alert("No se pudo cargar los datos"));
+        }
     }
 
     componentDidMount(){

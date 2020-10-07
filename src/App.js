@@ -67,9 +67,9 @@ function App() {
                 <SellerDashboard/>
                 } exact/>
         
-        <Route path="/catalog"
-            render={()=>
-                 <Catalog/>
+        <Route path="/catalog/:store"
+            render={(props)=>
+                 <Catalog store={props.match.params.store}/>
             
         } exact/>
 

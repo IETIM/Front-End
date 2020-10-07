@@ -15,7 +15,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link, animateScroll as scroll } from "react-scroll";
-
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { Todo } from "../todo/Todo";
 import { withStyles } from "@material-ui/core/styles";
 import { ListProduct } from "./ListProduct";
@@ -116,15 +116,17 @@ export class Catalog extends React.Component {
     const { classes } = this.props;
     console.log("clases::........");
     console.log(this.classes);
-
     const handleDrawerToggle = () => {
       this.setState({ mobileOpen: !this.state.mobileOpen });
     };
+    document.title = "Ieti deep | "+this.props.store;
 
     const drawer = (
       <div>
-        <div style = {{height: '80px', width: '100%'}}></div>
+        <div style = {{height: '30px', width: '100%'}}></div>
         <div className={classes.toolbar} />
+        <Divider/>
+        <center><Typography gutterBottom variant="h5" component="h2">Categorias</Typography></center>
         <Divider />
         <List>
           {testList.map((categories) => (
@@ -138,25 +140,15 @@ export class Catalog extends React.Component {
           >
             <ListItem button>
               <ListItemIcon>
-                {2% 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <LocalOfferIcon/>
               </ListItemIcon>
-              <ListItemText primary={categories.name} />
+              <ListItemText primary={categories.name.toUpperCase()} />
               
             </ListItem>
             </Link>
           ))}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </div>
     );
 
@@ -208,6 +200,7 @@ export class Catalog extends React.Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
+          <center><Typography gutterBottom variant="h3" component="h2">{this.props.store.toUpperCase()}</Typography></center>
             <ListProduct categories={testList} addProduc = {this.addProduc}/>
           {/* Aqui hay que poner la lista de product con los porps que son las categorias */}
         </main>

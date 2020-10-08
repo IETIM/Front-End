@@ -67,15 +67,65 @@ export class Catalog extends React.Component {
   }
 
 
+  updateData = (productsCart) => {
+    this.setState({
+        productsCart: productsCart
+    })
+  }
+
+  loadData = () => {
+    var request = window.indexedDB.open("pedidos", 1);        
+    var update = this.updateData;
+    request.onsuccess = (up) => {
+        var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+        var li = [];
+        cur.onsuccess = function(evt) {                    
+            var cursor = evt.target.result;
+            console.log("cursor");
+            console.log(cursor);
+            if (cursor) {
+                li.push(cursor.value);
+                console.log("add");
+                cursor.continue();
+            } else {
+                update(li);
+            }
+        };
+    }
+
+    request.onupgradeneeded = (event) => {
+        //console.log("Upgraded")
+        var dbtest = event.target.result;
+        var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+    }        
+  }
+
+
   addProduc(name, price) {
+    /*
     var listTemp = this.state.productsCart;
     listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
     this.setState({
       productsCart: listTemp
-    })    
+    })*/  
+    
+    const tempProduct = {"name": name, "price": price, "amount": 1, shop: this.props.store};
+    var request = window.indexedDB.open("pedidos", 1);
+        var showData = this.loadData;
+        request.onsuccess = (up) => {
+            //console.log("Add element");
+            request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").add(tempProduct);
+            showData();
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+        }
   }
 
   removeProduct(id) {
+    /*
     var listTemp = this.state.productsCart;
     for (var i = 0; i < listTemp.length; i++) {
       const item = listTemp[i];
@@ -86,16 +136,38 @@ export class Catalog extends React.Component {
     }
     this.setState({
       productsCart: listTemp
-    })    
+    })*/
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+        //console.log("Delete element");
+        request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").delete(id);
+        showData();
+    }
+    request.onupgradeneeded = (event) => {
+        //console.log("Upgraded")
+        var dbtest = event.target.result;
+        var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+    }    
   }
+
   removeAllProductsCart() {
-    this.setState({
-      productsCart: []
-    }) 
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+        //console.log("Add element");
+        request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").clear();
+        showData();
+    }
+    request.onupgradeneeded = (event) => {
+        //console.log("Upgraded")
+        var dbtest = event.target.result;
+        var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+    }
   }
 
   sumAmount(id, num) {
-    var listTemp = this.state.productsCart;
+    /*var listTemp = this.state.productsCart;
     for (var i = 0; i < listTemp.length; i++) {
       const item = listTemp[i];
       if (item.id == id) {
@@ -105,7 +177,33 @@ export class Catalog extends React.Component {
     }
     this.setState({
       productsCart: listTemp
-    }) 
+    })*/
+
+    var request = window.indexedDB.open("pedidos", 1);
+        var update = this.loadData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                if (cursor && cursor.value.id != id) {                                       
+                    cursor.continue();
+                } else if (cursor && cursor.value.id == id) {
+                    console.log("UPDATE DATA");
+                    const updateData = cursor.value;
+                    console.log(updateData)
+                    updateData.amount += num;                    
+                    cursor.update(updateData)
+                    update();
+                }                       
+            };
+
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+        }
   } 
 
   render() {
@@ -206,6 +304,10 @@ export class Catalog extends React.Component {
         </main>
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 }
 

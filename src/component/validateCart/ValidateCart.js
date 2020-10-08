@@ -11,14 +11,6 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import arroz from './static/images/arroz.jpg';
-import chocolate from './static/images/chocolate.jpg';
-import huevos from './static/images/huevos.jpg';
-import lentejas from './static/images/lentejas.png';
-import limon from './static/images/limon.jpg';
-import paella from './static/images/paella.jpg';
-import zapatos from './static/images/zapatosHombre.jpg';
-import cafe from './static/images/cafe.jpg';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
@@ -63,7 +55,7 @@ function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title">{"¿Eliminar producto?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Está seguro que desea eliminar el producto? 
+            ¿Está seguro que desea eliminar el producto?
             Este cambio no podrá ser anulado.
           </DialogContentText>
         </DialogContent>
@@ -93,6 +85,10 @@ function NestedGrid(props) {
       const handleClose = () => {
         setOpen(false);
       };
+
+      const images = require.context('./static/images', true);
+      let dynamicImage = images(`./${props.ruta}`);
+            
       return (
         
         <Grid item xs={2}>
@@ -111,7 +107,7 @@ function NestedGrid(props) {
             deleteProduct = {props.deleteProduct} id = {props.id}/>
           <CardMedia
             className={classes.media}
-            image={props.ruta}
+            image={dynamicImage}
             title="Paella dish"
           />
           <CardContent>
@@ -150,14 +146,14 @@ export default class ValidateCart extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {productsCart: [{id: 1, name:"Limón",price:"1000",description:"Cuatro limones.", ruta: limon},
-                                    {id: 2, name:"Arroz",price:"10800",description:"Cinco kilos de arroz ROA.", ruta: arroz},
-                                    {id: 3, name:"Huevos",price:"2000",description:"Una docena de huevos.", ruta: huevos},
-                                    {id: 4, name:"Chocolate",price:"4000",description:"Barra de chocolate Hershey's", ruta: chocolate},
-                                    {id: 5, name:"Cafe",price:"4300",description:"Cinco libras de café sello rojo.", ruta: cafe},
-                                    {id: 6, name:"Zapatos",price:"70000",description:"Zapatos formales para hombre.", ruta: zapatos},
-                                    {id: 7, name:"Paella",price:"14000",description:"Paella de tamaño grande.", ruta: paella},
-                                    {id: 8, name:"Lentejas",price:"3000",description:"Una libra de lentejas. ", ruta: lentejas}]};        
+        this.state = {productsCart: [{id: 1, name:"Limón",price:"1000",description:"Cuatro limones.", ruta: "limon.jpg"},
+                                    {id: 2, name:"Arroz",price:"10800",description:"Cinco kilos de arroz ROA.", ruta: "arroz.jpg"},
+                                    {id: 3, name:"Huevos",price:"2000",description:"Una docena de huevos.", ruta: "huevos.jpg"},
+                                    {id: 4, name:"Chocolate",price:"4000",description:"Barra de chocolate Hershey's", ruta: "chocolate.jpg"},
+                                    {id: 5, name:"Cafe",price:"4300",description:"Cinco libras de café sello rojo.", ruta: "cafe.jpg"},
+                                    {id: 6, name:"Zapatos",price:"70000",description:"Zapatos formales para hombre.", ruta: "zapatosHombre.jpg"},
+                                    {id: 7, name:"Paella",price:"14000",description:"Paella de tamaño grande.", ruta: "paella.jpg"},
+                                    {id: 8, name:"Lentejas",price:"3000",description:"Una libra de lentejas. ", ruta: "lentejas.png"}]};        
 
         this.deleteProduct = this.deleteProduct.bind(this);
         this.calculatePrice = this.calculatePrice.bind(this);

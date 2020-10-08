@@ -16,7 +16,7 @@ import { ProductForm } from './ProductForm';
         left:0,
         right:0,
         width: 300,
-        height: 400,
+        height: 460,
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
@@ -30,7 +30,7 @@ import { ProductForm } from './ProductForm';
 
     constructor(props){
         super(props)
-        this.state={nombre:"",precio:"",descripcion:"" ,existencias:""}
+        this.state={name:"",price:"",description:"" ,stocks:"",category:""}
         this.handleChange=this.handleChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
 
@@ -44,9 +44,10 @@ import { ProductForm } from './ProductForm';
             <div className={classes.paper}  style={{textAlign:"center"} } tabIndex="-1" >
                 <form  onSubmit={this.handleSubmit}>
                 <h3>{this.props.verb} producto</h3>
-                <ProductForm handleChange={this.handleChange} nombre={this.state.nombre} 
-                            precio={this.state.precio} descripcion={this.state.descripcion} 
-                            existencias={this.state.existencias} required={this.props.required}></ProductForm>
+                <ProductForm handleChange={this.handleChange} name={this.state.name} 
+                            price={this.state.price} description={this.state.description} 
+                            stocks={this.state.stocks} required={this.props.required} 
+                            category={this.state.category}></ProductForm>
                 <br/>
                 <br/>
                 <Button type="submit"
@@ -70,7 +71,7 @@ import { ProductForm } from './ProductForm';
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.handleProduct({nombre: this.state.nombre,precio: this.state.precio,descripcion: this.state.descripcion,existencias:this.state.existencias})
+        this.props.handleProduct({name: this.state.name,price: this.state.price,description: this.state.description,stocks:this.state.stocks,category:this.state.category})
     }
 
 }

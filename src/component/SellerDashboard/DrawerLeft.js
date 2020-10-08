@@ -76,7 +76,7 @@ class DrawerLeft extends React.Component{
 
       const { window }=this.props;
       const { classes } = this.props;
-      const tendero=this.props.tendero
+      const user=this.props.user
       
       const drawer = (
         <div>
@@ -85,20 +85,20 @@ class DrawerLeft extends React.Component{
           <List>
               <ListItem>
                 <ListItemIcon><Avatar alt="Nombre tendero" src={logo} /></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("username")} />
+                <ListItemText primary={user.username} />
               </ListItem>
               <ListItem>
 
               <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("tienda")} />
+                <ListItemText primary={user.shopName} />
               </ListItem>
               <ListItem>
               <ListItemIcon><RoomIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem ("address")} />
+                <ListItemText primary={user.address} />
               </ListItem>
               <ListItem>
               <ListItemIcon><WhatsAppIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("cellphone")} />
+                <ListItemText primary={user.cellphone} />
               </ListItem>
           </List>
           <Divider />

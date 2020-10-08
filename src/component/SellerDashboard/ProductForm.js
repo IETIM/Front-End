@@ -10,43 +10,53 @@ export class ProductForm extends React.Component{
             <div>
                 <TextField
                     required={this.props.required}
-                    id="nombre"
+                    id="name"
                     label="Nombre del producto"
-                    name="nombre"
+                    name="name"
                     onChange={this.props.handleChange}
-                    value={this.props.nombre}
+                    value={this.props.name}
                     variant="outlined">
                 </TextField>
                 <br/>
                 <TextField
                     required={this.props.required}
-                    id="precio"
+                    id="price"
                     label="Precio"
-                    name="precio"
+                    name="price"
                     type="number"
                     onChange={this.props.handleChange}
-                    value={this.props.precio}
+                    value={this.props.price}
                     variant="outlined">
                 </TextField>
                 <br/>
                 <TextField
                     required={this.props.required}
-                    id="existencias"
+                    id="stocks"
                     label="Existencias"
-                    name="existencias"
+                    name="stocks"
                     type="number"
                     onChange={this.props.handleChange}
-                    value={this.props.existencias}
+                    value={this.props.stocks}
                     variant="outlined">
                 </TextField>
                 <br/>
                 <TextField
                     required={this.props.required}
-                    id="descripcion"
+                    id="description"
                     label="Descripcion"
-                    name="descripcion"
+                    name="description"
                     onChange={this.props.handleChange}
-                    value={this.props.descripcion}
+                    value={this.props.description}
+                    variant="outlined">
+                </TextField>
+                <br/>
+                <TextField
+                    required={this.props.required}
+                    id="category"
+                    label="Categoria"
+                    name="category"
+                    onChange={this.props.handleChange}
+                    value={this.props.category}
                     variant="outlined">
                 </TextField>
             </div>

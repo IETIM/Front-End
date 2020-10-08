@@ -5,7 +5,7 @@ import SignUp from './component/signup/SignUp';
 import UserProfile from './component/Profile/UserProfile'
 import PlaceView from './component/PlaceView/PlaceView';
 import CategoryView from './component/PlaceView/CategoryView';
-import { SellerDashboard } from './component/SellerDashboard/SellerDashboard';
+import  SellerDashboard  from './component/SellerDashboard/SellerDashboard';
 import Catalog from './component/catalog/Catalog';
 import Home from './pages/Home';
 import Reports from './pages/Reports';

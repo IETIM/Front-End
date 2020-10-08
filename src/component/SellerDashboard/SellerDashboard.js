@@ -6,13 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { Modal } from '@material-ui/core';
 import ProductModal from './ProductModal';
 import { Redirect } from 'react-router-dom';
-import { getUrl } from '../../vars'
+import { getUrl,IsTendero } from '../../vars'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 
 
 const headers = {
-    'Authorization': "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QG1haWwuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVEVOREVSTyJ9XSwiZXhwIjoxNjAyMTQyMTI0LCJpYXQiOjE2MDIxMzg1MjR9.sZtcuHS8iL88c3mWSQ8EuzyktX8eCjHNpyI1r5VuZSeN765QzngGaISUStNdgk3yXGgD2Senmcu-0erwA_kYow"
+    'Authorization': localStorage.getItem("token")
 }
 
 
@@ -45,7 +45,14 @@ class SellerDashboard extends React.Component {
             })
     }
 
+    
+
     render() {
+        console.log("isTendero");
+        console.log(IsTendero());
+        if(!IsTendero()){
+            return <Redirect to="/"></Redirect>;
+        }
         return <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "row" }} >
             {
                 <div>

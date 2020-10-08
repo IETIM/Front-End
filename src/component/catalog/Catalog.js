@@ -102,11 +102,26 @@ export class Catalog extends React.Component {
 
 
   addProduc(name, price) {
+    /*
     var listTemp = this.state.productsCart;
     listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
     this.setState({
       productsCart: listTemp
-    })    
+    })*/  
+    
+    const tempProduct = {"name": name, "price": price, "amount": 1};
+    var request = window.indexedDB.open("pedidos", 1);
+        var showData = this.loadData;
+        request.onsuccess = (up) => {
+            //console.log("Add element");
+            request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").add(tempProduct);
+            showData();
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+        }
   }
 
   removeProduct(id) {

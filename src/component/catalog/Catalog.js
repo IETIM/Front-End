@@ -125,6 +125,7 @@ export class Catalog extends React.Component {
   }
 
   removeProduct(id) {
+    /*
     var listTemp = this.state.productsCart;
     for (var i = 0; i < listTemp.length; i++) {
       const item = listTemp[i];
@@ -135,7 +136,19 @@ export class Catalog extends React.Component {
     }
     this.setState({
       productsCart: listTemp
-    })    
+    })*/
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+        //console.log("Delete element");
+        request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").delete(id);
+        showData();
+    }
+    request.onupgradeneeded = (event) => {
+        //console.log("Upgraded")
+        var dbtest = event.target.result;
+        var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+    }    
   }
   removeAllProductsCart() {
     this.setState({

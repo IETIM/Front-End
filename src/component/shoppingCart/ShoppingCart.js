@@ -6,17 +6,143 @@ import './ShoppingCart.css';
 import { IconContext } from 'react-icons';
 import Button from '@material-ui/core/Button';
 import * as FaIcons from 'react-icons/fa';
-import {ShoppingData} from './ShoppingData';
 import Divider from '@material-ui/core/Divider';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+//import LoadData from "../IndexedDB/LoadData";
+
+export default class ShoppingCart extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {productsCart: []};        
+    }
+    
+    
+    updateData = (productsCart) => {
+        this.setState({
+            productsCart: productsCart
+        })
+    }
+
+    loadData = () => {
+        var request = window.indexedDB.open("pedidos", 1);        
+        var update = this.updateData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                console.log("cursor");
+                console.log(cursor);
+                if (cursor) {
+                    li.push(cursor.value);
+                    console.log("add");
+                    cursor.continue();
+                } else {
+                    update(li);
+                }
+            };
+        }
+
+        request.onupgradeneeded = (event) => {
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+        }        
+    }
+
+    removeProduct = (id) => {        
+        var request = window.indexedDB.open("pedidos", 1);
+        var showData = this.loadData;
+        request.onsuccess = (up) => {
+            //console.log("Delete element");
+            request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").delete(id);
+            showData();
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+        }    
+      }
+    
+    
+    
+    
+    removeAllProductsCart = () => {
+        var request = window.indexedDB.open("pedidos", 1);
+        var showData = this.loadData;
+        request.onsuccess = (up) => {
+            //console.log("Add element");
+            request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").clear();
+            showData();
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+        }
+    }
+
+    sumAmount = (id, num) => {
+    var request = window.indexedDB.open("pedidos", 1);
+        var update = this.loadData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                if (cursor && cursor.value.id != id) {                                       
+                    cursor.continue();
+                } else if (cursor && cursor.value.id == id) {
+                    console.log("UPDATE DATA");
+                    const updateData = cursor.value;
+                    console.log(updateData)
+                    updateData.amount += num;                    
+                    cursor.update(updateData)
+                    update();
+                }                       
+            };
+
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+        }
+    }
+    
+    render() {
+        if (!(this.props.sumAmount != null)) {
+            return(
+                <SidebarPage 
+                            sumAmount = {this.sumAmount}
+                            removeProduct = {this.removeProduct}
+                            removeAllProductsCart = {this.removeAllProductsCart}
+                            productsCart = {this.state.productsCart}/>
+            );    
+        }
+        
+        return(
+            <SidebarPage 
+                        sumAmount = {this.props.sumAmount}
+                        removeProduct = {this.props.removeProduct}
+                        removeAllProductsCart = {this.props.removeAllProductsCart}
+                        productsCart = {this.props.productsCart}/>
+        );
+    }
+
+    componentDidMount() {
+        this.loadData();
+    }
+}
 
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
-        
+
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -66,7 +192,7 @@ function SidebarPage (props){
                                 onClick = {() => props.removeAllProductsCart()}>
                             Vaciar Carrito
                             </Button>
-                            <Button variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>
+                            <Button href = "/validateCart"variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>
                             Validar Carrito
                             </Button>
                         </ul>                                                             
@@ -80,5 +206,3 @@ function SidebarPage (props){
     );    
     
 }
-
-export default SidebarPage;

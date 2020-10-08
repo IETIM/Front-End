@@ -55,7 +55,7 @@ function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title">{"¿Eliminar producto?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Está seguro que desea eliminar el producto? 
+            ¿Está seguro que desea eliminar el producto?
             Este cambio no podrá ser anulado.
           </DialogContentText>
         </DialogContent>

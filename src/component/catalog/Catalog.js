@@ -109,7 +109,7 @@ export class Catalog extends React.Component {
       productsCart: listTemp
     })*/  
     
-    const tempProduct = {"name": name, "price": price, "amount": 1};
+    const tempProduct = {"name": name, "price": price, "amount": 1, shop: this.props.store};
     var request = window.indexedDB.open("pedidos", 1);
         var showData = this.loadData;
         request.onsuccess = (up) => {

@@ -186,12 +186,15 @@ class Order extends React.Component{
 
     }
 
-    componentWillMount(){
+    componentDidMount(){
 
-      Axios.get(url+"/orders/"+this.props.name+"/orders",{"headers":{
+      Axios.get(url+"/orders/"+this.props.store,{"headers":{
         Authorization:localStorage.getItem("token")
       }})
-      .then((data)=>this.setState({orders:data}))
+      .then((data)=>{
+        console.log(data.data);
+        this.setState({orders:data.data});
+    })
       .catch((e)=>alert("No se pudo cargar los datos"));
     }
 }

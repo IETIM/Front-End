@@ -62,7 +62,7 @@ function App() {
             
         } exact/>
 
-        <Route path="/orders" render={()=><Order/>}></Route>
+        <Route path="/orders/:store" render={(props)=><Order store={props.match.params.store}></Order>}></Route>
 
             <Route path="/home" exact component = {Home}/>
             <Route path="/products" exact component = {Products}/>

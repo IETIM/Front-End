@@ -12,7 +12,7 @@ export default function Atendido(props){
         return ban;
     } 
     props.orders.forEach((order)=>{
-        if(order.status=="complete"){
+        if(order.status!="not payed"){
             atendidos.push(order);
             order.totalPrice=0;
             order.items.forEach((item)=>order.totalPrice+=item.price);

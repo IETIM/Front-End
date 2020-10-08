@@ -12,7 +12,7 @@ export default function Faltan(props){
         return ban;
     } 
     props.orders.forEach((order)=>{
-        if(order.status=="ready"){
+        if(order.state=="not payed"){
             atendidos.push(order);
             order.totalPrice=0;
             order.items.forEach((item)=>order.totalPrice+=item.price);

@@ -45,7 +45,7 @@ export class Login extends React.Component{
         .then((data)=>{
             //alert("Recibio");
             localStorage.setItem("IsLoggedIn",true);
-            localStorage.setItem("token",data.token);
+            localStorage.setItem("token",data.data.token);
             this.state.password="";
             this.setState(this.state);
 

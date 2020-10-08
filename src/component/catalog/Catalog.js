@@ -150,7 +150,7 @@ export class Catalog extends React.Component {
         var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
     }    
   }
-  
+
   removeAllProductsCart() {
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
@@ -167,7 +167,7 @@ export class Catalog extends React.Component {
   }
 
   sumAmount(id, num) {
-    var listTemp = this.state.productsCart;
+    /*var listTemp = this.state.productsCart;
     for (var i = 0; i < listTemp.length; i++) {
       const item = listTemp[i];
       if (item.id == id) {
@@ -177,7 +177,33 @@ export class Catalog extends React.Component {
     }
     this.setState({
       productsCart: listTemp
-    }) 
+    })*/
+
+    var request = window.indexedDB.open("pedidos", 1);
+        var update = this.loadData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                if (cursor && cursor.value.id != id) {                                       
+                    cursor.continue();
+                } else if (cursor && cursor.value.id == id) {
+                    console.log("UPDATE DATA");
+                    const updateData = cursor.value;
+                    console.log(updateData)
+                    updateData.amount += num;                    
+                    cursor.update(updateData)
+                    update();
+                }                       
+            };
+
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+        }
   } 
 
   render() {

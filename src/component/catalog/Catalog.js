@@ -150,10 +150,20 @@ export class Catalog extends React.Component {
         var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
     }    
   }
+  
   removeAllProductsCart() {
-    this.setState({
-      productsCart: []
-    }) 
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+        //console.log("Add element");
+        request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").clear();
+        showData();
+    }
+    request.onupgradeneeded = (event) => {
+        //console.log("Upgraded")
+        var dbtest = event.target.result;
+        var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+    }
   }
 
   sumAmount(id, num) {

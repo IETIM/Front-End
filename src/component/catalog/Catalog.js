@@ -67,6 +67,40 @@ export class Catalog extends React.Component {
   }
 
 
+  updateData = (productsCart) => {
+    this.setState({
+        productsCart: productsCart
+    })
+  }
+
+  loadData = () => {
+    var request = window.indexedDB.open("pedidos", 1);        
+    var update = this.updateData;
+    request.onsuccess = (up) => {
+        var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+        var li = [];
+        cur.onsuccess = function(evt) {                    
+            var cursor = evt.target.result;
+            console.log("cursor");
+            console.log(cursor);
+            if (cursor) {
+                li.push(cursor.value);
+                console.log("add");
+                cursor.continue();
+            } else {
+                update(li);
+            }
+        };
+    }
+
+    request.onupgradeneeded = (event) => {
+        //console.log("Upgraded")
+        var dbtest = event.target.result;
+        var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+    }        
+  }
+
+
   addProduc(name, price) {
     var listTemp = this.state.productsCart;
     listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
@@ -206,6 +240,10 @@ export class Catalog extends React.Component {
         </main>
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 }
 

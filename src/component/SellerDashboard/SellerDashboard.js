@@ -1,100 +1,117 @@
 import React from 'react';
-import  ProductGrid from './ProductsGrid';
+import ProductGrid from './ProductsGrid';
 import DrawerLeft from './DrawerLeft';
 import { InsertEmoticonSharp } from '@material-ui/icons';
 import DialogContent from '@material-ui/core/DialogContent';
 import { Modal } from '@material-ui/core';
 import ProductModal from './ProductModal';
 import { Redirect } from 'react-router-dom';
+import { getUrl } from '../../vars'
+import { withRouter } from 'react-router-dom'
+import axios from 'axios';
 
 
-const items=[{nombre:"nombre1",precio:100,descripcion:"producto1",existencias:10}
-        ,{nombre:"nombre2",precio:99,descripcion:"producto2",existencias:9}
-        ,{nombre:"nombre3",precio:98,descripcion:"producto3",existencias:8},
-        {nombre:"nombre4",precio:97,descripcion:"producto4",existencias:7},
-        {nombre:"nombre5",precio:96,descripcion:"producto5",existencias:6}]
+const headers = {
+    'Authorization': "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QG1haWwuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVEVOREVSTyJ9XSwiZXhwIjoxNjAyMTQyMTI0LCJpYXQiOjE2MDIxMzg1MjR9.sZtcuHS8iL88c3mWSQ8EuzyktX8eCjHNpyI1r5VuZSeN765QzngGaISUStNdgk3yXGgD2Senmcu-0erwA_kYow"
+}
 
 
-export class SellerDashboard extends React.Component{
+class SellerDashboard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state={openProductModal:false, openUpdateModal:false,indexToUpdate:"",path:""}
-        this.handleNewProductModal=this.handleNewProductModal.bind(this)
-        this.handleNewProduct=this.handleNewProduct.bind(this)
-        this.handleUpdateProductModal=this.handleUpdateProductModal.bind(this)
-        this.handleUpdateProduct=this.handleUpdateProduct.bind(this)
-        this.handleRedirect=this.handleRedirect.bind(this)
-
-
-
+        this.state = { openProductModal: false, openUpdateModal: false, indexToUpdate: "", items: [], user: { username: "",shopName:"" , shopId: "", address: "", cellphone: "" } }
+        this.handleNewProductModal = this.handleNewProductModal.bind(this)
+        this.handleNewProduct = this.handleNewProduct.bind(this)
+        this.handleUpdateProductModal = this.handleUpdateProductModal.bind(this)
+        this.handleUpdateProduct = this.handleUpdateProduct.bind(this)
+        this.handleRedirect = this.handleRedirect.bind(this)
     }
 
-    render(){
-        if(this.state.path!=""){
-            return <Redirect to={this.state.path} />
-        }
-        return <div style={{height:"100%", width: "100%", display:"flex", flexDirection: "row"}} >
+    componentDidMount() {
+        axios.get(getUrl()+"/username", { headers: headers })
+            .then(res => {
+                axios.get(getUrl()+"/storekeeper/"+res.data,{ headers: headers })
+                .then(res=>{
+                    var user=res.data
+                    var tempUser={username:user.email,shopName:user.shop.name,shopId:user.shop.id,address:user.shop.location,cellphone:user.cellphone}
+                    this.setState({
+                        items:user.shop.products,
+                        user:tempUser
+                    });
+
+                })
+                
+            })
+    }
+
+    render() {
+        return <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "row" }} >
             {
                 <div>
-                
-                <Modal open={this.state.openProductModal}
-                onClose={this.handleNewProductModal}
-                >
-                <ProductModal handleProduct={this.handleNewProduct} required={true} verb={"Añadir"}/>
-                </Modal>
 
-                <Modal open={this.state.openUpdateModal}
-                onClose={this.handleUpdateProductModal}
-                >
-                <ProductModal handleProduct={this.handleUpdateProduct} required={false} verb={"Actualizar"}/>
-                </Modal>
-                <DrawerLeft main={<ProductGrid productos={items} handleUpdateProductModal={this.handleUpdateProductModal} />}
-                             handleNewProductModal={this.handleNewProductModal}
-                             handleRedirect={this.handleRedirect}/>
+                    <Modal open={this.state.openProductModal}
+                        onClose={this.handleNewProductModal}
+                    >
+                        <ProductModal handleProduct={this.handleNewProduct} required={true} verb={"Añadir"} />
+                    </Modal>
+
+                    <Modal open={this.state.openUpdateModal}
+                        onClose={this.handleUpdateProductModal}
+                    >
+                        <ProductModal handleProduct={this.handleUpdateProduct} required={false} verb={"Actualizar"} />
+                    </Modal>
+                    <DrawerLeft main={<ProductGrid products={this.state.items} handleUpdateProductModal={this.handleUpdateProductModal} />}
+                        user={this.state.user}
+                        handleNewProductModal={this.handleNewProductModal}
+                        handleRedirect={this.handleRedirect} />
                 </div>}
         </div>;
     }
-    handleRedirect(pathToRedirect){
-        this.setState({
-            path:pathToRedirect
-        })
+    handleRedirect(pathToRedirect) {
+        this.props.history.push(pathToRedirect)
 
     }
-    handleNewProductModal(){
-        this.setState(prevstate=>({
+    handleNewProductModal() {
+        this.setState(prevstate => ({
             openProductModal: !prevstate.openProductModal
         }))
     }
-    handleUpdateProductModal(ind){
-        this.setState(prevstate=>({
+    handleUpdateProductModal(ind) {
+        this.setState(prevstate => ({
             openUpdateModal: !prevstate.openUpdateModal,
-            indexToUpdate:ind
+            indexToUpdate: ind
         }))
     }
-    handleNewProduct(product){
-        items.push(product)
-        this.setState({
-            openProductModal:false
-        })
+
+    handleNewProduct(product) {
+        axios.post(getUrl() + "/products/" + this.state.user.shopId, product, { headers: headers }).
+            then(res => {
+                product.id = res.data.id
+                this.setState(prevState => ({
+                    items: prevState.items.concat(product)
+                }));
+            })
+            this.setState({
+                openProductModal: false
+            })
     }
-    handleUpdateProduct(product){
-        if(product.nombre!=""){
-            items[this.state.indexToUpdate].nombre=product.nombre
-        }
-        if(product.precio!=""){
-            items[this.state.indexToUpdate].precio=product.precio
-        }
-        if(product.descripcion!=""){
-            items[this.state.indexToUpdate].descripcion=product.descripcion
-        }
-        if(product.existencias!=""){
-            items[this.state.indexToUpdate].existencias=product.existencias
-        }
+
+    handleUpdateProduct(product) {
+        var id = this.state.items[this.state.indexToUpdate].id;
+        axios.patch(getUrl() + "/products/" + id, product, { headers: headers }).
+            then(res => {
+                let tempItems = [...this.state.items];
+                tempItems[this.state.indexToUpdate] = res.data;
+                this.setState({
+                    items: tempItems
+                })
+            })
 
         this.setState({
-            openUpdateModal:false
+            openUpdateModal: false
         })
     }
 
 }
+export default withRouter(SellerDashboard);

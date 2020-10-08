@@ -32,18 +32,18 @@ const useStyles = makeStyles({
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                 {props.nombre}
+                 {props.name}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  Precio: {"$ "+props.precio}
+                  Precio: {"$ "+props.price}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  Existencias: {props.existencias}
+                  Existencias: {props.stocks}
               </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>
-          <ModalViewProduct imagen={logo} nombre={props.nombre} precio={props.precio} descripcion={props.descripcion}></ModalViewProduct>
+          <ModalViewProduct imagen={logo} nombre={props.name} precio={props.price} descripcion={props.description}></ModalViewProduct>
             <Button size="small" color="primary" onClick={()=>{props.handleUpdateProductModal(props.index)}}> Actualizar</Button>
           </CardActions>
         </Card>);

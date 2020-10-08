@@ -26,15 +26,15 @@ const useStyles = theme => ({
     render(){
         const { classes } = this.props;
 
-        const list= this.props.productos      
+        const list= this.props.products    
         return<div style={{height:"100%",width:"100%", flexGrow: "1"}}>
       
         <Grid container spacing={1} >
               <Grid container item  spacing={2}>
-              {list.map((producto,index)=>{
+              {list.map((product,index)=>{
                   return <Grid key={"producto"+index}  item >
-                  <ProductCard nombre= {producto.nombre} precio={producto.precio} index={index} 
-                              descripcion = {producto.descripcion} existencias={producto.existencias}
+                  <ProductCard name= {product.name} price={product.price} index={index} 
+                              description = {product.description} stocks={product.stocks}
                               handleUpdateProductModal={this.props.handleUpdateProductModal}/>
                   </Grid>
                   })}

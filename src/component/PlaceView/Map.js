@@ -20,7 +20,7 @@ export default class MapPlace extends React.Component{
             //A Graficar
             const Map = withScriptjs(withGoogleMap((props) =>
                 <GoogleMap
-                    defaultZoom={1}
+                    defaultZoom={10}
                     defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
                 >
                     {props.children}

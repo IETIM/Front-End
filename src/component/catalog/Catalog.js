@@ -107,13 +107,6 @@ export class Catalog extends React.Component {
   };
 
   addProduc(name, price) {
-    /*
-    var listTemp = this.state.productsCart;
-    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
-    this.setState({
-      productsCart: listTemp
-    })*/
-
     const tempProduct = {
       name: name,
       price: price,
@@ -141,22 +134,9 @@ export class Catalog extends React.Component {
   }
 
   removeProduct(id) {
-    /*
-    var listTemp = this.state.productsCart;
-    for (var i = 0; i < listTemp.length; i++) {
-      const item = listTemp[i];
-      if (item.id == id) {
-        listTemp.splice(i, 1);
-        break;
-      }
-    }
-    this.setState({
-      productsCart: listTemp
-    })*/
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
     request.onsuccess = (up) => {
-      //console.log("Delete element");
       request.result
         .transaction(["pedidos"], "readwrite")
         .objectStore("pedidos")
@@ -164,7 +144,6 @@ export class Catalog extends React.Component {
       showData();
     };
     request.onupgradeneeded = (event) => {
-      //console.log("Upgraded")
       var dbtest = event.target.result;
       var auto = dbtest.createObjectStore("pedidos", {
         keyPath: "id",
@@ -177,7 +156,6 @@ export class Catalog extends React.Component {
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
     request.onsuccess = (up) => {
-      //console.log("Add element");
       request.result
         .transaction(["pedidos"], "readwrite")
         .objectStore("pedidos")
@@ -185,7 +163,6 @@ export class Catalog extends React.Component {
       showData();
     };
     request.onupgradeneeded = (event) => {
-      //console.log("Upgraded")
       var dbtest = event.target.result;
       var auto = dbtest.createObjectStore("pedidos", {
         keyPath: "id",
@@ -195,18 +172,6 @@ export class Catalog extends React.Component {
   }
 
   sumAmount(id, num) {
-    /*var listTemp = this.state.productsCart;
-    for (var i = 0; i < listTemp.length; i++) {
-      const item = listTemp[i];
-      if (item.id == id) {
-        item.amount += num;
-        break;
-      }
-    }
-    this.setState({
-      productsCart: listTemp
-    })*/
-
     var request = window.indexedDB.open("pedidos", 1);
     var update = this.loadData;
     request.onsuccess = (up) => {
@@ -240,38 +205,6 @@ export class Catalog extends React.Component {
   }
 
   render() {
-    /*const testList = [
-      {
-        name: "food",
-        products: [
-          { name: "Limón", price: "2.000", description: "_" },
-          { name: "Pasta", price: "2.000", description: "_" },
-          { name: "Arroz", price: "2.000", description: "_" },
-          { name: "Salchicha", price: "2.000", description: "_" },
-          { name: "Platano", price: "2.000", description: "_" },
-          { name: "Papa", price: "2.000", description: "_" },
-          { name: "Huevos", price: "2.000", description: "_" },
-          { name: "Chicharron", price: "2.000", description: "_" },
-          { name: "Cafe", price: "2.000", description: "_" },
-          { name: "Lentejas", price: "2.000", description: "_" },
-        ],
-      },
-      {
-        name: "cars",
-        products: [
-          { name: "Chevrolet x2", price: "2.000", description: "_" },
-          { name: "itemb", price: "2.000", description: "_" },
-        ],
-      },
-      {
-        name: "lapices",
-        products: [
-          { name: "Lápiz #2", price: "2.000", description: "_" },
-          { name: "itemb", price: "2.000", description: "_" },
-        ],
-      },
-    ];
-    */
    const testList = this.state.products;
     const { window } = this.props;
     const { classes } = this.props;
@@ -401,7 +334,6 @@ export class Catalog extends React.Component {
             console.log(prod);
             for (let i = 0; i <= prod.length; i++) {
               if (prod[i].name === p.category) {
-                //Aqui seguiria iterando, debo ocuparme de ello luego
                 prod[i].products.push({
                   name: p.name,
                   price: p.price,

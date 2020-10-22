@@ -13,6 +13,7 @@ import Products from './pages/Products';
 import Login from './component/signin/Login';
 import Order from './component/Order/Order';
 import ValidateCart from './component/validateCart/ValidateCart';
+import UserOrders from './component/Order/UserOrders';
 
 
 
@@ -38,6 +39,11 @@ function App() {
         <Route path="/login"
             render={()=>
                 <Login/>
+                } exact/>
+
+        <Route path="/userOrders"
+            render={()=>
+                <UserOrders/>
                 } exact/>
 
         <Route path="/userprofile"

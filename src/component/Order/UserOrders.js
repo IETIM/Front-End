@@ -27,18 +27,20 @@ const columns = [
   { field: 'id', headerName: 'ID', width: 200 },
   { field: 'tienda', headerName: 'Tienda', width: 200 },
   { field: 'valortotal', headerName: 'Valor Total', width: 200 },
+  { field: 'fecha', headerName: 'Fecha', width: 200 },
+  { field: 'estado', headerName: 'Estado', width: 200 }
 ];
 
 const rows = [
-  { id: 1, tienda: 'Snow', valortotal: 4522 },
-  { id: 2, tienda: 'Snow', valortotal: 4522 },
-  { id: 3, tienda: 'Snow', valortotal: 4522 },
-  { id: 4, tienda: 'Snow', valortotal: 4522 },
-  { id: 5, tienda: 'Snow', valortotal: 4522 },
-  { id: 6, tienda: 'Snow', valortotal: 4522 },
-  { id: 7, tienda: 'Snow', valortotal: 4522 },
-  { id: 8, tienda: 'Snow', valortotal: 4522 },
-  { id: 9, tienda: 'Snow', valortotal: 4522 },
+  { id: 1, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado" },
+  { id: 2, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
+  { id: 3, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
+  { id: 4, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
+  { id: 5, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
+  { id: 6, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
+  { id: 7, tienda: 'Snow', valortotal: 4522 ,fecha:"2020-01-01",estado:"completado" },
+  { id: 8, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
+  { id: 9, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
 ];
 
 
@@ -157,37 +159,7 @@ export class UserOrders extends React.Component {
 
         <div style={{ height: "7  0px" }}></div>
         <CssBaseline />
-        <nav className={classes.drawer} aria-label="mailbox folders">
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Hidden smUp implementation="css">
-            <Drawer
-              container={container}
-              variant="temporary"
-              //anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={this.state.mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              variant="permanent"
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-        </nav>
+        
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <center>
@@ -195,7 +167,7 @@ export class UserOrders extends React.Component {
               {"Mis Ordenes"}
             </Typography>
           </center>
-          <div style={{ height: 400, width: '70%',margin: "0 auto"}}>
+          <div style={{ height: 400, width: '80%',margin: "0 auto"}}>
               <DataGrid rows={rows} columns={columns} pageSize={5} />
               
             </div>

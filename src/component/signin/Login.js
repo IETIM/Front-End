@@ -68,10 +68,10 @@ export class Login extends React.Component{
                         <Avatar className="avatar">
                             <LockIcon />
                         </Avatar>
-                        <Typography variant="h2">Sign in</Typography>
+                        <Typography variant="h2">Ingresar</Typography>
                         <div>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <InputLabel htmlFor="email">Correo</InputLabel>
                                 <Input 
                                 id="email" 
                                 name="email" 
@@ -80,7 +80,7 @@ export class Login extends React.Component{
                                 autoFocus />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <InputLabel htmlFor="password">Contraseña</InputLabel>
                                 <Input
                                     name="password"
                                     id="password"
@@ -96,7 +96,7 @@ export class Login extends React.Component{
                                     type = "submit"
                                     fullWidth
                                 >
-                                    Sign in
+                                    Ingresar
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -105,7 +105,7 @@ export class Login extends React.Component{
                                     color="primary"
                                     href = "/signup"
                                 >
-                                    Sign Up
+                                    Registro como usuario 
                                 </Button>
                             </div>
                         </div>

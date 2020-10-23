@@ -121,7 +121,11 @@ export default class ShoppingCart extends React.Component {
                             sumAmount = {this.sumAmount}
                             removeProduct = {this.removeProduct}
                             removeAllProductsCart = {this.removeAllProductsCart}
-                            productsCart = {this.state.productsCart}/>
+                            productsCart = {this.state.productsCart}
+                            modify = {this.props.modify}
+                            modifyElement = {this.modifyElement}
+                            isChange = {this.props.isChange}
+                            setIsChange = {this.props.setIsChange}/>
             );    
         }
         
@@ -130,20 +134,40 @@ export default class ShoppingCart extends React.Component {
                         sumAmount = {this.props.sumAmount}
                         removeProduct = {this.props.removeProduct}
                         removeAllProductsCart = {this.props.removeAllProductsCart}
-                        productsCart = {this.props.productsCart}/>
+                        productsCart = {this.props.productsCart}
+                        modify = {this.props.modify}
+                        modifyElement = {this.modifyElement}
+                        isChange = {this.props.isChange}
+                        setIsChange = {this.props.setIsChange}/>
         );
     }
 
     componentDidMount() {
         this.loadData();
     }
+
+    modifyElement = () => {
+        var update = this.loadData;
+        update();
+    }
+
 }
 
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
-    console.log("SHOPPING CART PROPS");
+    console.log("PROPS SHOPPING CART INI")
     console.log(props);
+    console.log("PROPS SHOPPING CART FIN")
+    const executeAction = () => {
+        if (props.modify != null) {
+            props.modify();
+        }
+    }
+    if (props.isChange) {        
+        props.modifyElement();
+        props.setIsChange();
+    }
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -162,21 +186,21 @@ function SidebarPage (props){
                                 return (
                                     <div>
                                         
-                                        <div key = {item.name + "_" + index} className = "nav-textV1">                                        
+                                        <div key = {item.order.name + "_" + index} className = "nav-textV1">                                        
                                                 <FaIcons.FaCartPlus />
-                                                <span style = {{color: 'white'}}> {item.name} </span>
-                                                <span style = {{float: 'right', color: 'white'}}> $ {item.price} </span>
+                                                <span style = {{color: 'white'}}> {item.order.name} </span>
+                                                <span style = {{float: 'right', color: 'white'}}> $ {item.order.price} </span>
                                                 
                                                 <div style = {{position: 'absolute', right: '-70px'}}>
                                                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 
                                                     style = {{width: '10%'}}>
                                                     <Button> 
                                                         {item.order.quantity == 1 ? 
-                                                             <DeleteIcon onClick = {() => props.removeProduct(item.id)}/> 
-                                                            :  <RemoveIcon onClick = {() => props.sumAmount(item.id, -1)}/>}
+                                                             <DeleteIcon onClick = {() => executeAction(props.removeProduct(item.id))}/> 
+                                                            :  <RemoveIcon onClick = {() => executeAction(props.sumAmount(item.id, -1))}/>}
                                                     </Button>
                                                     <Button>{item.order.quantity}</Button>
-                                                    <Button><AddIcon onClick = {() => props.sumAmount(item.id, 1)}/></Button>
+                                                    <Button><AddIcon onClick = {() => executeAction(props.sumAmount(item.id, 1))}/></Button>
                                                 </ButtonGroup>
                                                 </div>
                                         </div>
@@ -190,7 +214,7 @@ function SidebarPage (props){
                         </button> */}
                             <Button variant="contained" color="secondary" 
                                 style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}
-                                onClick = {() => props.removeAllProductsCart()}>
+                                onClick = {() => executeAction(props.removeAllProductsCart())}>
                             Vaciar Carrito
                             </Button>
                             <Button href = "/validateCart"variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>

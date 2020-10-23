@@ -103,8 +103,12 @@ export class Catalog extends React.Component {
 
   addProduc(name, price) {
     
-    const tempProduct = {shop: this.props.store, method: "Paypal", name: name, price: price, 
-                        order: {productId : this.state.productsCart.length, quantity: 1}};
+    const tempProduct = {shop: this.state.productsCart.length % 2 == 0 ? this.props.store: "Store B", 
+                        method: "Paypal",
+                        order: {
+                          productId : this.state.productsCart.length, quantity: 1, 
+                          name: name, price: price, description: "Buen producto"
+                        }};
     var request = window.indexedDB.open("pedidos", 1);
         var showData = this.loadData;
         request.onsuccess = (up) => {

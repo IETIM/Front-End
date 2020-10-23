@@ -87,8 +87,11 @@ function NestedGrid(props) {
         setOpen(false);
       };
 
-      const images = require.context('./static/images', true);
-      let dynamicImage = images(`./${props.ruta}`);
+      let dynamicImage;
+      if (props.ruta != null) {
+        const images = require.context('./static/images', true);
+        dynamicImage = images(`./${props.ruta}`);
+      }
             
       return (
         
@@ -120,20 +123,20 @@ function NestedGrid(props) {
         </Grid>
       );
     }
-
   
     return (
       <div className={classes2.root}>
         <Grid container spacing={0}>
           <Grid container item xs={12} spacing={3}>
-            {props.items.map((item, index) =>               
+            {props.items.map((item, index) => 
+              
               <RecipeReviewCard 
                     id = {item.id}
-                    key = {item.name + "_" + index} 
-                    name = {item.name} 
-                    price = {item.price} 
-                    description = {item.description} 
-                    ruta = {item.ruta}
+                    key = {item.order.name + "_" + index} 
+                    name = {item.order.name} 
+                    price = {item.order.price} 
+                    description = {item.order.description} 
+                    ruta = {item.order.ruta}
                     deleteProduct = {props.deleteProduct}
                     format = {props.format}/>
             )}
@@ -147,22 +150,22 @@ export default class ValidateCart extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {productsCart: [{id: 1, name:"Limón",price:"1000",description:"Cuatro limones.", ruta: "limon.jpg"},
-                                    {id: 2, name:"Arroz",price:"10800",description:"Cinco kilos de arroz ROA.", ruta: "arroz.jpg"},
-                                    {id: 3, name:"Huevos",price:"2000",description:"Una docena de huevos.", ruta: "huevos.jpg"},
-                                    {id: 4, name:"Chocolate",price:"4000",description:"Barra de chocolate Hershey's", ruta: "chocolate.jpg"},
-                                    {id: 5, name:"Cafe",price:"4300",description:"Cinco libras de café sello rojo.", ruta: "cafe.jpg"},
-                                    {id: 6, name:"Zapatos",price:"70000",description:"Zapatos formales para hombre.", ruta: "zapatosHombre.jpg"},
-                                    {id: 7, name:"Paella",price:"14000",description:"Paella de tamaño grande.", ruta: "paella.jpg"},
-                                    {id: 8, name:"Lentejas",price:"3000",description:"Una libra de lentejas. ", ruta: "lentejas.png"}]};        
-
+        var productsInitial = [{id: 1, name:"Limón",price:"1000",description:"Cuatro limones.", ruta: "limon.jpg"},
+        {id: 2, name:"Arroz",price:"10800",description:"Cinco kilos de arroz ROA.", ruta: "arroz.jpg"},
+        {id: 3, name:"Huevos",price:"2000",description:"Una docena de huevos.", ruta: "huevos.jpg"},
+        {id: 4, name:"Chocolate",price:"4000",description:"Barra de chocolate Hershey's", ruta: "chocolate.jpg"},
+        {id: 5, name:"Cafe",price:"4300",description:"Cinco libras de café sello rojo.", ruta: "cafe.jpg"},
+        {id: 6, name:"Zapatos",price:"70000",description:"Zapatos formales para hombre.", ruta: "zapatosHombre.jpg"},
+        {id: 7, name:"Paella",price:"14000",description:"Paella de tamaño grande.", ruta: "paella.jpg"},
+        {id: 8, name:"Lentejas",price:"3000",description:"Una libra de lentejas. ", ruta: "lentejas.png"}];
+        this.state = {productsCart: [], orders: [], isChange: false};        
         this.deleteProduct = this.deleteProduct.bind(this);
         this.calculatePrice = this.calculatePrice.bind(this);
     }
 
     updateData = (productsCart) => {
       this.setState({
-          products: productsCart
+        productsCart: productsCart
       })
       this.loadOrder();
     }
@@ -195,9 +198,9 @@ export default class ValidateCart extends React.Component {
 
     loadOrder = () => {
         var orders = [];
-        for (var i = 0; i < this.state.products.length; i++) {
-          let currentShop = this.state.products[i].shop;         
-          let currentOrder = this.state.products[i].order;          
+        for (var i = 0; i < this.state.productsCart.length; i++) {
+          let currentShop = this.state.productsCart[i].shop;         
+          let currentOrder = this.state.productsCart[i].order;          
           let flag = false;
           for (var j = 0; j < orders.length; j++) {
             if (orders[j].shop == currentShop) {
@@ -216,22 +219,31 @@ export default class ValidateCart extends React.Component {
           }; 
           orders.push(order);
         }
-        console.log("ORDERS FINALES --------------------------------------------------");
-        console.log(orders);
-        console.log("ORDERS FINALES --------------------------------------------------");
         this.setState({
           orders: orders
         });
+        console.log("ESTATE VALIDATE")
         console.log(this.state)
     }
 
     deleteProduct(id) {
-      var newList = []
-      for (var i = 0; i < this.state.productsCart.length; i++) {
-        var item = this.state.productsCart[i];
-        if (item.id !== id) newList.push(item);
-      }
-      this.setState({productsCart: newList})
+      var request = window.indexedDB.open("pedidos", 1);
+        var showData = this.loadData;
+        request.onsuccess = (up) => {
+            request.result.transaction(["pedidos"], "readwrite").objectStore("pedidos").delete(id);
+            showData();
+        }
+        request.onupgradeneeded = (event) => {
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos", {keyPath: "id", autoIncrement: true});
+        }
+        this.setIsChange();
+    }
+
+    setIsChange = () => {
+      this.setState({
+        isChange: !this.state.isChange
+      })
     }
 
     calculatePrice() {
@@ -271,6 +283,10 @@ export default class ValidateCart extends React.Component {
       this.loadData();        
     }
 
+    modifyElement = () => {
+      var update = this.loadData;
+      update();
+    }
 
     render(){
         console.log("-----------------VALIDATE CART NEW PRODUCTS---------------------");
@@ -278,7 +294,11 @@ export default class ValidateCart extends React.Component {
         console.log("-----------------VALIDATE CART NEW PRODUCTS---------------------");
         return (
             <div>
-                <AppBar/>                
+                <AppBar 
+                  modify = {this.modifyElement}
+                  isChange = {this.state.isChange}
+                  setIsChange =  {this.setIsChange}
+                  />                
                 <div style = {{height: '80px', width: '100%'}}></div>
                 <div style = {{textAlign: 'center'}}>
                     <header>
@@ -292,7 +312,7 @@ export default class ValidateCart extends React.Component {
             
                 </div>
             
-                <PaymentForm products = {this.state.products} price = {this.calculatePrice()}/>
+                <PaymentForm orders = {this.state.orders} price = {this.calculatePrice()}/>
                 
             </div>
         );

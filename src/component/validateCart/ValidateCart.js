@@ -19,6 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PaymentForm from './PaymentForm';
+import axios from 'axios';
 
 const useStylesAlt = makeStyles((theme) => ({
     root: {
@@ -193,24 +194,25 @@ export default class ValidateCart extends React.Component {
     }
 
     loadOrder = () => {
-        console.log("PRODUCTS ----------------------------------------")
-        console.log(this.state.products)
-        console.log("PRODUCTS ----------------------------------------")
-        var orders = [{}];
+        var orders = [];
         for (var i = 0; i < this.state.products.length; i++) {
-          let currentShop = this.state.products.shop;
-          console.log("CURRENTSHOP");
-          console.log(currentShop);
-          let currentOrder = this.state.products.order;          
+          let currentShop = this.state.products[i].shop;         
+          let currentOrder = this.state.products[i].order;          
+          let flag = false;
+          for (var j = 0; j < orders.length; j++) {
+            if (currentShop in orders[j]) {
+              alert("Alert FOR")
+              orders.currentShop.purchases.push(currentOrder);
+              flag = true;
+              break;
+          }
+          if (flag) continue;
           var order = {
             shop: currentShop,
             purchases: currentOrder,
-          };          
+          };
           orders.push(order);
         }
-        console.log("ORDERS --------------------------------------------------");
-        console.log(orders);
-        console.log("ORDERS --------------------------------------------------");
     }
 
     deleteProduct(id) {
@@ -239,7 +241,7 @@ export default class ValidateCart extends React.Component {
     }
 
     handleSubmitPay = (orders) => {
-      responses = []
+      var responses = []
       for (var i = 0; i < orders.length; i++) {
         axios.post('https://ieti-project.firebaseio.com/orders/new', 
             orders[i],
@@ -250,7 +252,7 @@ export default class ValidateCart extends React.Component {
                  responses.push(response);
              })
              .catch(e => {
-                alert("Ha ocurrido un problema al intentar realizar el pago, por favor intente nuevamente!"),
+                alert("Ha ocurrido un problema al intentar realizar el pago, por favor intente nuevamente!");
              });
       }
     }

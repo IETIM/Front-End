@@ -31,12 +31,11 @@ class SellerDashboard extends React.Component {
     }
 
     componentDidMount() {
+        
         axios.get(getUrl() + "/username", { headers: this.buildHeaders() })
             .then(res => {
-                console.log(this.buildHeaders())
                 axios.get(getUrl() + "/storekeeper/" + res.data, { headers: this.buildHeaders() })
                     .then(res => {
-                        console.log(res)
                         var user = res.data
                         var tempProducts=[]
                         var tempUser = { username: user.email, shopName: user.shop.name, shopId: user.shop.id, address: user.shop.location, cellphone: user.cellphone }
@@ -135,7 +134,6 @@ class SellerDashboard extends React.Component {
         this.handleUpload(product.image,product.uploadedImage).then((url) => {
             product.image = url
             delete product.uploadedImage
-            console.log(product)
             axios.post(getUrl() + "/products/" + this.state.user.shopId, product, { headers: this.buildHeaders() }).
                 then(res => {
                     product.id = res.data.id
@@ -153,7 +151,6 @@ class SellerDashboard extends React.Component {
 
     handleUpdateProduct(product) {
         var image=product.image!=null?product.image:this.state.items[this.state.indexToUpdate].image
-        console.log(image)
         var id = this.state.items[this.state.indexToUpdate].id;
 
         this.handleUpload(image,product.uploadedImage).then((url)=>{

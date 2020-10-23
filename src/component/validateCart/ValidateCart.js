@@ -163,6 +163,7 @@ export default class ValidateCart extends React.Component {
       this.setState({
           products: productsCart
       })
+      this.loadOrder();
     }
 
     loadData = () => {
@@ -191,8 +192,25 @@ export default class ValidateCart extends React.Component {
         }        
     }
 
-    loadJson = () => {
-        
+    loadOrder = () => {
+        console.log("PRODUCTS ----------------------------------------")
+        console.log(this.state.products)
+        console.log("PRODUCTS ----------------------------------------")
+        var orders = [{}];
+        for (var i = 0; i < this.state.products.length; i++) {
+          let currentShop = this.state.products.shop;
+          console.log("CURRENTSHOP");
+          console.log(currentShop);
+          let currentOrder = this.state.products.order;          
+          var order = {
+            shop: currentShop,
+            purchases: currentOrder,
+          };          
+          orders.push(order);
+        }
+        console.log("ORDERS --------------------------------------------------");
+        console.log(orders);
+        console.log("ORDERS --------------------------------------------------");
     }
 
     deleteProduct(id) {
@@ -220,16 +238,32 @@ export default class ValidateCart extends React.Component {
       return num;
     }
 
+    handleSubmitPay = (orders) => {
+      responses = []
+      for (var i = 0; i < orders.length; i++) {
+        axios.post('https://ieti-project.firebaseio.com/orders/new', 
+            orders[i],
+            {
+             headers: { "Content-Type": "application/json" }
+            })
+             .then(response => { 
+                 responses.push(response);
+             })
+             .catch(e => {
+                alert("Ha ocurrido un problema al intentar realizar el pago, por favor intente nuevamente!"),
+             });
+      }
+    }
+
     componentDidMount() {
-      this.loadData();
-      this.loadJson();
+      this.loadData();        
     }
 
 
     render(){
-        console.log("-----------------NEW PRODUCTS---------------------");
+        console.log("-----------------VALIDATE CART NEW PRODUCTS---------------------");
         console.log(this.state)
-        console.log("-----------------NEW PRODUCTS---------------------");
+        console.log("-----------------VALIDATE CART NEW PRODUCTS---------------------");
         return (
             <div>
                 <AppBar/>                
@@ -246,7 +280,7 @@ export default class ValidateCart extends React.Component {
             
                 </div>
             
-                <PaymentForm price = {this.calculatePrice()}/>
+                <PaymentForm products = {this.state.products} price = {this.calculatePrice()}/>
                 
             </div>
         );

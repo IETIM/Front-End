@@ -37,6 +37,19 @@ export class PaymentForm extends React.Component{
         this.setState({paypal: flag});
     }
 
+    loadJson = () => {
+        var orders = [];
+        for (var i = 0; i < this.state.products.length; i++) {
+          let currentShop = this.state.products.shop;
+          let currentOrder = this.state.products.order;          
+          var order = {
+            shop: currentShop,
+            purchases: currentOrder,
+          };          
+          orders.push(order);
+        }
+    }
+
     render(){
         return (
             <>

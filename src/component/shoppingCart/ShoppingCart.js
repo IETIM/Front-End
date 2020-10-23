@@ -142,7 +142,7 @@ export default class ShoppingCart extends React.Component {
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
-    console.log("PROPS");
+    console.log("SHOPPING CART PROPS");
     console.log(props);
     return( 
             <>

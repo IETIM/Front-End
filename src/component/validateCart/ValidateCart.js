@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AlertDialog(props) {
-  
+  var text = !props.allProducts ? 
+        "¿Está seguro que desea eliminar el producto " + "\"" + props.nameProduct + "\"?": 
+        "¿Está seguro que desea eliminar todos los productos?";
 
   return (
     <div>      
@@ -56,7 +58,8 @@ function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title">{"¿Eliminar producto?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Está seguro que desea eliminar el producto?
+            {text}
+            <br></br>
             Este cambio no podrá ser anulado.
           </DialogContentText>
         </DialogContent>
@@ -108,7 +111,7 @@ function NestedGrid(props) {
             subheader= {"$ " + props.format(props.price)}
           />
           <AlertDialog open ={open} handleClickOpen = {handleClickOpen} handleClose = {handleClose}
-            deleteProduct = {props.deleteProduct} id = {props.id}/>
+            deleteProduct = {props.deleteProduct} id = {props.id} nameProduct = {props.name} allProducts = {false}/>
           <CardMedia
             className={classes.media}
             image={dynamicImage}

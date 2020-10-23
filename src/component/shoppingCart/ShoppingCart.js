@@ -11,7 +11,45 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-//import LoadData from "../IndexedDB/LoadData";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+function AlertDialog(props) {  
+    var text = !props.allProducts ? 
+        "¿Está seguro que desea eliminar el producto " + "\"" + props.nameProduct + "\"?": 
+        "¿Está seguro que desea eliminar todos los productos?";
+
+    return (
+        <div>      
+        <Dialog
+            open={props.open}
+            onClose={props.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{"¿Eliminar producto?"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                {text}
+                <br></br>
+                Este cambio no podrá ser anulado.
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={() => props.handleClose()} color="primary">
+                Cancelar
+            </Button>
+            <Button onClick={() => props.deleteProduct(props.id)} color="secondary" autoFocus>
+                Eliminar
+            </Button>
+            </DialogActions>
+        </Dialog>
+        </div>
+    );
+}
 
 export default class ShoppingCart extends React.Component {
 
@@ -168,6 +206,35 @@ function SidebarPage (props){
         props.modifyElement();
         props.setIsChange();
     }
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = (type, id, name) => {        
+        setOpen(true);
+        setAllProducts(type);
+        setPropsProducts({...propsProducts, id: id, name: name});
+    };
+    const [allProducts, setAllProducts] = React.useState(false);
+    const [propsProducts, setPropsProducts] = React.useState({
+        id: -40,
+        name: "nothing"
+    });
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
+    const confirmDeletion = (id) => {
+        if (!allProducts) {
+            props.removeProduct(id)
+        } else if (allProducts) {
+            props.removeAllProductsCart()
+        }
+        handleClose();
+        if (props.modify != null) {
+            props.modify();
+        }
+    }
+    console.log("PROPORPSAORPOARPAORPAOSPROAPROPROPRO")
+    console.log(propsProducts)
+    console.log("PROPORPSAORPOARPAORPAOSPROAPROPROPRO")
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -181,7 +248,7 @@ function SidebarPage (props){
                                 <Link to = "#" className = "menu-barsV2" style = {{marginLeft: 'calc(100% - 4rem)'}}>
                                     <AiIcons.AiOutlineClose onClick = {showSidebar}/>
                                 </Link>
-                            </li>
+                            </li>                            
                             {props.productsCart.map((item, index) => {
                                 return (
                                     <div>
@@ -196,25 +263,28 @@ function SidebarPage (props){
                                                     style = {{width: '10%'}}>
                                                     <Button> 
                                                         {item.order.quantity == 1 ? 
-                                                             <DeleteIcon onClick = {() => executeAction(props.removeProduct(item.id))}/> 
+                                                             <DeleteIcon onClick = {() => handleClickOpen(false, item.id, item.order.name)}/> 
                                                             :  <RemoveIcon onClick = {() => executeAction(props.sumAmount(item.id, -1))}/>}
                                                     </Button>
                                                     <Button>{item.order.quantity}</Button>
                                                     <Button><AddIcon onClick = {() => executeAction(props.sumAmount(item.id, 1))}/></Button>
                                                 </ButtonGroup>
-                                                </div>
+                                                </div>                                                
                                         </div>
                                         <Divider style = {{background: 'white'}}/>
                                     </div>
                                 );
                             })}
+                            <AlertDialog open ={open} handleClickOpen = {handleClickOpen} handleClose = {handleClose}
+                                                deleteProduct = {confirmDeletion} id = {propsProducts.id} allProducts = {allProducts}
+                                                nameProduct = {propsProducts.name}/>
                             
                             {/*<button style = {{height: '40px', width: '100%', borderRadius: '4px', marginTop: '100%', position: 'inline-block'}}>
                             Validar 
                         </button> */}
                             <Button variant="contained" color="secondary" 
                                 style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}
-                                onClick = {() => executeAction(props.removeAllProductsCart())}>
+                                onClick = {() => handleClickOpen(true, -40, "Nothing")}>
                             Vaciar Carrito
                             </Button>
                             <Button href = "/validateCart"variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>

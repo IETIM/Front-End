@@ -23,17 +23,7 @@ const columns = [
   { field: 'estado', headerName: 'Estado', width: 200 }
 ];
 
-const rows = [
-  { id: 1, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado" },
-  { id: 2, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-  { id: 3, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-  { id: 4, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-  { id: 5, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-  { id: 6, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-  { id: 7, tienda: 'Snow', valortotal: 4522 ,fecha:"2020-01-01",estado:"completado" },
-  { id: 8, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-  { id: 9, tienda: 'Snow', valortotal: 4522,fecha:"2020-01-01",estado:"completado"  },
-];
+let rows = [];
 
 const drawerWidth = 240;
 
@@ -96,8 +86,7 @@ export class UserOrders extends React.Component {
     let url = getUrl();
     let token = localStorage.getItem("token");
     const headers = {
-      Authorization:
-        token,
+      Authorization:token,
     };
     let user = this.parseJwt(token);
     
@@ -108,7 +97,10 @@ export class UserOrders extends React.Component {
             .then((response) => response.json())
             .then((data) => {
               console.log(data);
-              rows = {id:data.id,tienda:data.shop,valortotal:data.total,fecha:data.date}
+              data.forEach(element => {
+                  rows.push({id:element.id,tienda:element.shop,valortotal:element.total,fecha:element.date,estado:element.state})
+              });
+              console.log(rows)
               resolve();
             });
     });
@@ -125,40 +117,6 @@ export class UserOrders extends React.Component {
       this.setState({ mobileOpen: !this.state.mobileOpen });
     };
     document.title = "Ieti deep | Mis productos";
-
-    const drawer = (
-      <div>
-        <div style={{ height: "30px", width: "100%" }}></div>
-        <div className={classes.toolbar} />
-        <Divider />
-        <center>
-          <Typography gutterBottom variant="h5" component="h2">
-            Categorias
-          </Typography>
-        </center>
-        <Divider />
-        <List>
-          {testList.map((categories) => (
-            <Link
-              activeClass="active"
-              to={categories.name}
-              spy={true}
-              smooth={true}
-              offset={-90}
-              duration={500}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <LocalOfferIcon />
-                </ListItemIcon>
-                <ListItemText primary={categories.name.toUpperCase()} />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        <Divider />
-      </div>
-    );
 
     const container =
       window !== undefined ? () => window().document.body : undefined;

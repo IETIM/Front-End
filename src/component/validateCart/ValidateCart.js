@@ -159,6 +159,42 @@ export default class ValidateCart extends React.Component {
         this.calculatePrice = this.calculatePrice.bind(this);
     }
 
+    updateData = (productsCart) => {
+      this.setState({
+          products: productsCart
+      })
+    }
+
+    loadData = () => {
+        var request = window.indexedDB.open("pedidos", 1);        
+        var update = this.updateData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                console.log("cursor");
+                console.log(cursor);
+                if (cursor) {
+                    li.push(cursor.value);
+                    console.log("add");
+                    cursor.continue();
+                } else {
+                    update(li);
+                }
+            };
+        }
+
+        request.onupgradeneeded = (event) => {
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+        }        
+    }
+
+    loadJson = () => {
+        
+    }
+
     deleteProduct(id) {
       var newList = []
       for (var i = 0; i < this.state.productsCart.length; i++) {
@@ -184,8 +220,16 @@ export default class ValidateCart extends React.Component {
       return num;
     }
 
+    componentDidMount() {
+      this.loadData();
+      this.loadJson();
+    }
 
-    render() {    
+
+    render(){
+        console.log("-----------------NEW PRODUCTS---------------------");
+        console.log(this.state)
+        console.log("-----------------NEW PRODUCTS---------------------");
         return (
             <div>
                 <AppBar/>                

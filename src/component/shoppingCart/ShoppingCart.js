@@ -100,7 +100,7 @@ export default class ShoppingCart extends React.Component {
                     console.log("UPDATE DATA");
                     const updateData = cursor.value;
                     console.log(updateData)
-                    updateData.order.amount += num;                    
+                    updateData.order.quantity += num;                    
                     cursor.update(updateData)
                     update();
                 }                       
@@ -171,11 +171,11 @@ function SidebarPage (props){
                                                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 
                                                     style = {{width: '10%'}}>
                                                     <Button> 
-                                                        {item.order.amount == 1 ? 
+                                                        {item.order.quantity == 1 ? 
                                                              <DeleteIcon onClick = {() => props.removeProduct(item.id)}/> 
                                                             :  <RemoveIcon onClick = {() => props.sumAmount(item.id, -1)}/>}
                                                     </Button>
-                                                    <Button>{item.order.amount}</Button>
+                                                    <Button>{item.order.quantity}</Button>
                                                     <Button><AddIcon onClick = {() => props.sumAmount(item.id, 1)}/></Button>
                                                 </ButtonGroup>
                                                 </div>

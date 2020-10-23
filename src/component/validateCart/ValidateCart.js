@@ -200,19 +200,29 @@ export default class ValidateCart extends React.Component {
           let currentOrder = this.state.products[i].order;          
           let flag = false;
           for (var j = 0; j < orders.length; j++) {
-            if (currentShop in orders[j]) {
-              alert("Alert FOR")
-              orders.currentShop.purchases.push(currentOrder);
+            if (orders[j].shop == currentShop) {
+              let products = orders[j].purchases;
+              products.push(currentOrder);
+              orders[j].purchases = products;
               flag = true;
               break;
+            }
           }
           if (flag) continue;
+          let firtsProduct = [currentOrder];
           var order = {
             shop: currentShop,
-            purchases: currentOrder,
-          };
+            purchases: firtsProduct,
+          }; 
           orders.push(order);
         }
+        console.log("ORDERS FINALES --------------------------------------------------");
+        console.log(orders);
+        console.log("ORDERS FINALES --------------------------------------------------");
+        this.setState({
+          orders: orders
+        });
+        console.log(this.state)
     }
 
     deleteProduct(id) {

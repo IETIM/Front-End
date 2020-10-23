@@ -186,7 +186,6 @@ export default class ValidateCart extends React.Component {
 
 
     render() {    
-        
         return (
             <div>
                 <AppBar/>                

@@ -100,7 +100,7 @@ export default class ShoppingCart extends React.Component {
                     console.log("UPDATE DATA");
                     const updateData = cursor.value;
                     console.log(updateData)
-                    updateData.amount += num;                    
+                    updateData.order.amount += num;                    
                     cursor.update(updateData)
                     update();
                 }                       
@@ -142,7 +142,8 @@ export default class ShoppingCart extends React.Component {
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
-
+    console.log("PROPS");
+    console.log(props);
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -170,11 +171,11 @@ function SidebarPage (props){
                                                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 
                                                     style = {{width: '10%'}}>
                                                     <Button> 
-                                                        {item.amount == 1 ? 
+                                                        {item.order.amount == 1 ? 
                                                              <DeleteIcon onClick = {() => props.removeProduct(item.id)}/> 
                                                             :  <RemoveIcon onClick = {() => props.sumAmount(item.id, -1)}/>}
                                                     </Button>
-                                                    <Button>{item.amount}</Button>
+                                                    <Button>{item.order.amount}</Button>
                                                     <Button><AddIcon onClick = {() => props.sumAmount(item.id, 1)}/></Button>
                                                 </ButtonGroup>
                                                 </div>

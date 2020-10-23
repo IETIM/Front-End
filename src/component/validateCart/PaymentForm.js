@@ -16,8 +16,17 @@ export class PaymentForm extends React.Component{
 
     constructor(props) {
         super(props);
+        var order = 
+        [{
+            shop: "mitiendita",
+            method: "Paypal",
+            purchases: [{productId:"5f7e735312de4a10fbce30c5", quantity:2}],
+            description: "Lolazos :D",
+            currency: "USD",
+            user: "marcelo@marcelo.com"
+        }]
         this.state = {paypal: true}
-        this.handleMethod = this.handleMethod.bind(this);        
+        this.handleMethod = this.handleMethod.bind(this);                
     }    
 
     handleMethod(e) {

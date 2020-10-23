@@ -102,14 +102,9 @@ export class Catalog extends React.Component {
 
 
   addProduc(name, price) {
-    /*
-    var listTemp = this.state.productsCart;
-    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
-    this.setState({
-      productsCart: listTemp
-    })*/  
     
-    const tempProduct = {"name": name, "price": price, "amount": 1, shop: this.props.store};
+    const tempProduct = {shop: this.props.store, "name": name, "price": price, 
+                        order: {productId : this.state.productsCart.length, "amount": 1}};
     var request = window.indexedDB.open("pedidos", 1);
         var showData = this.loadData;
         request.onsuccess = (up) => {
@@ -125,18 +120,6 @@ export class Catalog extends React.Component {
   }
 
   removeProduct(id) {
-    /*
-    var listTemp = this.state.productsCart;
-    for (var i = 0; i < listTemp.length; i++) {
-      const item = listTemp[i];
-      if (item.id == id) {
-        listTemp.splice(i, 1);
-        break;
-      }
-    }
-    this.setState({
-      productsCart: listTemp
-    })*/
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
     request.onsuccess = (up) => {
@@ -167,18 +150,6 @@ export class Catalog extends React.Component {
   }
 
   sumAmount(id, num) {
-    /*var listTemp = this.state.productsCart;
-    for (var i = 0; i < listTemp.length; i++) {
-      const item = listTemp[i];
-      if (item.id == id) {
-        item.amount += num;
-        break;
-      }
-    }
-    this.setState({
-      productsCart: listTemp
-    })*/
-
     var request = window.indexedDB.open("pedidos", 1);
         var update = this.loadData;
         request.onsuccess = (up) => {
@@ -192,7 +163,7 @@ export class Catalog extends React.Component {
                     console.log("UPDATE DATA");
                     const updateData = cursor.value;
                     console.log(updateData)
-                    updateData.amount += num;                    
+                    updateData.order.amount += num;                    
                     cursor.update(updateData)
                     update();
                 }                       

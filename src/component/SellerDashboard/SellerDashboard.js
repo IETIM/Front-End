@@ -11,6 +11,8 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 import { storage } from "../../firebase";
 import { resolve } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
@@ -102,7 +104,8 @@ class SellerDashboard extends React.Component {
     handleUpload(image,uploadImage) {
         return new Promise((resolve, reject) => {
             if (image != null && uploadImage) {
-                const uploadTask = storage.ref(`images/${image.name}`).put(image);
+                const uuid=uuidv4()
+                const uploadTask = storage.ref(`images/${uuid+image.name}`).put(image);
                 uploadTask.on(
                     "state_changed",
                     snapshot => { },
@@ -110,7 +113,7 @@ class SellerDashboard extends React.Component {
                     () => {
                         storage
                             .ref("images")
-                            .child(image.name)
+                            .child(uuid+image.name)
                             .getDownloadURL()
                             .then(url => {
                                 resolve(url)

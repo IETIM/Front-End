@@ -12,10 +12,10 @@ export default function Atendido(props){
         return ban;
     } 
     props.orders.forEach((order)=>{
-        if(order.status!="not payed"){
+        order.date = "12-12-2020";
+        if(order.state!="new"){
             atendidos.push(order);
-            order.totalPrice=0;
-            order.items.forEach((item)=>order.totalPrice+=item.price);
+            order.totalPrice=order.total;
             total+=order.totalPrice;
             if(!existDate(order.date)) dates.push(order.date);
         }

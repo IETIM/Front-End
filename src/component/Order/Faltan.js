@@ -12,10 +12,11 @@ export default function Faltan(props){
         return ban;
     } 
     props.orders.forEach((order)=>{
-        if(order.state=="not payed"){
+        order.date = "12-12-2020";
+        if(order.state=="new"){
             atendidos.push(order);
-            order.totalPrice=0;
-            order.items.forEach((item)=>order.totalPrice+=item.price);
+            order.totalPrice=order.total;
+            //order.items.forEach((item)=>order.totalPrice+=item.price);
             total+=order.totalPrice;
             if(!existDate(order.date)) dates.push(order.date);
         }

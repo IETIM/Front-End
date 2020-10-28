@@ -132,7 +132,9 @@ class Order extends React.Component{
       
           const container =
             window !== undefined ? () => window().document.body : undefined;      
-        document.title="Ieti deep | Stores"
+        document.title="Ieti deep | Stores";
+
+        let orders = this.state.orders;
         return(
             <div className={classes.root}>
             <AppBar 
@@ -178,8 +180,8 @@ class Order extends React.Component{
            <main className={classes.content}>
              <div className={classes.toolbar} />
              {!this.state.at && !this.state.falta && <DefaultView/>}
-             {this.state.at && <Atendido orders={this.state.orders} />}
-             {this.state.falta && <Faltan updateOrden={this.complete} orders={this.state.orders}/>}
+             {this.state.at && <Atendido orders={orders} />}
+             {this.state.falta && <Faltan updateOrden={this.complete} orders={orders}/>}
            </main>
          </div>
         )
@@ -199,24 +201,4 @@ class Order extends React.Component{
     }
 }
 export default withStyles(useStyles)(Order);
-
-/*
-
- <div style={{width:'100%',height:'80px'}}/>
-        <div style={{width:'100%',height:'calc(100% - 80px)' ,display:'flex',flexDirection:'row'}}>
-            <div style={{width:'25%',height:'100%'}}><center><ListAltIcon style={{fontSize:'100'}}/></center>
-            <br></br>
-            <center>
-                <Button style={{width:'90%',borderBottom:'1px solid black'}} onClick={()=>{
-                    setAt(true); setFalta(false);}}>Pedidos atendidos</Button>
-                <Button onClick={()=>{setAt(false); setFalta(true);}} style={{width:'90%',borderBottom:'1px solid black'}}>Pedidos faltantes</Button>    
-            </center>
-            </div>
-            <div style={{width:'75%',height:'100%'}}>
-                {!at && !falta && <DefaultView/>}
-                {at && <Atendido orders={orders} />}
-                {falta && <Faltan updateOrden={complete} orders={orders}/>}
-            </div>
-        </div>
-*/
 

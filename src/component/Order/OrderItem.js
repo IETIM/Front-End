@@ -7,9 +7,9 @@ export default function OrderItem(props){
     return(<React.Fragment><center><div style={{width:'300px', height:'200px',border:'1px solid black'}}>
         <b>Pedido {props.order.id}</b>
         <br></br>
-        <b>Numero de elementos: </b>{props.order.items.length}
+        <b>Numero de elementos: </b>{props.order.purchases.length}
         <br></br>
-        <b>Precio: </b> {props.order.totalPrice}
+        <b>Precio: </b> {props.order.total}
         <br/><br/>
         <Button onClick={()=>setModal(true)}>Ver Detalle</Button>
         <br/><br/>
@@ -25,11 +25,11 @@ export default function OrderItem(props){
                         <td style={{width:'100px',background:'blue',color:'white'}}>Precio</td>
                         <td style={{width:'100px',background:'blue',color:'white'}}>Cantidad</td>
                     </tr>
-                    {props.order.items.map((item)=>{
+                    {props.order.purchases.map((item)=>{
                         return (<tr>
                             <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.number}</td>
+                        <td>{item.productId}</td>
+                        <td>{item.quantity}</td>
                         </tr>)
                     })}
                 </table>

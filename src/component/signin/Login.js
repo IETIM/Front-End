@@ -40,14 +40,21 @@ export class Login extends React.Component{
     }
 
     handleSend() {
-        
+        var state = this.state;
+        var setPassword = this.setState;
         Axios.post(url+"/login",{username:this.state.email,password:this.state.password})
         .then((data)=>{
-            //alert("Recibio");
+            console.log(data);
+            var token  = data.data.token;
+            console.log(token);
             localStorage.setItem("IsLoggedIn",true);
-            localStorage.setItem("token",data.token);
-            this.state.password="";
-            this.setState(this.state);
+            localStorage.setItem("token",token);
+            Axios.get(url+"/role",{headers:{Authorization:token}}).then((li)=>{
+                localStorage.setItem("roles",JSON.stringify(li.data));
+                this.state.password="";
+                this.setState(this.state);
+                //setPassword(state);
+            });
 
         }).catch((err)=>{
             console.log(err);

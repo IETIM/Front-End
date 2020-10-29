@@ -1,5 +1,7 @@
 import React from 'react';
-import { InputLabel,Button, TextField,Select, FormControl } from '@material-ui/core';
+import { Fab,InputLabel,Button, TextField,Select, FormControl } from '@material-ui/core';
+import ImageIcon from '@material-ui/icons/Image';
+
 
 
 export class ProductForm extends React.Component{
@@ -8,6 +10,30 @@ export class ProductForm extends React.Component{
 
         return(
             <div>
+                <label htmlFor="upload-photo">
+                <input
+                    style={{ display: 'none' }}
+                    id="upload-photo"
+                    name="upload-photo"
+                    type="file"
+                    onChange={this.props.handleFileChange}
+                />
+
+                <Fab
+                    color="primary"
+                    size="small"
+                    component="span"
+                    aria-label="add"
+                    variant="extended"
+                >
+                    <ImageIcon /> Cargar Imagen
+                </Fab>
+                <br />
+                <br/>
+                <br/>
+
+                </label>
+
                 <TextField
                     required={this.props.required}
                     id="name"

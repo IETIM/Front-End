@@ -2,6 +2,9 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import CardItem from './CardItem';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import Axios from 'axios';
+
+const url = "https://ieti-deep-backend.herokuapp.com";
 
 export default class ItemsView extends React.Component{
     constructor(props){
@@ -16,9 +19,10 @@ export default class ItemsView extends React.Component{
         console.log(selected);
         this.state.selected = selected;
         this.setState(this.state);
+        this.componentWillMount();
     }
     render(){
-        //console.log(this.state.selected);
+        //console.log(this.state.data);
         if(this.state.selected==''){
             return (<div style={{width:'100%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div style={{width:'50%',height:'50%'}}>
@@ -47,7 +51,7 @@ export default class ItemsView extends React.Component{
                                     {(4*row+col<this.state.data.length && <CardItem 
                                     key={"Card-"+row+"-"+col}
                                     title={this.state.data[4*row+col].name.toUpperCase()}
-                                    descripcion={this.state.data[4*row+col].descripcion}></CardItem>)}
+                                    descripcion={this.state.data[4*row+col].location}></CardItem>)}
                                     </div>);
                                 })}
                         <div style={{width:'1%',height:'1px'}}/>
@@ -58,7 +62,11 @@ export default class ItemsView extends React.Component{
     }
 
     componentWillMount(){
-
+        if(this.state.selected!=''){
+            Axios.get(url+"/shops?type="+this.state.selected)
+                .then((data)=>this.setState({data:data.data}))
+                .catch((err)=>alert("No se pudo cargar los datos"));
+        }
     }
 
     componentDidMount(){

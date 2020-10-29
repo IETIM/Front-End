@@ -109,12 +109,12 @@ export class Catalog extends React.Component {
   };
 
   addProduc(name, price) {
-    const tempProduct = {
-      name: name,
-      price: price,
-      amount: 1,
-      shop: this.props.store,
-    };
+    const tempProduct = {shop: this.state.productsCart.length % 2 == 0 ? this.props.store: "Store B", 
+                        method: "Paypal",
+                        order: {
+                          productId : this.state.productsCart.length, quantity: 1, 
+                          name: name, price: price, description: "Buen producto"
+                        }};
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
     request.onsuccess = (up) => {
@@ -175,35 +175,30 @@ export class Catalog extends React.Component {
 
   sumAmount(id, num) {
     var request = window.indexedDB.open("pedidos", 1);
-    var update = this.loadData;
-    request.onsuccess = (up) => {
-      var cur = request.result
-        .transaction(["pedidos"], "readwrite")
-        .objectStore("pedidos")
-        .openCursor();
-      var li = [];
-      cur.onsuccess = function (evt) {
-        var cursor = evt.target.result;
-        if (cursor && cursor.value.id != id) {
-          cursor.continue();
-        } else if (cursor && cursor.value.id == id) {
-          console.log("UPDATE DATA");
-          const updateData = cursor.value;
-          console.log(updateData);
-          updateData.amount += num;
-          cursor.update(updateData);
-          update();
+        var update = this.loadData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                if (cursor && cursor.value.id != id) {                                       
+                    cursor.continue();
+                } else if (cursor && cursor.value.id == id) {
+                    console.log("UPDATE DATA");
+                    const updateData = cursor.value;
+                    console.log(updateData)
+                    if (updateData.order.quantity + num <= 0) return;
+                    updateData.order.quantity += num;                    
+                    cursor.update(updateData)
+                    update();
+                }                       
+            };
+
         }
-      };
-    };
-    request.onupgradeneeded = (event) => {
-      //console.log("Upgraded")
-      var dbtest = event.target.result;
-      var auto = dbtest.createObjectStore("pedidos", {
-        keyPath: "id",
-        autoIncrement: true,
-      });
-    };
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
   }
 
   render() {

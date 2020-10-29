@@ -11,13 +11,24 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Divider from '@material-ui/core/Divider';
+import PurchaseForm from './PurchaseForm';
 
 export class PaymentForm extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {paypal: true}
-        this.handleMethod = this.handleMethod.bind(this);        
+        var order = 
+        [{
+            shop: "mitiendita",
+            method: "Paypal",
+            purchases: [{productId:"5f7e735312de4a10fbce30c5", quantity:2}],
+            description: "Lolazos :D",
+            currency: "USD",
+            user: "marcelo@marcelo.com"
+        }]
+        this.state = {paypal: true, description: "", currency: "USD", method: ''}
+        this.handleMethod = this.handleMethod.bind(this);                
     }    
 
     handleMethod(e) {
@@ -25,10 +36,52 @@ export class PaymentForm extends React.Component{
         if (e.target.value === "Paypal") {        
             flag = false;
         }
-        this.setState({paypal: flag});
+        this.setState({
+            paypal: flag,
+            method: e.target.value
+        });
     }
 
+    handleDescription = (e) => {
+        this.setState({
+            description: e.target.value
+        })
+    }
+
+    handleCurrency = (e) => {
+        this.setState({
+            currency: e.target.value
+        })
+    }
+
+    submitPay = (event) => {
+        event.preventDefault();
+        let jsonsOrders = [];
+        this.props.orders.map((order) => {
+            let json = {shop: order.shop, method: this.state.method, purchases: [], description: this.state.description,
+            currency: this.state.currency, user: "marcelo@marcelo.com"};
+            let generatePurchase = [];
+            for (var i = 0; i < order.purchases.length; i++) {
+                let jsonPurchase = {productId: order.purchases[i].productId, quantity: order.purchases[i].quantity};
+                generatePurchase.push(jsonPurchase);
+            }
+            json["purchases"] = generatePurchase;
+            jsonsOrders.push(json);
+        });
+        console.log(" ---------------------- ORDERS SUBMIT PAY ---------------------- ")
+        console.log(jsonsOrders)
+        console.log(" ---------------------- ORDERS SUBMIT PAY ---------------------- ")
+    }
+
+
+    
     render(){
+        console.log("--------------- PAYMENT FORM INI --------------")
+        console.log(this.props)
+        console.log("--------------- PAYMENT FORM  FIN --------------")
+        console.log("------------ PAYMENT FORM STATE INI -----------")
+        console.log(this.state)
+        console.log("------------ PAYMENT FORM STATE FIN -----------")
         return (
             <>
             <div  hidden = {this.props.price == "0" ? false: true}>
@@ -37,24 +90,37 @@ export class PaymentForm extends React.Component{
                 </div>
             </div>
             <div hidden = {this.props.price == "0" ? true: false}>                
-                <div className = "login" style = {{width:'60%', height:'100hv', display:'flex'}}>
+                <div className = "login" style = {{width:'90%', height:'100hv', display:'flex'}}>
                         <React.Fragment>
                             <CssBaseline />
                             <main className="layout">
                                 <Paper className="paper">                                
                                     <Typography variant="h2">Confirmar Pago</Typography>
-                                    <form className="form" onSubmit={() => alert("Gracias por su compra")}>
+                                    <form className="form" onSubmit={this.submitPay}>
+                                        <h1>Productos </h1>                                        
+                                        <Divider />
+                                        {this.props.orders.map((order) =>                                             
+                                            <div>                                                
+                                                <h2>{order.shop}</h2>
+                                                <Divider />
+                                                    <PurchaseForm purchases = {order.purchases} format = {this.props.format}/>                                                                                                    
+                                                <Divider />
+                                            </div>
+                                        )}
+                                        
+                                        <br></br>
                                         <FormControl fullWidth>
-                                            <div style = {{fontSize: '20px'}}> Precio </div>                                    
+                                            <div style = {{fontSize: '20px'}}> Precio Total de la Compra</div>                                    
                                             <TextField    
                                                 fullWidth                                        
                                                 disabled
                                                 id="idTextPrecio"
                                                 value={"$ " + this.props.price}
                                                 variant="outlined"
-                                                helperText="Precio total de la compra"
                                             />
                                         </FormControl>
+
+                                        <Divider />
                                             <br></br>                                
                                             <br></br>
                                         <FormControl fullWidth required>
@@ -66,8 +132,7 @@ export class PaymentForm extends React.Component{
                                                 onChange = {this.handleMethod}
                                                 >
                                                 <ListSubheader>Físico</ListSubheader>
-                                                <MenuItem value = "PagoCEntrega">Pago contra entrega</MenuItem>
-                                                <MenuItem value = "EnTienda">En tienda </MenuItem>
+                                                <MenuItem value = "inShop">En tienda </MenuItem>
                                                 <ListSubheader>Virtual</ListSubheader>
                                                 <MenuItem value = "Paypal">Paypal</MenuItem>
                                             </Select>
@@ -84,30 +149,19 @@ export class PaymentForm extends React.Component{
                                                     select
                                                     variant="outlined"                                            
                                                     style = {{width: '100%'}}
+                                                    onChange = {this.handleCurrency}
                                                 > 
                                                     <MenuItem value="USD"> (USD) Dólar Estadounidense </MenuItem>
                                                     <MenuItem value="EUR"> (EUR) Euro </MenuItem>
                                                     <MenuItem value="JPY"> (JPY) Yen </MenuItem>
                                                     <MenuItem value="GBP"> (GBP) Libra esterlina </MenuItem>
-                                                    <MenuItem value="COP"> (COP) Peso Colombiano </MenuItem>
+                                                    <MenuItem value="MXN"> (MXN) Peso Mexicano </MenuItem>
                                                 </TextField>                                                                                
                                                 <br></br>                                                   
                                         </FormControl>
                                         </div>                        
                                         
-                                        <FormControl fullWidth>
-                                            <div style = {{fontSize: '20px'}}> Intención </div>                                    
-                                            <TextField
-                                                disabled
-                                                id="dTextItencion"
-                                                defaultValue="Rebaja 7%"
-                                                variant="outlined"
-                                                style = {{width: '100%'}}
-                                                helperText="Rebaja de la compra"
-                                            />
-                                        </FormControl>
-                                            <br></br>                                
-                                            <br></br>
+                                       
                                         <FormControl fullWidth>
                                             <div style = {{fontSize: '20px'}}> Descripción </div>                                    
                                             <TextField
@@ -115,6 +169,7 @@ export class PaymentForm extends React.Component{
                                                 defaultValue=""
                                                 variant="outlined"
                                                 style = {{width: '100%'}}
+                                                onChange = {this.handleDescription}                                                
                                                 helperText="Rebaja de la compra"
                                             />
                                         </FormControl>

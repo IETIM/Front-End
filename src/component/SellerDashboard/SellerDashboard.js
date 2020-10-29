@@ -6,13 +6,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { Modal } from '@material-ui/core';
 import ProductModal from './ProductModal';
 import { Redirect } from 'react-router-dom';
-import { getUrl } from '../../vars'
+import { getUrl,IsTendero } from '../../vars'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 import { storage } from "../../firebase";
 import { resolve } from 'path';
 import { v4 as uuidv4 } from 'uuid';
-
 
 
 
@@ -57,7 +56,14 @@ class SellerDashboard extends React.Component {
             })
     }
 
+    
+
     render() {
+        console.log("isTendero");
+        console.log(IsTendero());
+        if(!IsTendero()){
+            return <Redirect to="/"></Redirect>;
+        }
         return <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "row" }} >
             {
                 <div>

@@ -1,4 +1,4 @@
 export function getUrl(){
-    var url="http://localhost:8080";
+    var url=process.env.REACT_APP_BACKEND_URL;
     return url
 }

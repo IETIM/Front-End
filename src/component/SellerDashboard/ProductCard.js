@@ -26,9 +26,9 @@ const useStyles = makeStyles({
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              alt="Nombre del producto"
-              image={logo}
-              title="Nombre del producto"
+              alt={props.name}
+              image={props.image||logo}
+              title={props.name}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">

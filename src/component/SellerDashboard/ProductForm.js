@@ -31,6 +31,17 @@ export class ProductForm extends React.Component{
                 <br/>
                 <TextField
                     required={this.props.required}
+                    id="existencias"
+                    label="Existencias"
+                    name="existencias"
+                    type="number"
+                    onChange={this.props.handleChange}
+                    value={this.props.existencias}
+                    variant="outlined">
+                </TextField>
+                <br/>
+                <TextField
+                    required={this.props.required}
                     id="descripcion"
                     label="Descripcion"
                     name="descripcion"

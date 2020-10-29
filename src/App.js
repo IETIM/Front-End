@@ -5,15 +5,14 @@ import SignUp from './component/signup/SignUp';
 import UserProfile from './component/Profile/UserProfile'
 import PlaceView from './component/PlaceView/PlaceView';
 import CategoryView from './component/PlaceView/CategoryView';
-import { Place } from '@material-ui/icons';
 import { SellerDashboard } from './component/SellerDashboard/SellerDashboard';
 import Catalog from './component/catalog/Catalog';
 import Home from './pages/Home';
 import Reports from './pages/Reports';
 import Products from './pages/Products';
-import AppBar from './component/appbar/AppBar';
 import Login from './component/signin/Login';
 import Order from './component/Order/Order';
+import ValidateCart from './component/validateCart/ValidateCart';
 
 
 
@@ -22,22 +21,6 @@ function App() {
     const profile = () => (
         <UserProfile/>
         );
-    /*const Login = () => (
-        <Login/>
-        );*/
-
-    /*if (localStorage.getItem("username") === null){
-        console.log("hola");
-        localStorage.setItem("username","chan");
-        localStorage.setItem("password","chan123");
-        localStorage.setItem("isloggedin",false);
-    }*/
-    /*if(localStorage.getItem("nombreTendero")===null){
-        localStorage.setItem("nombreTendero","Pepito Perez")
-        localStorage.setItem("nombreTienda","Variedades pepito")
-        localStorage.setItem("direccion","avenida 123 calle 321")
-        localStorage.setItem("telefono","1234567890")
-    }*/
 
   return (
    <BrowserRouter>
@@ -70,6 +53,12 @@ function App() {
         <Route path="/catalog"
             render={()=>
                  <Catalog/>
+            
+        } exact/>
+
+        <Route path="/validateCart"
+            render={()=>
+                 <ValidateCart/>
             
         } exact/>
 

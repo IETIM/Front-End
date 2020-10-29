@@ -182,9 +182,9 @@ export class Catalog extends React.Component {
   } 
 
   render() {
-    const testList =[{name:"food",products:[{name:"Limón",price:"2.000",description:"_"},{name:"Pasta",price:"2.000",description:"_"},{name:"Arroz",price:"2.000",description:"_"},{name:"Salchicha",price:"2.000",description:"_"},{name:"Platano",price:"2.000",description:"_"},{name:"Papa",price:"2.000",description:"_"},{name:"Huevos",price:"2.000",description:"_"},{name:"Chicharron",price:"2.000",description:"_"},{name:"Cafe",price:"2.000",description:"_"},{name:"Lentejas",price:"2.000",description:"_"}]},
-                      {name:"cars",products:[{name:"Chevrolet x2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]},
-                      {name:"lapices",products:[{name:"Lápiz #2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]}]
+    const testList =[{name:"food",products:[{name:"Limón",price:"2000",description:"_"},{name:"Pasta",price:"2000",description:"_"},{name:"Arroz",price:"2000",description:"_"},{name:"Salchicha",price:"2000",description:"_"},{name:"Platano",price:"2000",description:"_"},{name:"Papa",price:"2000",description:"_"},{name:"Huevos",price:"2000",description:"_"},{name:"Chicharron",price:"2000",description:"_"},{name:"Cafe",price:"2000",description:"_"},{name:"Lentejas",price:"2000",description:"_"}]},
+                      {name:"cars",products:[{name:"Chevrolet x2",price:"2000",description:"_"},{name:"itemb",price:"2000",description:"_"}]},
+                      {name:"lapices",products:[{name:"Lápiz #2",price:"2000",description:"_"},{name:"itemb",price:"2000",description:"_"}]}]
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");

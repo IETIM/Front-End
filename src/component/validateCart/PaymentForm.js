@@ -11,6 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Divider from '@material-ui/core/Divider';
+import PurchaseForm from './PurchaseForm';
 
 export class PaymentForm extends React.Component{
 
@@ -49,8 +51,11 @@ export class PaymentForm extends React.Component{
           orders.push(order);
         }
     }
-
+    
     render(){
+        console.log("------------------------- PAYMENT FORM -------------------------")
+        console.log(this.props)
+        console.log("------------------------- PAYMENT FORM -------------------------")
         return (
             <>
             <div  hidden = {this.props.price == "0" ? false: true}>
@@ -66,17 +71,30 @@ export class PaymentForm extends React.Component{
                                 <Paper className="paper">                                
                                     <Typography variant="h2">Confirmar Pago</Typography>
                                     <form className="form" onSubmit={() => alert("Gracias por su compra")}>
+                                        <h1>Productos </h1>                                        
+                                        <Divider />
+                                        {this.props.orders.map((order) =>                                             
+                                            <div>                                                
+                                                <h2>{order.shop}</h2>
+                                                <Divider />
+                                                    <PurchaseForm purchases = {order.purchases} format = {this.props.format}/>                                                                                                    
+                                                <Divider />
+                                            </div>
+                                        )}
+                                        
+                                        <br></br>
                                         <FormControl fullWidth>
-                                            <div style = {{fontSize: '20px'}}> Precio </div>                                    
+                                            <div style = {{fontSize: '20px'}}> Precio Total de la Compra</div>                                    
                                             <TextField    
                                                 fullWidth                                        
                                                 disabled
                                                 id="idTextPrecio"
                                                 value={"$ " + this.props.price}
                                                 variant="outlined"
-                                                helperText="Precio total de la compra"
                                             />
                                         </FormControl>
+
+                                        <Divider />
                                             <br></br>                                
                                             <br></br>
                                         <FormControl fullWidth required>

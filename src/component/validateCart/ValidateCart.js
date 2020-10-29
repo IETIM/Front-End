@@ -251,8 +251,11 @@ export default class ValidateCart extends React.Component {
 
     calculatePrice() {
       var totalPrice = 0;
+      console.log("-------------------------------------------------")
+      console.log(this.state)
+      console.log("-------------------------------------------------")
       this.state.productsCart.map((product) => {
-        totalPrice += parseInt(product.price);
+        totalPrice += parseInt(product.order.price);
       });
       return this.format(totalPrice .toString());
     }
@@ -315,7 +318,7 @@ export default class ValidateCart extends React.Component {
             
                 </div>
             
-                <PaymentForm orders = {this.state.orders} price = {this.calculatePrice()}/>
+                <PaymentForm orders = {this.state.orders} price = {this.calculatePrice()} format = {this.format}/>
                 
             </div>
         );

@@ -26,75 +26,62 @@ export default function AlertDialogSlide(props) {
     <div>
       <Dialog
         open={props.open}
+        maxWidth = 'sm'
         TransitionComponent={Transition}
         keepMounted
         onClose={()=> props.handleOpen()}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Todo Task"}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Registre los datos de su tienda"}</DialogTitle>
         <DialogContent>
-                <form onSubmit={props.handleSubmit} className="todo-form">
-                    <h3>Registre los datos de su tienda</h3>
+                <form onSubmit={props.handleSubmit} className="todo-form" style = {{alignItems : 'center'}}>
+                 
                     <label htmlFor="text"  className="right-margin">
-                        Description:
+                        Nombre:
                     </label>
 
-                    <TextField
-                        multiline 
-                        variant="outlined"
+                    <TextField 
                         id="text"
-                        onChange={props.handleTextChange}
-                        value={props.state.text}>
+                        onChange={props.handleNameChange}
+                        value={props.state.shopname}>
                     </TextField>
 
                     <br/>
                     <br/>
                     <label htmlFor="status" className="right-margin">
-                        Status:
+                        Tipo de tienda:
                     </label>
 
                     <Select
                       autoFocus
-                      value={props.state.status}
-                      onChange = {props.handleStatusChange}
+                      value={props.state.type}
+                      onChange = {props.handleTypeChange}
                       inputProps={{
                         name: 'Status',
                         id: 'max-width',
                       }}
                     >
-                        <MenuItem value="Ready">ready</MenuItem>
-                        <MenuItem value="In progress">in progress</MenuItem>
-                        <MenuItem value="Done">done</MenuItem>
+                        <MenuItem value="drogueria">drogueria</MenuItem>
+                        <MenuItem value="supermercado">supermercado</MenuItem>
+                        <MenuItem value="restaurante">restaurante</MenuItem>
+                        <MenuItem value="variedades">variedades</MenuItem>
+                        <MenuItem value="panadería">panadería</MenuItem>
+                        <MenuItem value="miscelanea">miscelanea</MenuItem>
+                        <MenuItem value="ferretería">ferretería</MenuItem>
                     </Select>
                     <br/>
                     <br/>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="space-around">
-                            <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="due-date"
-                            label="Todo Date"
-                            value={props.state.dueDate}
-                            onChange={props.handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            />
-                        </Grid>
-                    </MuiPickersUtilsProvider>
+                  
                     
                     <label htmlFor="responsible" className="right-margin">
-                        Responsible:
+                        Dirección:
                     </label>
 
                     <TextField
-                        id="responsible"
-                        onChange={props.handleRespChange}
-                        value={props.state.responsible}>
+                        id= "responsible"
+                        onChange={props.handleLocationChange}
+                        value={props.state.location}>
                     </TextField>
   
                     <br/>
@@ -106,8 +93,8 @@ export default function AlertDialogSlide(props) {
           <Button onClick={()=> props.handleOpen()} color="primary">
             Cancel
           </Button>
-          <Button onClick={props.handleSubmit} color="primary">
-            Add #{props.state.items.length + 1} 
+          <Button onClick={()=> props.handleSubmit()} color="primary">
+            Agregar 
           </Button>
         </DialogActions>
       </Dialog>

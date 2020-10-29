@@ -105,7 +105,7 @@ export class Login extends React.Component{
                                     color="primary"
                                     href = "/signup"
                                 >
-                                    Registro como usuario 
+                                    Registro
                                 </Button>
                             </div>
                         </div>

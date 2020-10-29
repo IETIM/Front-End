@@ -255,7 +255,7 @@ export default class ValidateCart extends React.Component {
       console.log(this.state)
       console.log("-------------------------------------------------")
       this.state.productsCart.map((product) => {
-        totalPrice += parseInt(product.order.price);
+        totalPrice += parseInt(product.order.price) * parseInt(product.order.quantity);
       });
       return this.format(totalPrice .toString());
     }

@@ -138,6 +138,7 @@ export default class ShoppingCart extends React.Component {
                     console.log("UPDATE DATA");
                     const updateData = cursor.value;
                     console.log(updateData)
+                    if (updateData.order.quantity + num <= 0) return;
                     updateData.order.quantity += num;                    
                     cursor.update(updateData)
                     update();
@@ -256,13 +257,13 @@ function SidebarPage (props){
                                         <div key = {item.order.name + "_" + index} className = "nav-textV1">                                        
                                                 <FaIcons.FaCartPlus />
                                                 <span style = {{color: 'white'}}> {item.order.name} </span>
-                                                <span style = {{float: 'right', color: 'white'}}> $ {item.order.price} </span>
+                                                <span style = {{float: 'right', color: 'white'}}> $ {item.order.price * item.order.quantity} </span>
                                                 
                                                 <div style = {{position: 'absolute', right: '-70px'}}>
                                                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 
                                                     style = {{width: '10%'}}>
                                                     <Button> 
-                                                        {item.order.quantity == 1 ? 
+                                                        {item.order.quantity <= 1 ? 
                                                              <DeleteIcon onClick = {() => handleClickOpen(false, item.id, item.order.name)}/> 
                                                             :  <RemoveIcon onClick = {() => executeAction(props.sumAmount(item.id, -1))}/>}
                                                     </Button>

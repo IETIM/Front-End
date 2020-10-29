@@ -167,6 +167,7 @@ export class Catalog extends React.Component {
                     console.log("UPDATE DATA");
                     const updateData = cursor.value;
                     console.log(updateData)
+                    if (updateData.order.quantity + num <= 0) return;
                     updateData.order.quantity += num;                    
                     cursor.update(updateData)
                     update();

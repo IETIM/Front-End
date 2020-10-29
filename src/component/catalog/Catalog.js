@@ -20,6 +20,7 @@ import { Todo } from "../todo/Todo";
 import { withStyles } from "@material-ui/core/styles";
 import { ListProduct } from "./ListProduct";
 import { getUrl } from "../../vars";
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -309,11 +310,11 @@ export class Catalog extends React.Component {
   }
 
   componentDidMount() {
+    let token = localStorage.getItem("token");
     this.loadData();
     let url = getUrl();
     const headers = {
-      Authorization:
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZW5kZXJvQG1haWwuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVEVOREVSTyJ9XSwiZXhwIjoxNjAyMTg0Mjg5LCJpYXQiOjE2MDIxODA2ODl9.NqP9DvQIEivEjLGZQfESTyC_Gnr-MmME3LSr68hRQDeODWX7CCuGOYTCs_jqkal4mJZ9bxU7FLmp_e2AAv3MDw",
+      Authorization:token,
     };
     fetch(url + "/products/5f7e735312de4a10fbce30c6", {
       headers: headers,

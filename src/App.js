@@ -14,6 +14,8 @@ import Login from './component/signin/Login';
 import Order from './component/Order/Order';
 import ValidateCart from './component/validateCart/ValidateCart';
 import UserOrders from './component/Order/UserOrders';
+import PaySuccess from './component/pay/PaySuccess';
+import PayFailed from './component/pay/PayFailed';
 
 
 
@@ -65,6 +67,18 @@ function App() {
         <Route path="/validateCart"
             render={()=>
                  <ValidateCart/>
+            
+        } exact/>
+
+<Route path="/pay/success"
+            render={()=>
+                 <PaySuccess/>
+            
+        } exact/>
+
+<Route path="/pay/cancel"
+            render={()=>
+                 <PayFailed/>
             
         } exact/>
 

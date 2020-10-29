@@ -16,6 +16,11 @@ import Avatar from '@material-ui/core/Avatar';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import {Link} from 'react-router-dom';
 import PlaceView from '../PlaceView/PlaceView';
+import axios from 'axios'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from './ShopDialog'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +46,7 @@ export default function Register(props) {
     weight: '',
     weightRange: '',
     showPassword: false,
+
   });
 
   const [values2, setValues2] = React.useState({
@@ -59,10 +65,47 @@ export default function Register(props) {
     passwd: '',
     passwdConfirm: ''
   });
+  
+  const [state, setState] = React.useState({
+    checkedA: false,
+    tendero : false,
+    isOpen : false,
+    shopname : "",
+    location : "",
+    type : "",
+
+  });
 
   const handleChangeForm = (prop) => (event) => {
     setFormulario({ ...formulario, [prop]: event.target.value});    
   }
+
+  const handleChangeSt = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    state.tendero = true; 
+  };
+
+  const handleNameChange = (event) => {
+  
+  };
+
+  const handleLocationChange = (event) => {
+  
+  };
+
+  const handleTypeChange = (event) => {
+
+  };
+
+  const handleSubmit = (event) => {
+    //TODO register Storekeepr
+  };
+
+  const handleOpen = (event) => {
+    //TODO Open dialog
+  };
+
+  
 
   const [noError, setError] = React.useState({
     flag: true
@@ -79,33 +122,37 @@ export default function Register(props) {
     setError({ ...noError, flag: flagError});   
   };
 
-  
- 
   const registerUser = (event) => {
-    event.preventDefault();
+      event.preventDefault();
     verifyNoError();
     console.log(formulario);
     if (formulario.passwd !== formulario.passwdConfirm || (formulario.passwd === "" || formulario.passwdConfirm === "")) {
       alert("Las contraseñas no coinciden o son vacias, intente nuevamente!");
       return;
     }
-    if (localStorage.getItem('users') == null) {
-      localStorage.setItem('users', '[{"username": "Johann Paez", "email": "johann.paez@mail.escuelaing.edu.co", "passwd": "Prueba123@"}, {"username": "Sebastian Campos", "email": "najoh2907@hotmail.com", "passwd": "asd"}]');
-    }
-    var userAdd = {username: formulario.fullName, email: formulario.email, passwd: formulario.passwd};
-    var users = localStorage.getItem("users");
-    var jsonUsers = JSON.parse(users);
-    jsonUsers.push(userAdd);
-    localStorage.setItem("users", JSON.stringify(jsonUsers));
-    localStorage.setItem("username", formulario.fullName);
-    localStorage.setItem("password", formulario.passwd);    
-    localStorage.setItem("email", formulario.email); 
-    localStorage.setItem("cellphone", formulario.cellphone); 
-    localStorage.setItem("address", formulario.address); 
-                   
-    localStorage.setItem('IsLoggedIn', true);
-  }
-  
+    
+    //let url = "https://ieti-deep-backend.herokuapp.com";
+    let url = "http://localhost:8080"
+    let newuser = {
+          name: formulario.fullName,  
+          email: formulario.email, 
+          password: formulario.passwd, 
+          cellphone : formulario.cellphone,
+          address : formulario.address};
+    axios.post(url+"/register",newuser)
+        .then((data)=>{
+            localStorage.setItem("username", formulario.fullName);
+            localStorage.setItem("password", formulario.passwd);    
+            localStorage.setItem("email", formulario.email); 
+            localStorage.setItem("cellphone", formulario.cellphone); 
+            localStorage.setItem("address", formulario.address); 
+            localStorage.setItem("IsLoggedIn",true);
+        }).catch((err)=>{
+            localStorage.removeItem("IsLoggedIn");
+            console.log(err);
+            alert("No se pudo registrar con éxito");
+        }); 
+      }
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -142,13 +189,13 @@ export default function Register(props) {
                 <CssBaseline />
                 <main className="layout">                    
                     <Paper className="paper">                                                
-                        <Typography variant="h2">Sign Up</Typography>
+                        <Typography variant="h2">Registro</Typography>
                         <Avatar className="avatar">
                             <AccountBoxIcon />
                         </Avatar>
                         <form className="form" onSubmit = {registerUser}>                            
                             <FormControl className={classes.root} noValidate autoComplete="off">
-                                <TextField required onChange={handleChangeForm("fullName")} id="idFullName" label="Full Name" variant="outlined"/>
+                                <TextField required onChange={handleChangeForm("fullName")} id="idFullName" label="Nombre" variant="outlined"/>
                             </FormControl>
                             <br></br>
                             
@@ -157,15 +204,15 @@ export default function Register(props) {
                             </FormControl>
                             <br></br>
                             <FormControl className={classes.root} noValidate autoComplete="off">
-                                <TextField required onChange={handleChangeForm("cellphone")} id="idFullName" label="Cellphone" variant="outlined"/>
+                                <TextField required onChange={handleChangeForm("cellphone")} id="idFullName" label="Celular" variant="outlined"/>
                             </FormControl>
                             <br></br>
                             <FormControl className={classes.root} noValidate autoComplete="off">
-                                <TextField required onChange={handleChangeForm("address")} id="idFullName" label="Address" variant="outlined"/>
+                                <TextField required onChange={handleChangeForm("address")} id="idFullName" label="Dirección" variant="outlined"/>
                             </FormControl>
                             <br></br>
                             <FormControl className={classes.root} variant="outlined">
-                                <InputLabel error = {noError.flag ? false: true} id = "idPasswd" htmlFor="outlined-adornment-password" >Password</InputLabel>
+                                <InputLabel error = {noError.flag ? false: true} id = "idPasswd" htmlFor="outlined-adornment-password" >Contraseña</InputLabel>
                                 <OutlinedInput required
                                 error = {noError.flag ? false: true}
                                 id="outlined-adornment-password"
@@ -188,7 +235,7 @@ export default function Register(props) {
                             </FormControl>
                             <br></br>
                             <FormControl className={classes.root} variant="outlined">
-                                <InputLabel error = {noError.flag ? false: true} id = "idPasswdConfirm" htmlFor="outlined-adornment-password" >Confirm password</InputLabel>
+                                <InputLabel error = {noError.flag ? false: true} id = "idPasswdConfirm" htmlFor="outlined-adornment-password" >Confirmar contraseña</InputLabel>
                                 <OutlinedInput required
                                 error = {noError.flag ? false: true}
                                 id="outlined-adornment-password"
@@ -209,6 +256,18 @@ export default function Register(props) {
                                 labelWidth={130}
                                 />
                             </FormControl>
+
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={state.checkedB}
+                                  onChange={handleChangeSt}
+                                  name="checkedB"
+                                  color="primary"
+                                />
+                              }
+                              label="Registrarme como tendero"
+                        />
                             <br></br>
                             <Button
                                 type="submit"
@@ -217,7 +276,7 @@ export default function Register(props) {
                                 color="primary"
                                 className="submit"                                
                             >
-                                Sign Up
+                                Registrarse
                             </Button>
                             <br></br>
                             <br></br>
@@ -231,8 +290,20 @@ export default function Register(props) {
                                 Sign In
                             </Button>
                         </form>
-                    </Paper>
+
+                        <Dialog 
+                          handleNameChange = {handleNameChange}
+                          handleLocationChange = {handleLocationChange}
+                          handleTypeChange = {handleTypeChange}
+                          handleSubmit = {handleSubmit}
+                          handleOpen = {handleOpen}
+                          open = {state.isOpen}
+                        > </Dialog>
+                       
+                      
+                  </Paper>
                 </main>  
+              
             </React.Fragment>                  
     </div>
   );

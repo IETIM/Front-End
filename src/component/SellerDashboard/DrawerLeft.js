@@ -22,6 +22,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import Avatar from '@material-ui/core/Avatar';
 import logo from './../../logo.svg';
 import {Redirect} from 'react-router-dom';
+import { indigo } from '@material-ui/core/colors';
 
 
 const drawerWidth = 240;
@@ -29,6 +30,10 @@ const drawerWidth = 240;
 const useStyles =theme =>  ({
   root: {
     display: 'flex',
+  },
+  blue: {
+    color: theme.palette.getContrastText(indigo[500]),
+    backgroundColor: indigo[500],
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -76,7 +81,8 @@ class DrawerLeft extends React.Component{
 
       const { window }=this.props;
       const { classes } = this.props;
-      const tendero=this.props.tendero
+      const user=this.props.user
+      
       
       const drawer = (
         <div>
@@ -84,35 +90,35 @@ class DrawerLeft extends React.Component{
           <Divider />
           <List>
               <ListItem>
-                <ListItemIcon><Avatar alt="Nombre tendero" src={logo} /></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("username")} />
+      <ListItemIcon><Avatar alt="Nombre tendero" className={classes.blue}  >{user.username.charAt(0).toUpperCase() }</Avatar></ListItemIcon>
+                <ListItemText primary={user.username} />
               </ListItem>
               <ListItem>
 
-              <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("tienda")} />
+              <ListItemIcon><StorefrontIcon color="primary"/></ListItemIcon>
+                <ListItemText primary={user.shopName} />
               </ListItem>
               <ListItem>
-              <ListItemIcon><RoomIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem ("address")} />
+              <ListItemIcon><RoomIcon color="primary"/></ListItemIcon>
+                <ListItemText primary={user.address} />
               </ListItem>
               <ListItem>
-              <ListItemIcon><WhatsAppIcon/></ListItemIcon>
-                <ListItemText primary={localStorage.getItem("cellphone")} />
+              <ListItemIcon><WhatsAppIcon color="primary"/></ListItemIcon>
+                <ListItemText primary={user.cellphone} />
               </ListItem>
           </List>
           <Divider />
           <List>
               <ListItem button key={"Update"} onClick={()=>{this.props.handleRedirect("/userprofile")}}>
-                <ListItemIcon><SettingsApplicationsIcon/> </ListItemIcon>
+                <ListItemIcon><SettingsApplicationsIcon color="primary"/> </ListItemIcon>
                 <ListItemText primary={"Actualizar datos"} />
               </ListItem>
               <ListItem button key={"Pedidos"} onClick={()=>{this.props.handleRedirect("/orders")}}>
-                <ListItemIcon><ShoppingCartIcon/> </ListItemIcon>
+                <ListItemIcon><ShoppingCartIcon color="primary"/> </ListItemIcon>
                 <ListItemText primary={"Ver pedidos"} />
               </ListItem>
               <ListItem button key={"Añadir producto"} onClick={this.props.handleNewProductModal} >
-                <ListItemIcon><AddBoxIcon/> </ListItemIcon>
+                <ListItemIcon><AddBoxIcon color="primary"/> </ListItemIcon>
                 <ListItemText primary={"Añadir producto"} />
               </ListItem>
           </List>

@@ -7,8 +7,6 @@ function AppBar (props){
 
     const classes = AppBarCss();
 
-    console.log("---------------------- PRINT APPBAR -------------------");
-    console.log(props.productsCart);
     return( 
             <>                
                 <div className = {classes.sidebarpage}> 
@@ -17,7 +15,10 @@ function AppBar (props){
                         sumAmount = {props.sumAmount}
                         removeProduct = {props.removeProduct}
                         removeAllProductsCart = {props.removeAllProductsCart}
-                        productsCart = {props.productsCart == null ? []: props.productsCart}/>    
+                        productsCart = {props.productsCart == null ? []: props.productsCart}
+                        modify = {props.modify}
+                        isChange = {props.isChange}
+                        setIsChange =  {props.setIsChange}/>    
                 </div>
                     
             </>

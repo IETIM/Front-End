@@ -15,10 +15,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link, animateScroll as scroll } from "react-scroll";
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import { Todo } from "../todo/Todo";
 import { withStyles } from "@material-ui/core/styles";
 import { ListProduct } from "./ListProduct";
+import { getUrl } from "../../vars";
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -58,60 +60,150 @@ const useStyles = (theme) => ({
 export class Catalog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mobileOpen: false, productsCart: []};
+    this.state = { mobileOpen: false, productsCart: [],products:[] };
     console.log(props == undefined);
     this.addProduc = this.addProduc.bind(this);
     this.removeAllProductsCart = this.removeAllProductsCart.bind(this);
     this.removeProduct = this.removeProduct.bind(this);
     this.sumAmount = this.sumAmount.bind(this);
+    console.log(window.location.pathname);
   }
 
+  updateData = (productsCart) => {
+    this.setState({
+      productsCart: productsCart,
+    });
+  };
+
+  loadData = () => {
+    var request = window.indexedDB.open("pedidos", 1);
+    var update = this.updateData;
+    request.onsuccess = (up) => {
+      var cur = request.result
+        .transaction(["pedidos"], "readwrite")
+        .objectStore("pedidos")
+        .openCursor();
+      var li = [];
+      cur.onsuccess = function (evt) {
+        var cursor = evt.target.result;
+        console.log("cursor");
+        console.log(cursor);
+        if (cursor) {
+          li.push(cursor.value);
+          console.log("add");
+          cursor.continue();
+        } else {
+          update(li);
+        }
+      };
+    };
+
+    request.onupgradeneeded = (event) => {
+      //console.log("Upgraded")
+      var dbtest = event.target.result;
+      var auto = dbtest.createObjectStore("pedidos", {
+        keyPath: "id",
+        autoIncrement: true,
+      });
+    };
+  };
 
   addProduc(name, price) {
-    var listTemp = this.state.productsCart;
-    listTemp.push({"id": listTemp.length + 1, "name": name, "price": price, "amount": 1});
-    this.setState({
-      productsCart: listTemp
-    })    
+    const tempProduct = {shop: this.state.productsCart.length % 2 == 0 ? this.props.store: "Store B", 
+                        method: "Paypal",
+                        order: {
+                          productId : this.state.productsCart.length, quantity: 1, 
+                          name: name, price: price, description: "Buen producto"
+                        }};
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+      //console.log("Add element");
+      request.result
+        .transaction(["pedidos"], "readwrite")
+        .objectStore("pedidos")
+        .add(tempProduct);
+      showData();
+    };
+    request.onupgradeneeded = (event) => {
+      //console.log("Upgraded")
+      var dbtest = event.target.result;
+      var auto = dbtest.createObjectStore("pedidos", {
+        keyPath: "id",
+        autoIncrement: true,
+      });
+    };
   }
 
   removeProduct(id) {
-    var listTemp = this.state.productsCart;
-    for (var i = 0; i < listTemp.length; i++) {
-      const item = listTemp[i];
-      if (item.id == id) {
-        listTemp.splice(i, 1);
-        break;
-      }
-    }
-    this.setState({
-      productsCart: listTemp
-    })    
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+      request.result
+        .transaction(["pedidos"], "readwrite")
+        .objectStore("pedidos")
+        .delete(id);
+      showData();
+    };
+    request.onupgradeneeded = (event) => {
+      var dbtest = event.target.result;
+      var auto = dbtest.createObjectStore("pedidos", {
+        keyPath: "id",
+        autoIncrement: true,
+      });
+    };
   }
+
   removeAllProductsCart() {
-    this.setState({
-      productsCart: []
-    }) 
+    var request = window.indexedDB.open("pedidos", 1);
+    var showData = this.loadData;
+    request.onsuccess = (up) => {
+      request.result
+        .transaction(["pedidos"], "readwrite")
+        .objectStore("pedidos")
+        .clear();
+      showData();
+    };
+    request.onupgradeneeded = (event) => {
+      var dbtest = event.target.result;
+      var auto = dbtest.createObjectStore("pedidos", {
+        keyPath: "id",
+        autoIncrement: true,
+      });
+    };
   }
 
   sumAmount(id, num) {
-    var listTemp = this.state.productsCart;
-    for (var i = 0; i < listTemp.length; i++) {
-      const item = listTemp[i];
-      if (item.id == id) {
-        item.amount += num;
-        break;
-      }
-    }
-    this.setState({
-      productsCart: listTemp
-    }) 
-  } 
+    var request = window.indexedDB.open("pedidos", 1);
+        var update = this.loadData;
+        request.onsuccess = (up) => {
+            var cur = request.result.transaction(["pedidos"],"readwrite").objectStore("pedidos").openCursor();
+            var li = [];
+            cur.onsuccess = function(evt) {                    
+                var cursor = evt.target.result;
+                if (cursor && cursor.value.id != id) {                                       
+                    cursor.continue();
+                } else if (cursor && cursor.value.id == id) {
+                    console.log("UPDATE DATA");
+                    const updateData = cursor.value;
+                    console.log(updateData)
+                    if (updateData.order.quantity + num <= 0) return;
+                    updateData.order.quantity += num;                    
+                    cursor.update(updateData)
+                    update();
+                }                       
+            };
+
+        }
+        request.onupgradeneeded = (event) => {
+            //console.log("Upgraded")
+            var dbtest = event.target.result;
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true})
+        };
+  }
 
   render() {
-    const testList =[{name:"food",products:[{name:"Limón",price:"2.000",description:"_"},{name:"Pasta",price:"2.000",description:"_"},{name:"Arroz",price:"2.000",description:"_"},{name:"Salchicha",price:"2.000",description:"_"},{name:"Platano",price:"2.000",description:"_"},{name:"Papa",price:"2.000",description:"_"},{name:"Huevos",price:"2.000",description:"_"},{name:"Chicharron",price:"2.000",description:"_"},{name:"Cafe",price:"2.000",description:"_"},{name:"Lentejas",price:"2.000",description:"_"}]},
-                      {name:"cars",products:[{name:"Chevrolet x2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]},
-                      {name:"lapices",products:[{name:"Lápiz #2",price:"2.000",description:"_"},{name:"itemb",price:"2.000",description:"_"}]}]
+   const testList = this.state.products;
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");
@@ -119,32 +211,35 @@ export class Catalog extends React.Component {
     const handleDrawerToggle = () => {
       this.setState({ mobileOpen: !this.state.mobileOpen });
     };
-    document.title = "Ieti deep | "+this.props.store;
+    document.title = "Ieti deep | " + this.props.store;
 
     const drawer = (
       <div>
-        <div style = {{height: '30px', width: '100%'}}></div>
+        <div style={{ height: "30px", width: "100%" }}></div>
         <div className={classes.toolbar} />
-        <Divider/>
-        <center><Typography gutterBottom variant="h5" component="h2">Categorias</Typography></center>
+        <Divider />
+        <center>
+          <Typography gutterBottom variant="h5" component="h2">
+            Categorias
+          </Typography>
+        </center>
         <Divider />
         <List>
           {testList.map((categories) => (
             <Link
-            activeClass="active"
-            to={categories.name}
-            spy={true}
-            smooth={true}
-            offset={-90}
-            duration={500}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                <LocalOfferIcon/>
-              </ListItemIcon>
-              <ListItemText primary={categories.name.toUpperCase()} />
-              
-            </ListItem>
+              activeClass="active"
+              to={categories.name}
+              spy={true}
+              smooth={true}
+              offset={-90}
+              duration={500}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <LocalOfferIcon />
+                </ListItemIcon>
+                <ListItemText primary={categories.name.toUpperCase()} />
+              </ListItem>
             </Link>
           ))}
         </List>
@@ -155,17 +250,16 @@ export class Catalog extends React.Component {
     const container =
       window !== undefined ? () => window().document.body : undefined;
 
-      
     return (
       <div className={classes.root}>
-         <AppBar 
-              sumAmount = {this.sumAmount}
-              removeProduct = {this.removeProduct}
-              productsCart = {this.state.productsCart} 
-              removeAllProductsCart = {this.removeAllProductsCart}
-          />
+        <AppBar
+          sumAmount={this.sumAmount}
+          removeProduct={this.removeProduct}
+          productsCart={this.state.productsCart}
+          removeAllProductsCart={this.removeAllProductsCart}
+        />
 
-       <div style = {{height: '7  0px'}}></div>
+        <div style={{ height: "7  0px" }}></div>
         <CssBaseline />
         <nav className={classes.drawer} aria-label="mailbox folders">
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -200,12 +294,58 @@ export class Catalog extends React.Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <center><Typography gutterBottom variant="h3" component="h2">{this.props.store.toUpperCase()}</Typography></center>
-            <ListProduct categories={testList} addProduc = {this.addProduc}/>
+          <center>
+            <Typography gutterBottom variant="h3" component="h2">
+              {this.props.store.toUpperCase()}
+            </Typography>
+          </center>
+          <ListProduct categories={testList} addProduc={this.addProduc} />
           {/* Aqui hay que poner la lista de product con los porps que son las categorias */}
         </main>
       </div>
     );
+  }
+
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    this.loadData();
+    let url = getUrl();
+    let token = localStorage.getItem("token")
+    const headers = {
+      Authorization:token,
+    };
+    fetch(url + "/products/5f7e735312de4a10fbce30c6", {
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        let prod = [];
+        let cat = [];
+        data.forEach(function (p) {
+          if (!cat.includes(p.category)) {
+            console.log("ADDING CATEGORY" + p.category);
+            cat.push(p.category);
+            prod.push({ name: p.category, products: [{name:p.name,price:p.price,description:p.description}] });
+          } else {
+            var item = null;
+            console.log("PRODUCTOS!");
+            console.log(prod);
+            for (let i = 0; i <= prod.length; i++) {
+              if (prod[i].name === p.category) {
+                prod[i].products.push({
+                  name: p.name,
+                  price: p.price,
+                  description: p.description,
+                });
+                break;
+              }
+            }
+          }
+        });
+        console.log(prod);
+        this.setState({products:prod});
+      });
   }
 }
 

@@ -86,7 +86,7 @@ class PlaceView extends React.Component{
         const handleDrawerToggle = () => {
           this.setState({ mobileOpen: !this.state.mobileOpen });
         };
-        const cat = ["Droguerias","Supermercados","Cafeterias"]
+        const cat = ["drugstore"]
         const drawer = (
             <div>
               <div style = {{height: '30px', width: '100%'}}></div>

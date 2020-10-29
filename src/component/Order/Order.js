@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import {Toolbar,IconButton,Typography,MenuIcon, Grid} from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {ImageSearch} from '@material-ui/icons';
@@ -20,6 +21,8 @@ import DefaultView from './DefaultView';
 import Atendido from './Atendido';
 import Faltan from './Faltan';
 import Axios from 'axios';
+import { IsTendero } from '../../vars'
+
 
 const drawerWidth = 240;
 
@@ -82,6 +85,9 @@ class Order extends React.Component{
         const { window } = this.props;
         const  {classes}  = this.props;
         console.log("clases::........");
+        if(!IsTendero()){
+          return <Redirect to="/"></Redirect>
+        }
         console.log(this.classes);
         const handleDrawerToggle = () => {
           this.setState({ mobileOpen: !this.state.mobileOpen });

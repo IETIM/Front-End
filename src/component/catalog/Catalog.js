@@ -20,6 +20,7 @@ import { Todo } from "../todo/Todo";
 import { withStyles } from "@material-ui/core/styles";
 import { ListProduct } from "./ListProduct";
 import { getUrl } from "../../vars";
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -138,7 +139,6 @@ export class Catalog extends React.Component {
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
     request.onsuccess = (up) => {
-      //console.log("Delete element");
       request.result
         .transaction(["pedidos"], "readwrite")
         .objectStore("pedidos")
@@ -146,7 +146,6 @@ export class Catalog extends React.Component {
       showData();
     };
     request.onupgradeneeded = (event) => {
-      //console.log("Upgraded")
       var dbtest = event.target.result;
       var auto = dbtest.createObjectStore("pedidos", {
         keyPath: "id",
@@ -159,7 +158,6 @@ export class Catalog extends React.Component {
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
     request.onsuccess = (up) => {
-      //console.log("Add element");
       request.result
         .transaction(["pedidos"], "readwrite")
         .objectStore("pedidos")
@@ -167,7 +165,6 @@ export class Catalog extends React.Component {
       showData();
     };
     request.onupgradeneeded = (event) => {
-      //console.log("Upgraded")
       var dbtest = event.target.result;
       var auto = dbtest.createObjectStore("pedidos", {
         keyPath: "id",
@@ -314,6 +311,7 @@ export class Catalog extends React.Component {
   }
 
   componentDidMount() {
+    let token = localStorage.getItem("token");
     this.loadData();
     let url = getUrl();
     let token = localStorage.getItem("token")
@@ -338,7 +336,7 @@ export class Catalog extends React.Component {
             console.log("PRODUCTOS!");
             console.log(prod);
             for (let i = 0; i <= prod.length; i++) {
-              if (prod[i].name === p.category) 
+              if (prod[i].name === p.category) {
                 prod[i].products.push({
                   name: p.name,
                   price: p.price,

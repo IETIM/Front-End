@@ -307,7 +307,6 @@ export class Catalog extends React.Component {
   }
 
   componentDidMount() {
-    let token = localStorage.getItem("token");
     this.loadData();
     let url = getUrl();
     let token = localStorage.getItem("token")

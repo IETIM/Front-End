@@ -30,6 +30,7 @@ class SellerDashboard extends React.Component {
         this.handleRedirect = this.handleRedirect.bind(this)
         this.handleUpload = this.handleUpload.bind(this)
         this.buildHeaders=this.buildHeaders.bind(this)
+        this.handleDeleteItem=this.handleDeleteItem.bind(this)
     }
 
     componentDidMount() {
@@ -72,10 +73,11 @@ class SellerDashboard extends React.Component {
                     >
                         <ProductModal handleProduct={this.handleUpdateProduct} required={false} verb={"Actualizar"} />
                     </Modal>
-                    <DrawerLeft main={<ProductGrid products={this.state.items} handleUpdateProductModal={this.handleUpdateProductModal} />}
+                    <DrawerLeft main={<ProductGrid products={this.state.items} handleUpdateProductModal={this.handleUpdateProductModal}  handleDeleteItem={this.handleDeleteItem} />}
                         user={this.state.user}
                         handleNewProductModal={this.handleNewProductModal}
-                        handleRedirect={this.handleRedirect} />
+                        handleRedirect={this.handleRedirect}
+                        />
                 </div>}
         </div>;
     }
@@ -170,6 +172,18 @@ class SellerDashboard extends React.Component {
         this.setState({
             openUpdateModal: false
         })
+        })
+    }
+    handleDeleteItem(index){
+        console.log(index)
+        var id = this.state.items[index].id;
+        axios.delete(getUrl()+"/products/"+id,{headers:this.buildHeaders()}).
+        then(res => {
+            let tempItems = [...this.state.items];
+            tempItems.splice(index,1)
+            this.setState({
+                items: tempItems
+            })
         })
     }
 

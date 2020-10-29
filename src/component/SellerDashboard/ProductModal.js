@@ -2,6 +2,7 @@ import React from 'react';
 import { InputLabel,Button, TextField,Select, FormControl } from '@material-ui/core';
 import { withStyles} from '@material-ui/core/styles';
 import { ProductForm } from './ProductForm';
+import SaveIcon from '@material-ui/icons/Save';
 
 
 
@@ -64,6 +65,8 @@ import { ProductForm } from './ProductForm';
                             variant="contained"
                             color="primary"
                             className="submit"
+                            startIcon={<SaveIcon />}
+
                             >
                     {this.props.verb} 
                 </Button>

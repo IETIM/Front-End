@@ -76,42 +76,110 @@ export default function Register(props) {
 
   });
 
+  const [user, setUser] = React.useState({
+    user : ""
+  });
+
   const handleChangeForm = (prop) => (event) => {
     setFormulario({ ...formulario, [prop]: event.target.value});    
   }
 
-  const handleChangeSt = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    state.tendero = true; 
-  };
-
   const handleNameChange = (event) => {
-  
+    setState({ ...state, shopname: event.target.value });
   };
 
   const handleLocationChange = (event) => {
-  
+    setState({ ...state, location: event.target.value });
   };
 
   const handleTypeChange = (event) => {
-
+    setState({ ...state, type: event.target.value });
   };
 
-  const handleSubmit = (event) => {
-    //TODO register Storekeepr
-  };
-
-  const handleOpen = (event) => {
-    //TODO Open dialog
+  const handleOpen = () => {
+    setState({ ...state, isOpen: !state.isOpen, 
+                        checkedA: !state.checkedA,
+                        tendero : !state.tendero,
+                        shopname : "",
+                        location : "",
+                        type : "", });
   };
 
   
+  const handleSubmit = (event) => {
+      
+      setState({ ...state, isOpen: !state.isOpen });    
+  }
 
+  const registerUser = (event) => {
+    event.preventDefault();
+    verifyNoError();
+    console.log(formulario);
+    if (formulario.passwd !== formulario.passwdConfirm || (formulario.passwd === "" || formulario.passwdConfirm === "")) {
+      alert("Las contraseñas no coinciden o son vacias, intente nuevamente!");
+      return;
+    }
+    
+    if (state.tendero){
+
+      let newShop = {
+        name : state.shopname,
+        products :[],
+        location :state.location,
+        type : state.type,
+        apiClient : process.env.REACT_APP_CLIENT_ID,
+        apiSecret : process.env.REACT_APP_CLIENT_SECRET
+      }
+      console.log(process.env.REACT_APP_CLIENT_ID);
+      let url = process.env.REACT_APP_BACKEND_URL;
+      let newSk = {
+        email : formulario.email,
+        name : formulario.fullName,
+        password : formulario.passwd,
+        cellphone :formulario.cellphone,
+        shop : newShop
+      }
+      console.log(newSk);
+      axios.post(url+"/storekeeper/register",newSk)
+        .then((data)=>{
+            localStorage.setItem("user", newSk);  
+            localStorage.setItem("IsLoggedIn",true);
+            setUser({ ...user, user: newSk });    
+            
+        }).catch((err)=>{
+            localStorage.removeItem("IsLoggedIn");
+            console.log(err);
+            alert("No se pudo registrar con éxito");
+        }); 
+      } else {
+  
+      let url = process.env.REACT_APP_BACKEND_URL;
+      console.log(url);
+      let newuser = {
+            name: formulario.fullName,    
+            email: formulario.email, 
+            password: formulario.passwd, 
+            cellphone : formulario.cellphone,
+            address : formulario.address};
+      console.log(newuser);
+      axios.post(url+"/register",newuser)
+          .then((data)=>{
+              localStorage.setItem("user", newuser); 
+              localStorage.setItem("IsLoggedIn",true);
+              setUser({ ...user, user: newuser });
+              
+          }).catch((err)=>{
+              localStorage.removeItem("IsLoggedIn");
+              console.log(err);
+              alert("No se pudo registrar con éxito");
+          }); 
+        }
+      }
+  
   const [noError, setError] = React.useState({
     flag: true
   });
-    
-  
+      
   const verifyNoError = () => {
     var flagError;
     if (formulario.passwd === formulario.passwdConfirm) {
@@ -122,37 +190,6 @@ export default function Register(props) {
     setError({ ...noError, flag: flagError});   
   };
 
-  const registerUser = (event) => {
-      event.preventDefault();
-    verifyNoError();
-    console.log(formulario);
-    if (formulario.passwd !== formulario.passwdConfirm || (formulario.passwd === "" || formulario.passwdConfirm === "")) {
-      alert("Las contraseñas no coinciden o son vacias, intente nuevamente!");
-      return;
-    }
-    
-    //let url = "https://ieti-deep-backend.herokuapp.com";
-    let url = "http://localhost:8080"
-    let newuser = {
-          name: formulario.fullName,  
-          email: formulario.email, 
-          password: formulario.passwd, 
-          cellphone : formulario.cellphone,
-          address : formulario.address};
-    axios.post(url+"/register",newuser)
-        .then((data)=>{
-            localStorage.setItem("username", formulario.fullName);
-            localStorage.setItem("password", formulario.passwd);    
-            localStorage.setItem("email", formulario.email); 
-            localStorage.setItem("cellphone", formulario.cellphone); 
-            localStorage.setItem("address", formulario.address); 
-            localStorage.setItem("IsLoggedIn",true);
-        }).catch((err)=>{
-            localStorage.removeItem("IsLoggedIn");
-            console.log(err);
-            alert("No se pudo registrar con éxito");
-        }); 
-      }
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -180,7 +217,7 @@ export default function Register(props) {
   if (localStorage.getItem('IsLoggedIn'))  {
     return (
       <PlaceView />
-    );
+    );    
   }
 
   return (
@@ -260,8 +297,8 @@ export default function Register(props) {
                             <FormControlLabel
                               control={
                                 <Checkbox
-                                  checked={state.checkedB}
-                                  onChange={handleChangeSt}
+                                  checked={state.checkedA}
+                                  onChange={handleOpen}
                                   name="checkedB"
                                   color="primary"
                                 />
@@ -278,17 +315,7 @@ export default function Register(props) {
                             >
                                 Registrarse
                             </Button>
-                            <br></br>
-                            <br></br>
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="submit"
-                                href = "login"                             
-                            >
-                                Sign In
-                            </Button>
+                            
                         </form>
 
                         <Dialog 
@@ -298,6 +325,7 @@ export default function Register(props) {
                           handleSubmit = {handleSubmit}
                           handleOpen = {handleOpen}
                           open = {state.isOpen}
+                          state = {state}
                         > </Dialog>
                        
                       
@@ -307,4 +335,4 @@ export default function Register(props) {
             </React.Fragment>                  
     </div>
   );
-}
+  };

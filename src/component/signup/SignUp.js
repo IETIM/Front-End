@@ -179,8 +179,8 @@ export default function Register(props) {
 
   if (localStorage.getItem('IsLoggedIn'))  {
     return (
-      <PlaceView />
-    );
+      <SellerDashboard />
+    );    
   }
 
   return (

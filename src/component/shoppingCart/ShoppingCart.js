@@ -11,7 +11,45 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-//import LoadData from "../IndexedDB/LoadData";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+function AlertDialog(props) {  
+    var text = !props.allProducts ? 
+        "¿Está seguro que desea eliminar el producto " + "\"" + props.nameProduct + "\"?": 
+        "¿Está seguro que desea eliminar todos los productos?";
+
+    return (
+        <div>      
+        <Dialog
+            open={props.open}
+            onClose={props.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{"¿Eliminar producto?"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                {text}
+                <br></br>
+                Este cambio no podrá ser anulado.
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={() => props.handleClose()} color="primary">
+                Cancelar
+            </Button>
+            <Button onClick={() => props.deleteProduct(props.id)} color="secondary" autoFocus>
+                Eliminar
+            </Button>
+            </DialogActions>
+        </Dialog>
+        </div>
+    );
+}
 
 export default class ShoppingCart extends React.Component {
 
@@ -100,7 +138,8 @@ export default class ShoppingCart extends React.Component {
                     console.log("UPDATE DATA");
                     const updateData = cursor.value;
                     console.log(updateData)
-                    updateData.amount += num;                    
+                    if (updateData.order.quantity + num <= 0) return;
+                    updateData.order.quantity += num;                    
                     cursor.update(updateData)
                     update();
                 }                       
@@ -121,7 +160,11 @@ export default class ShoppingCart extends React.Component {
                             sumAmount = {this.sumAmount}
                             removeProduct = {this.removeProduct}
                             removeAllProductsCart = {this.removeAllProductsCart}
-                            productsCart = {this.state.productsCart}/>
+                            productsCart = {this.state.productsCart}
+                            modify = {this.props.modify}
+                            modifyElement = {this.modifyElement}
+                            isChange = {this.props.isChange}
+                            setIsChange = {this.props.setIsChange}/>
             );    
         }
         
@@ -130,19 +173,69 @@ export default class ShoppingCart extends React.Component {
                         sumAmount = {this.props.sumAmount}
                         removeProduct = {this.props.removeProduct}
                         removeAllProductsCart = {this.props.removeAllProductsCart}
-                        productsCart = {this.props.productsCart}/>
+                        productsCart = {this.props.productsCart}
+                        modify = {this.props.modify}
+                        modifyElement = {this.modifyElement}
+                        isChange = {this.props.isChange}
+                        setIsChange = {this.props.setIsChange}/>
         );
     }
 
     componentDidMount() {
         this.loadData();
     }
+
+    modifyElement = () => {
+        var update = this.loadData;
+        update();
+    }
+
 }
 
 function SidebarPage (props){
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
-
+    console.log("PROPS SHOPPING CART INI")
+    console.log(props);
+    console.log("PROPS SHOPPING CART FIN")
+    const executeAction = () => {
+        if (props.modify != null) {
+            props.modify();
+        }
+    }
+    if (props.isChange) {        
+        props.modifyElement();
+        props.setIsChange();
+    }
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = (type, id, name) => {        
+        setOpen(true);
+        setAllProducts(type);
+        setPropsProducts({...propsProducts, id: id, name: name});
+    };
+    const [allProducts, setAllProducts] = React.useState(false);
+    const [propsProducts, setPropsProducts] = React.useState({
+        id: -40,
+        name: "nothing"
+    });
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
+    const confirmDeletion = (id) => {
+        if (!allProducts) {
+            props.removeProduct(id)
+        } else if (allProducts) {
+            props.removeAllProductsCart()
+        }
+        handleClose();
+        if (props.modify != null) {
+            props.modify();
+        }
+    }
+    console.log("PROPORPSAORPOARPAORPAOSPROAPROPROPRO")
+    console.log(propsProducts)
+    console.log("PROPORPSAORPOARPAORPAOSPROAPROPROPRO")
     return( 
             <>
                 <IconContext.Provider value = {{ color: '#fff' }}>
@@ -156,40 +249,43 @@ function SidebarPage (props){
                                 <Link to = "#" className = "menu-barsV2" style = {{marginLeft: 'calc(100% - 4rem)'}}>
                                     <AiIcons.AiOutlineClose onClick = {showSidebar}/>
                                 </Link>
-                            </li>
+                            </li>                            
                             {props.productsCart.map((item, index) => {
                                 return (
                                     <div>
                                         
-                                        <div key = {item.name + "_" + index} className = "nav-textV1">                                        
+                                        <div key = {item.order.name + "_" + index} className = "nav-textV1">                                        
                                                 <FaIcons.FaCartPlus />
-                                                <span style = {{color: 'white'}}> {item.name} </span>
-                                                <span style = {{float: 'right', color: 'white'}}> $ {item.price} </span>
+                                                <span style = {{color: 'white'}}> {item.order.name} </span>
+                                                <span style = {{float: 'right', color: 'white'}}> $ {item.order.price * item.order.quantity} </span>
                                                 
                                                 <div style = {{position: 'absolute', right: '-70px'}}>
                                                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 
                                                     style = {{width: '10%'}}>
                                                     <Button> 
-                                                        {item.amount == 1 ? 
-                                                             <DeleteIcon onClick = {() => props.removeProduct(item.id)}/> 
-                                                            :  <RemoveIcon onClick = {() => props.sumAmount(item.id, -1)}/>}
+                                                        {item.order.quantity <= 1 ? 
+                                                             <DeleteIcon onClick = {() => handleClickOpen(false, item.id, item.order.name)}/> 
+                                                            :  <RemoveIcon onClick = {() => executeAction(props.sumAmount(item.id, -1))}/>}
                                                     </Button>
-                                                    <Button>{item.amount}</Button>
-                                                    <Button><AddIcon onClick = {() => props.sumAmount(item.id, 1)}/></Button>
+                                                    <Button>{item.order.quantity}</Button>
+                                                    <Button><AddIcon onClick = {() => executeAction(props.sumAmount(item.id, 1))}/></Button>
                                                 </ButtonGroup>
-                                                </div>
+                                                </div>                                                
                                         </div>
                                         <Divider style = {{background: 'white'}}/>
                                     </div>
                                 );
                             })}
+                            <AlertDialog open ={open} handleClickOpen = {handleClickOpen} handleClose = {handleClose}
+                                                deleteProduct = {confirmDeletion} id = {propsProducts.id} allProducts = {allProducts}
+                                                nameProduct = {propsProducts.name}/>
                             
                             {/*<button style = {{height: '40px', width: '100%', borderRadius: '4px', marginTop: '100%', position: 'inline-block'}}>
                             Validar 
                         </button> */}
                             <Button variant="contained" color="secondary" 
                                 style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}
-                                onClick = {() => props.removeAllProductsCart()}>
+                                onClick = {() => handleClickOpen(true, -40, "Nothing")}>
                             Vaciar Carrito
                             </Button>
                             <Button href = "/validateCart"variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>

@@ -1,5 +1,5 @@
 export function getUrl(){
-    var url="https://ieti-deep-backend.herokuapp.com";
+    var url=process.env.REACT_APP_BACKEND_URL;
     return url
 }
 

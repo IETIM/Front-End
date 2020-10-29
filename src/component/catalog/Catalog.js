@@ -66,6 +66,7 @@ export class Catalog extends React.Component {
     this.removeAllProductsCart = this.removeAllProductsCart.bind(this);
     this.removeProduct = this.removeProduct.bind(this);
     this.sumAmount = this.sumAmount.bind(this);
+    console.log(window.location.pathname);
   }
 
   updateData = (productsCart) => {
@@ -313,6 +314,7 @@ export class Catalog extends React.Component {
     let token = localStorage.getItem("token");
     this.loadData();
     let url = getUrl();
+    let token = localStorage.getItem("token")
     const headers = {
       Authorization:token,
     };
@@ -344,7 +346,7 @@ export class Catalog extends React.Component {
               }
             }
           }
-        });
+        );
         console.log(prod);
         this.setState({products:prod});
       });

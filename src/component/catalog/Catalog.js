@@ -198,7 +198,8 @@ export class Catalog extends React.Component {
         request.onupgradeneeded = (event) => {
             //console.log("Upgraded")
             var dbtest = event.target.result;
-            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true});
+            var auto = dbtest.createObjectStore("pedidos",{keyPath: "id", autoIncrement: true})
+        };
   }
 
   render() {
@@ -341,7 +342,7 @@ export class Catalog extends React.Component {
               }
             }
           }
-        );
+        });
         console.log(prod);
         this.setState({products:prod});
       });

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import { Link, BrowserRouter } from 'react-router-dom';
+import Axios from 'axios';
 
 export default class MapPlace extends React.Component{
     constructor(props){
@@ -35,7 +36,7 @@ export default class MapPlace extends React.Component{
                     mapElement={<div style={{ height: `100%` }} />}>
                         <Marker style={{background:'gray'}} 
                             onClick={()=>this.updatePlace({name:"Yo",link:null})} 
-                            icon={{strokeColor:'blue',url:"https://maps.google.com/mapfiles/ms/icons/blue-dot.png",scale:4}}
+                            icon={{strokeColor:'blue',url:"https://maps.google.com/mapfiles/ms/icons/blue-dot.png",scale:10}}
                             position={{lat:this.state.lat,lng:this.state.lng}}/>
 
                         {this.state.near.map((place)=> <Marker onClick={()=>this.updatePlace({name:place.name,link:null})} position={{lat:place.lat,lng:place.lng}}/>)}
@@ -53,19 +54,27 @@ export default class MapPlace extends React.Component{
     }
 
     updateCords(pos){
-        //Actualiza coordenadas
         this.state.lat=pos.coords.latitude;
         this.state.lng=pos.coords.longitude;
-        this.state.near.push({lat:pos.coords.latitude+0.09,lng:pos.coords.longitude,name:"Local 1"});
-        this.state.near.push({lat:pos.coords.latitude-0.1,lng:pos.coords.longitude,name:"Local 2"});
-        this.state.near.push({lat:pos.coords.latitude,lng:pos.coords.longitude+0.04,name:"Local 3"});
-        this.state.near.push({lat:pos.coords.latitude+0.05,lng:pos.coords.longitude-0.07,name:"Local 4"});
+
         this.setState(this.state);
 
     }
 
-    componentWillMount(){
-        //LoadMyPosition
+    updateStores = async (stores)=>{
+        for(var i=0;i<stores.length;i++){
+            var data = await Axios.get("https://geocode.search.hereapi.com/v1/geocode?q="+stores[i].location+"&apiKey=0aizyNbKZY4J9HTyfyGWqiIltD1mmBqxngImkcvaBS8");
+            console.log(data.data);
+            stores[i].lng = data.data.items[0].position.lng;
+            stores[i].lat = data.data.items[0].position.lat;
+        }
+        this.state.near = stores;
+    }
+
+    async componentWillMount(){
+        var fun = this.updateStores;
+        const data = await Axios.get("https://ieti-deep-backend.herokuapp.com/shops")
+        await fun(data.data);
         navigator.geolocation.getCurrentPosition((pos)=>this.updateCords(pos));
     }
 }

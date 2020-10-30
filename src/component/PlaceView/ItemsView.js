@@ -10,7 +10,7 @@ const url = getUrl();
 export default class ItemsView extends React.Component{
     constructor(props){
         super(props);
-        this.state = {selected:'',data:[{name:'Local 1',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 1ra'},{name:'local 2',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 2da'},{name:'local 3',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 3ra'},{name:'Local 4',descripcion:"Sabores de la cocina colombian",dirreccion:'cr 4ta'},{name:'local 5',descripcion:"Sabores de la cocina colombian",dirreccion:'cra 5ta'},{name:'local 6',descripcion:"Sabores de la cocina colombian",dirreccion:'cra 6ta'}]};
+        this.state = {selected:'',data:[]};
         this.setSelected = this.setSelected.bind(this);
         this.props.setFun(this.setSelected);
         console.log("Creo ItemsView");
@@ -52,7 +52,9 @@ export default class ItemsView extends React.Component{
                                     {(4*row+col<this.state.data.length && <CardItem 
                                     key={"Card-"+row+"-"+col}
                                     title={this.state.data[4*row+col].name.toUpperCase()}
-                                    descripcion={this.state.data[4*row+col].location}></CardItem>)}
+                                    descripcion={this.state.data[4*row+col].location}
+                                    id={this.state.data[4*row+col].id}
+                                    ></CardItem>)}
                                     </div>);
                                 })}
                         <div style={{width:'1%',height:'1px'}}/>

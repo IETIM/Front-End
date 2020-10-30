@@ -176,12 +176,15 @@ export default function Register(props) {
             email: formulario.email, 
             password: formulario.passwd, 
             cellphone : formulario.cellphone,
-            address : formulario.address};
+            address : formulario.address,
+           authorities : [ {"role" : "ROLE_TENDERO" }]};
+
       console.log(newuser);
       axios.post(url+"/register",newuser)
           .then((data)=>{
               localStorage.setItem("user", newuser); 
               localStorage.setItem("IsLoggedIn",true);
+              localStorage.setItem("roles",newuser.authorities);
               setUser({ ...user, user: newuser });
               
           }).catch((err)=>{
@@ -232,7 +235,7 @@ export default function Register(props) {
 
   if (localStorage.getItem('IsLoggedIn'))  {
     return (
-      <SellerDashboard />
+      <PlaceView />
     );    
   }
 

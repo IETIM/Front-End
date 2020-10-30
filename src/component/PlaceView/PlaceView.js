@@ -22,6 +22,10 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { Todo } from "../todo/Todo";
 import { withStyles,useTheme} from "@material-ui/core/styles";
 import Map from './Map';
+import Axios from 'axios';
+import { getUrl } from '../../vars';
+
+const url = getUrl();
 
 const drawerWidth = 240;
 
@@ -61,7 +65,7 @@ const useStyles = (theme) => ({
 class PlaceView extends React.Component{
     constructor(props){
         super(props);
-        this.state = {funUpdate:null};
+        this.state = {funUpdate:null,categories:[]};
         this.setFunUpdate = this.setFunUpdate.bind(this);
         this.setCategory = this.setCategory.bind(this);
     }
@@ -86,7 +90,7 @@ class PlaceView extends React.Component{
         const handleDrawerToggle = () => {
           this.setState({ mobileOpen: !this.state.mobileOpen });
         };
-        const cat = ["drugstore"]
+        const cat = this.state.categories
         const drawer = (
             <div>
               <div style = {{height: '30px', width: '100%'}}></div>
@@ -173,6 +177,13 @@ class PlaceView extends React.Component{
          </div>
         )
 
+    }
+
+    async componentDidMount(){
+      const data = await Axios.get(url+"/shops");
+      var dict = {};
+      data.data.forEach(item=>dict[item.type]=1);
+      this.setState({categories:Object.keys(dict)});
     }
 }
 export default withStyles(useStyles)(PlaceView);

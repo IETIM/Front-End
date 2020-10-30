@@ -15,7 +15,7 @@ export class ListProduct extends React.Component {
             const product = category.products.map((item,j)=>{
                 return (
                     <Grid item xs="auto">
-                        <Product key={j} name={item.name} price={item.price} description={item.description} addProduc = {this.props.addProduc}/>
+                        <Product key={j} name={item.name} price={item.price} description={item.description} image={item.image} addProduc = {this.props.addProduc}/>
                     </Grid>
                 );
             })

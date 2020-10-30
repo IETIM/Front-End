@@ -40,7 +40,7 @@ export default function CardItem(props){
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Link to="/catalog/Store A"><Button size="small" color="primary">
+          <Link to={"/catalog/"+props.id}><Button size="small" color="primary">
             Ver
           </Button></Link>
         </CardActions>

@@ -3,8 +3,9 @@ import Typography from '@material-ui/core/Typography';
 import CardItem from './CardItem';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import Axios from 'axios';
+import { getUrl } from '../../vars';
 
-const url = "https://ieti-deep-backend.herokuapp.com";
+const url = getUrl();
 
 export default class ItemsView extends React.Component{
     constructor(props){

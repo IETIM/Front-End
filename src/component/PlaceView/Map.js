@@ -4,6 +4,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Axios from 'axios';
+import { getUrl } from '../../vars';
 
 export default class MapPlace extends React.Component{
     constructor(props){
@@ -73,7 +74,9 @@ export default class MapPlace extends React.Component{
 
     async componentWillMount(){
         var fun = this.updateStores;
-        const data = await Axios.get("https://ieti-deep-backend.herokuapp.com/shops")
+        var url = getUrl();
+        const data = await Axios.get(url+"/shops")
+        console.log(data);
         await fun(data.data);
         navigator.geolocation.getCurrentPosition((pos)=>this.updateCords(pos));
     }

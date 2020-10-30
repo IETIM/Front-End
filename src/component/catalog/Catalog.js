@@ -203,7 +203,7 @@ export class Catalog extends React.Component {
   }
 
   render() {
-   const testList = this.state.products;
+   var testList = this.state.products;
     const { window } = this.props;
     const { classes } = this.props;
     console.log("clases::........");
@@ -313,7 +313,7 @@ export class Catalog extends React.Component {
     const headers = {
       Authorization:token,
     };
-    fetch(url + "/products/5f7e735312de4a10fbce30c6", {
+    fetch(url + "/products/5f9b5dba2c076d28c1fd5b60", {
       headers: headers,
     })
       .then((response) => response.json())
@@ -325,23 +325,24 @@ export class Catalog extends React.Component {
           if (!cat.includes(p.category)) {
             console.log("ADDING CATEGORY" + p.category);
             cat.push(p.category);
-            prod.push({ name: p.category, products: [{name:p.name,price:p.price,description:p.description}] });
+            prod.push({ name: p.category, products: [{name:p.name,price:p.price,description:p.description,image:p.image}] });
           } else {
             var item = null;
             console.log("PRODUCTOS!");
             console.log(prod);
             for (let i = 0; i <= prod.length; i++) {
-              if (prod[i].name === p.category) {
+              if (prod[i].name === p.category) 
                 prod[i].products.push({
                   name: p.name,
                   price: p.price,
                   description: p.description,
+                  image:p.image
                 });
                 break;
               }
             }
           }
-        });
+        );
         console.log(prod);
         this.setState({products:prod});
       });

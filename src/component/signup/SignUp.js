@@ -20,6 +20,7 @@ import axios from 'axios'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from './ShopDialog'
+import SellerDashboard from '../SellerDashboard/SellerDashboard'
 
 
 const useStyles = makeStyles((theme) => ({

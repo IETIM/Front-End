@@ -24,11 +24,12 @@ const useStyles = makeStyles({
   });
   export default function Product(props){
       const classes = useStyles();
+      console.log(props)
       return(  <Card className={classes.root}>
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              image={logo}
+              image={props.image}
               title="Contemplative Reptile"
             />
             <CardContent>
@@ -41,7 +42,7 @@ const useStyles = makeStyles({
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <ModalViewProduct imagen={logo} nombre={props.name} precio={props.price} descripcion={props.description}></ModalViewProduct>
+            <ModalViewProduct imagen={props.image} nombre={props.name} precio={props.price} descripcion={props.description}></ModalViewProduct>
             <Button size="small" color="primary" onClick = {() => props.addProduc(props.name, props.price)}> Añadir al carro</Button>
           </CardActions>
         </Card>);

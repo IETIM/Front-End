@@ -11,9 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import './Login.css'
 import { Redirect, Link, withRouter } from 'react-router-dom';
 import Axios from 'axios';
+import { getUrl } from '../../vars';
 
 
-const url = "https://ieti-deep-backend.herokuapp.com";
+const url = getUrl();
 
 
 export class Login extends React.Component{

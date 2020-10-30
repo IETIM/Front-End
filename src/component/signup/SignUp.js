@@ -19,7 +19,8 @@ import PlaceView from '../PlaceView/PlaceView';
 import axios from 'axios'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Dialog from './ShopDialog'
+import Dialog from './ShopDialog';
+import SellerDashboard from '../SellerDashboard/SellerDashboard'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -132,11 +133,26 @@ export default function Register(props) {
       }
       console.log(process.env.REACT_APP_CLIENT_ID);
       let url = process.env.REACT_APP_BACKEND_URL;
+      let newuser = {
+        name: formulario.fullName,    
+        email: formulario.email, 
+        password: formulario.passwd, 
+        cellphone : formulario.cellphone,
+        address : formulario.address,
+        authorities : [ {"role" : "ROLE_TENDERO" }]
+      };
+      console.log(newuser);
+      axios.post(url+"/register",newuser)
+          .then((data)=>{
+              localStorage.setItem("user", newuser); 
+              
+          }).catch((err)=>{
+              localStorage.removeItem("IsLoggedIn");
+              console.log(err);
+              alert("No se pudo registrar con éxito");
+          }); 
       let newSk = {
         email : formulario.email,
-        name : formulario.fullName,
-        password : formulario.passwd,
-        cellphone :formulario.cellphone,
         shop : newShop
       }
       console.log(newSk);
@@ -144,7 +160,7 @@ export default function Register(props) {
         .then((data)=>{
             localStorage.setItem("user", newSk);  
             localStorage.setItem("IsLoggedIn",true);
-            setUser({ ...user, user: newSk });    
+            setUser({ ...user, user: newuser });    
             
         }).catch((err)=>{
             localStorage.removeItem("IsLoggedIn");

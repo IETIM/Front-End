@@ -13,9 +13,12 @@ export class ListProduct extends React.Component {
     render() {
         const ProductList = this.props.categories.map((category,i) => {
             const product = category.products.map((item,j)=>{
+                console.log("LIST PRODUCT INI -----")
+                console.log(item);
+                console.log("LIST PRODUCT FIN -----")
                 return (
                     <Grid item xs="auto">
-                        <Product key={j} name={item.name} price={item.price} description={item.description} image={item.image} addProduc = {this.props.addProduc}/>
+                        <Product key={j} name={item.name} price={item.price} description={item.description} image={item.image} addProduc = {this.props.addProduc} id = {item.id}/>
                     </Grid>
                 );
             })

@@ -13,22 +13,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
 import PurchaseForm from './PurchaseForm';
+import axios from 'axios';
+import { getUrl } from '../../vars';
 
 export class PaymentForm extends React.Component{
 
     constructor(props) {
         super(props);
         var order = 
-        [{
-            shop: "mitiendita",
-            method: "Paypal",
-            purchases: [{productId:"5f7e735312de4a10fbce30c5", quantity:2}],
-            description: "Lolazos :D",
-            currency: "USD",
-            user: "marcelo@marcelo.com"
-        }]
-        this.state = {paypal: true, description: "", currency: "USD", method: ''}
-        this.handleMethod = this.handleMethod.bind(this);                
+        this.state = {paypal: true, description: "", currency: "USD", method: '', user: ""}
+        this.handleMethod = this.handleMethod.bind(this);       
+        this.getUser = this.getUser.bind(this);       
     }    
 
     handleMethod(e) {
@@ -54,12 +49,25 @@ export class PaymentForm extends React.Component{
         })
     }
 
+    getUser () {
+        axios.get(getUrl() + "/username", { headers: this.buildHeaders() })    
+            .then(response => {               
+                this.setState({user: response.data});
+            });        
+    }
+
+    buildHeaders = () => {
+        let headers = {'Authorization':localStorage.getItem("token")}
+        return headers
+    }
+    
     submitPay = (event) => {
-        event.preventDefault();
+        event.preventDefault();    
         let jsonsOrders = [];
+        var user = this.state.user;
         this.props.orders.map((order) => {
             let json = {shop: order.shop, method: this.state.method, purchases: [], description: this.state.description,
-            currency: this.state.currency, user: "marcelo@marcelo.com"};
+            currency: this.state.currency, user: user};
             let generatePurchase = [];
             for (var i = 0; i < order.purchases.length; i++) {
                 let jsonPurchase = {productId: order.purchases[i].productId, quantity: order.purchases[i].quantity};
@@ -71,10 +79,58 @@ export class PaymentForm extends React.Component{
         console.log(" ---------------------- ORDERS SUBMIT PAY ---------------------- ")
         console.log(jsonsOrders)
         console.log(" ---------------------- ORDERS SUBMIT PAY ---------------------- ")
+        this.generateOrders(jsonsOrders);
     }
 
+    generateOrders = (orders) => {
+        var responseOrders = [];
+        let token = localStorage.getItem("token");
+        const headers = {
+            Authorization:token,
+        };
+        for (var i = 0; i < orders.length; i++) {
+            axios.post(getUrl() + '/orders/new',
+                orders[i],
+                {headers : headers}
+            )
+                .then(function (response) {
+                    responseOrders.push(response.data)                    
+                })
+                .catch(function (error) {
+                    alert("Ha ocurrido un error!")
+                    console.log(error);
+            });
+        }
+        
+        console.log(" ---------------------- RESPONSE ORDERS PAY ---------------------- ")
+        console.log(responseOrders)
+        console.log(" ---------------------- RESPONSE ORDERS PAY ---------------------- ")
+        this.payPaypal(responseOrders);
+    }
 
-    
+    payPaypal = (orders) => {
+        let token = localStorage.getItem("token");
+        const headers = {
+            Authorization:token,
+        };
+        for (var i = 0; i < orders.length; i++) {          
+            axios.post(getUrl() + '/pay/' + orders[i].id,
+                {headers : headers}
+            )
+                .then(function (response) {
+                    alert("Realizado con éxito")
+                })
+                .catch(function (error) {
+                    alert("Ha ocurrido un error!")
+                    console.log(error);
+            });
+        }    
+    }
+
+    componentDidMount() {
+        this.getUser();
+    }
+        
     render(){
         console.log("--------------- PAYMENT FORM INI --------------")
         console.log(this.props)
@@ -99,11 +155,11 @@ export class PaymentForm extends React.Component{
                                     <form className="form" onSubmit={this.submitPay}>
                                         <h1>Productos </h1>                                        
                                         <Divider />
-                                        {this.props.orders.map((order) =>                                             
+                                        {this.props.orders.map((order, index) =>
                                             <div>                                                
                                                 <h2>{order.shop}</h2>
                                                 <Divider />
-                                                    <PurchaseForm purchases = {order.purchases} format = {this.props.format}/>                                                                                                    
+                                                    <PurchaseForm key = {order.shop + index}purchases = {order.purchases} format = {this.props.format}/>                                                                                                    
                                                 <Divider />
                                             </div>
                                         )}

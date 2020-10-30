@@ -108,13 +108,13 @@ function NestedGrid(props) {
                 
             }            
             title= {props.name}
-            subheader= {"$ " + props.format(props.price)}
+            subheader= {"$ " + props.format((props.price) .toString())}
           />
           <AlertDialog open ={open} handleClickOpen = {handleClickOpen} handleClose = {handleClose}
             deleteProduct = {props.deleteProduct} id = {props.id} nameProduct = {props.name} allProducts = {false}/>
           <CardMedia
             className={classes.media}
-            image={dynamicImage}
+            image={props.image}
             title="Paella dish"
           />
           <CardContent>
@@ -139,7 +139,7 @@ function NestedGrid(props) {
                     name = {item.order.name} 
                     price = {item.order.price} 
                     description = {item.order.description} 
-                    ruta = {item.order.ruta}
+                    image = {item.order.image}
                     deleteProduct = {props.deleteProduct}
                     format = {props.format}/>
             )}

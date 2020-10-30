@@ -109,7 +109,7 @@ export class Catalog extends React.Component {
   };
 
   addProduc(name, price, description, id, image) {
-    const tempProduct = {shop: this.state.shop, 
+    const tempProduct = {shop: this.state.shop,
                         method: "Paypal",
                         order: {
                           productId : id, quantity: 1, 

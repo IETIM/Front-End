@@ -293,11 +293,11 @@ function SidebarPage (props){
                             Validar 
                         </button> */}
                             <Button variant="contained" color="secondary" 
-                                style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}
+                                style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block', fontSize: '90%'}}
                                 onClick = {() => handleClickOpen(true, -40, "Nothing")}>
                             Vaciar Carrito
                             </Button>
-                            <Button href = "/validateCart"variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block'}}>
+                            <Button href = "/validateCart"variant="contained" color="primary" style = {{height: '40px', width: '50%', borderRadius: '4px', position: 'inline-block', fontSize: '90%'}}>
                             Validar Carrito
                             </Button>
                         </ul>                                                             

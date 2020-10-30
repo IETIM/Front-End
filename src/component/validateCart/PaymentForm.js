@@ -89,23 +89,42 @@ export class PaymentForm extends React.Component{
             Authorization:token,
         };
         for (var i = 0; i < orders.length; i++) {
-            axios.post('http://localhost:8080/orders/new',
+            axios.post(getUrl() + '/orders/new',
                 orders[i],
                 {headers : headers}
             )
                 .then(function (response) {
-                    responseOrders.push(response.data)
+                    responseOrders.push(response.data)                    
                 })
                 .catch(function (error) {
                     alert("Ha ocurrido un error!")
                     console.log(error);
             });
         }
-
-        alert("")
+        
         console.log(" ---------------------- RESPONSE ORDERS PAY ---------------------- ")
         console.log(responseOrders)
         console.log(" ---------------------- RESPONSE ORDERS PAY ---------------------- ")
+        this.payPaypal(responseOrders);
+    }
+
+    payPaypal = (orders) => {
+        let token = localStorage.getItem("token");
+        const headers = {
+            Authorization:token,
+        };
+        for (var i = 0; i < orders.length; i++) {          
+            axios.post(getUrl() + '/pay/' + orders[i].id,
+                {headers : headers}
+            )
+                .then(function (response) {
+                    alert("Realizado con éxito")
+                })
+                .catch(function (error) {
+                    alert("Ha ocurrido un error!")
+                    console.log(error);
+            });
+        }    
     }
 
     componentDidMount() {

@@ -60,7 +60,7 @@ const useStyles = (theme) => ({
 export class Catalog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mobileOpen: false, productsCart: [],products:[] };
+    this.state = { mobileOpen: false, productsCart: [],products:[],shop:""};
     console.log(props == undefined);
     this.addProduc = this.addProduc.bind(this);
     this.removeAllProductsCart = this.removeAllProductsCart.bind(this);
@@ -296,7 +296,7 @@ export class Catalog extends React.Component {
           <div className={classes.toolbar} />
           <center>
             <Typography gutterBottom variant="h3" component="h2">
-              {this.props.store.toUpperCase()}
+              {this.state.shop}
             </Typography>
           </center>
           <ListProduct categories={testList} addProduc={this.addProduc} />
@@ -313,7 +313,7 @@ export class Catalog extends React.Component {
     const headers = {
       Authorization:token,
     };
-    fetch(url + "/products/5f9b5dba2c076d28c1fd5b60", {
+    fetch(url + "/shops/" + this.props.store, {
       headers: headers,
     })
       .then((response) => response.json())
@@ -321,7 +321,7 @@ export class Catalog extends React.Component {
         console.log(data);
         let prod = [];
         let cat = [];
-        data.forEach(function (p) {
+        data.products.forEach(function (p) {
           if (!cat.includes(p.category)) {
             console.log("ADDING CATEGORY" + p.category);
             cat.push(p.category);
@@ -344,7 +344,7 @@ export class Catalog extends React.Component {
           }
         );
         console.log(prod);
-        this.setState({products:prod});
+        this.setState({products:prod,shop:data.name});
       });
   }
 }

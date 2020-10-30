@@ -108,12 +108,12 @@ export class Catalog extends React.Component {
     };
   };
 
-  addProduc(name, price) {
-    const tempProduct = {shop: this.state.productsCart.length % 2 == 0 ? this.props.store: "Store B", 
+  addProduc(name, price, description, id, image) {
+    const tempProduct = {shop: this.state.shop, 
                         method: "Paypal",
                         order: {
-                          productId : this.state.productsCart.length, quantity: 1, 
-                          name: name, price: price, description: "Buen producto"
+                          productId : id, quantity: 1, 
+                          name: name, price: price, description: description, image: image
                         }};
     var request = window.indexedDB.open("pedidos", 1);
     var showData = this.loadData;
@@ -325,7 +325,7 @@ export class Catalog extends React.Component {
           if (!cat.includes(p.category)) {
             console.log("ADDING CATEGORY" + p.category);
             cat.push(p.category);
-            prod.push({ name: p.category, products: [{name:p.name,price:p.price,description:p.description,image:p.image}] });
+            prod.push({ name: p.category, products: [{name:p.name,price:p.price,description:p.description,image:p.image, id:p.id}] });
           } else {
             var item = null;
             console.log("PRODUCTOS!");
@@ -336,7 +336,8 @@ export class Catalog extends React.Component {
                   name: p.name,
                   price: p.price,
                   description: p.description,
-                  image:p.image
+                  image:p.image,
+                  id:p.id
                 });
                 break;
               }

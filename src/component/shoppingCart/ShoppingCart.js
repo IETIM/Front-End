@@ -65,6 +65,13 @@ export default class ShoppingCart extends React.Component {
         })
     }
 
+    format = (input) => {
+        var num = input.replace(/\./g,'');
+        num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+        num = num.split('').reverse().join('').replace(/^[\.]/,'');    
+        return num;
+    }
+
     loadData = () => {
         var request = window.indexedDB.open("pedidos", 1);        
         var update = this.updateData;
@@ -164,7 +171,8 @@ export default class ShoppingCart extends React.Component {
                             modify = {this.props.modify}
                             modifyElement = {this.modifyElement}
                             isChange = {this.props.isChange}
-                            setIsChange = {this.props.setIsChange}/>
+                            setIsChange = {this.props.setIsChange}
+                            format = {this.format}/>
             );    
         }
         
@@ -177,7 +185,8 @@ export default class ShoppingCart extends React.Component {
                         modify = {this.props.modify}
                         modifyElement = {this.modifyElement}
                         isChange = {this.props.isChange}
-                        setIsChange = {this.props.setIsChange}/>
+                        setIsChange = {this.props.setIsChange}
+                        format = {this.format}/>
         );
     }
 
@@ -257,7 +266,7 @@ function SidebarPage (props){
                                         <div key = {item.order.name + "_" + index} className = "nav-textV1">                                        
                                                 <FaIcons.FaCartPlus />
                                                 <span style = {{color: 'white'}}> {item.order.name} </span>
-                                                <span style = {{float: 'right', color: 'white'}}> $ {item.order.price * item.order.quantity} </span>
+                                                <span style = {{float: 'right', color: 'white'}}> $ {props.format((item.order.price * item.order.quantity) .toString())} </span>
                                                 
                                                 <div style = {{position: 'absolute', right: '-70px'}}>
                                                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" 

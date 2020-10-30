@@ -22,7 +22,7 @@ export class PurchaseForm extends React.Component{
                 <div style = {{width: '25%', float: 'left'}}>
                     <h3> Precio </h3>
                     {this.props.purchases.map((purchase) =>
-                        <div> $ {this.props.format(purchase.price)} </div>
+                        <div> $ {this.props.format(purchase.price .toString())} </div>
                     )}
                 </div>
                 <div style = {{width: '25%', float: 'left'}}>

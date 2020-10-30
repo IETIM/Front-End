@@ -43,7 +43,7 @@ const useStyles = makeStyles({
           </CardActionArea>
           <CardActions>
             <ModalViewProduct imagen={props.image} nombre={props.name} precio={props.price} descripcion={props.description}></ModalViewProduct>
-            <Button size="small" color="primary" onClick = {() => props.addProduc(props.name, props.price)}> Añadir al carro</Button>
+            <Button size="small" color="primary" onClick = {() => props.addProduc(props.name, props.price, props.description, props.id, props.image)}> Añadir al carro</Button>
           </CardActions>
         </Card>);
   }

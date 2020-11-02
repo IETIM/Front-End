@@ -1,53 +1,64 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Axios from 'axios';
 import { getUrl } from '../../vars';
 
-export default class MapPlace extends React.Component{
+class MapPlace extends React.Component{
     constructor(props){
         super(props);
-        this.state= {lat:null,lng:null,place:'',near:[]};
+        this.state= {lat:0,lng:0,place:'',near:[],loadLocation:false};
         this.updateCords=this.updateCords.bind(this);
         this.updatePlace = this.updatePlace.bind(this);
     }
-    render(){
-        if(this.state.lat==null){
-            //Mientras pide permisos
-            return(<div id="data">loading ....</div>);
-        }else{
-            //A Graficar
-            const Map = withScriptjs(withGoogleMap((props) =>
-                <GoogleMap
-                    defaultZoom={10}
-                    defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
-                >
-                    {props.children}
-                </GoogleMap>
-                ));
-            return(
-                <div style={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}}>
-                <Map
-                    isMarkerShown
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `300px`,width:'90%'}} />}
-                    mapElement={<div style={{ height: `100%` }} />}>
-                        <Marker style={{background:'gray'}} 
-                            onClick={()=>this.updatePlace({name:"Yo",link:null})} 
-                            icon={{strokeColor:'blue',url:"https://maps.google.com/mapfiles/ms/icons/blue-dot.png",scale:10}}
-                            position={{lat:this.state.lat,lng:this.state.lng}}/>
+    
+    render() {
+        console.log(this.state.loadLocation);
+        var lat = this.state.lat;
+        var lng = this.state.lng;
+        console.log("lat "+lat);
+        console.log("lat "+lng);
+        return (
+        <React.Fragment>
+          <Map google={this.props.google} style={{width:'100%',height:'50%'}}
+          center={{
+            lat: lat,
+            lng: lng
+          }}
+          
+          zoom={20}>
+     
+            <Marker
+                position={{
+                    lat: lat,
+                    lng: lng
+                }}
+                    name={'Current location'} />
 
-                        {this.state.near.map((place)=> <Marker onClick={()=>this.updatePlace({name:place.name,link:null})} position={{lat:place.lat,lng:place.lng}}/>)}
-                    </Map>
-                    <div style={{width:'100%',height:'30px',background:'green'}} id="dataPlace">
-                        
-                    </div>
-                    </div>);
-        }
-    }
+                <Marker
+                position={{
+                    lat: lat+0.0001,
+                    lng: lng
+                }}
+                    name={'Current location'} />
+                <Marker
+                position={{
+                    lat: lat,
+                    lng: lng+0.0001
+                }}
+                    name={'Current location'} />
+                <Marker
+                position={{
+                    lat: lat,
+                    lng: lng-0.0001
+                }}
+                    name={'Current location'} />
+          </Map>
+          </React.Fragment>
+        );
+      }
 
     updatePlace(place){
         ReactDOM.render(<div style={{textAlign:"center",color:"white"}}>{place.name}</div>,
@@ -55,9 +66,12 @@ export default class MapPlace extends React.Component{
     }
 
     updateCords(pos){
-        this.state.lat=pos.coords.latitude;
-        this.state.lng=pos.coords.longitude;
+        console.log("Posoiton");
+        console.log(pos);
 
+        this.state.lat = pos.coords.latitude;
+        this.state.lng = pos.coords.longitude;
+        this.state.loadLocation = true;
         this.setState(this.state);
 
     }
@@ -75,9 +89,13 @@ export default class MapPlace extends React.Component{
     async componentWillMount(){
         var fun = this.updateStores;
         var url = getUrl();
-        const data = await Axios.get(url+"/shops")
-        console.log(data);
-        await fun(data.data);
+        //const data = await Axios.get(url+"/shops")
+        //console.log(data);
+        //await fun(data.data);
         navigator.geolocation.getCurrentPosition((pos)=>this.updateCords(pos));
     }
 }
+
+export default GoogleApiWrapper({
+    apiKey: ""
+  })(MapPlace)

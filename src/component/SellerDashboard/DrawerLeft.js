@@ -102,10 +102,10 @@ class DrawerLeft extends React.Component{
               <ListItemIcon><RoomIcon color="primary"/></ListItemIcon>
                 <ListItemText primary={user.address} />
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
               <ListItemIcon><WhatsAppIcon color="primary"/></ListItemIcon>
                 <ListItemText primary={user.cellphone} />
-              </ListItem>
+              </ListItem> */}
           </List>
           <Divider />
           <List>

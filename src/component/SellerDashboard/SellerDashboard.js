@@ -12,6 +12,7 @@ import axios from 'axios';
 import { storage } from "../../firebase";
 import { resolve } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import PlaceView from '../PlaceView/PlaceView';
 
 
 
@@ -62,7 +63,8 @@ class SellerDashboard extends React.Component {
         console.log("isTendero");
         console.log(IsTendero());
         if(!IsTendero()){
-            return <Redirect to="/"></Redirect>;
+            console.log("NO TENDERO");
+            return <PlaceView />
         }
         return <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "row" }} >
             {

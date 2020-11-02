@@ -309,13 +309,7 @@ export class Catalog extends React.Component {
   componentDidMount() {
     this.loadData();
     let url = getUrl();
-    let token = localStorage.getItem("token")
-    const headers = {
-      Authorization:token,
-    };
-    fetch(url + "/shops/" + this.props.store, {
-      headers: headers,
-    })
+    fetch(url + "/shops/" + this.props.store)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

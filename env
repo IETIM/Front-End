@@ -1,8 +1,0 @@
-REACT_APP_API_KEY= AIzaSyCDwM38mFYOrcVeq6eXq7W8BnUeNoosT3M
-REACT_APP_AUTH_DOMAIN=ieti-project.firebaseapp.com
-REACT_APP_DATABASE_URL=https://ieti-project.firebaseio.com
-REACT_APP_PROJECT_ID=ieti-project
-REACT_APP_STORAGE_BUCKET=ieti-project.appspot.com
-REACT_APP_MESSAGING_SENDER_ID=822229817193
-REACT_APP_APP_ID=1:822229817193:web:20db7daf0f2cbeba3b0ff8
-REACT_APP_BACKEND_URL=http://localhost:8080

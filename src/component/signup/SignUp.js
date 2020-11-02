@@ -141,10 +141,26 @@ export default function Register(props) {
         address : formulario.address,
         authorities : [ {"role" : "ROLE_TENDERO" }]
       };
+      let logUser = {
+        username : formulario.email,
+        password : formulario.passwd
+      }
       console.log(newuser);
       axios.post(url+"/register",newuser)
           .then((data)=>{
               localStorage.setItem("user", newuser); 
+              localStorage.setItem("IsLoggedIn",true);
+              setUser({ ...user, user: newuser });
+              axios.post(url+"/login",logUser)
+                .then((data)=>{
+                  localStorage.setItem("token",data.data.token);
+                  axios.get(url+"/role",{headers:{Authorization:data.data.token}}).then((li)=>{
+                    localStorage.setItem("roles",JSON.stringify(li.data));
+                  });
+                }).catch((err)=>{
+                  alert("Error en login");
+                  console.log(err);
+                })
               
           }).catch((err)=>{
               localStorage.removeItem("IsLoggedIn");
@@ -177,15 +193,27 @@ export default function Register(props) {
             password: formulario.passwd, 
             cellphone : formulario.cellphone,
             address : formulario.address,
-           authorities : [ {"role" : "ROLE_TENDERO" }]};
+            authorities : [ {"role" : "ROLE_USER" }]};
+      let logUser = {
+        username : formulario.email,
+        password : formulario.passwd
+      }
 
       console.log(newuser);
       axios.post(url+"/register",newuser)
           .then((data)=>{
-              localStorage.setItem("user", newuser); 
               localStorage.setItem("IsLoggedIn",true);
-              localStorage.setItem("roles",newuser.authorities);
               setUser({ ...user, user: newuser });
+              axios.post(url+"/login",logUser)
+                .then((data)=>{
+                  localStorage.setItem("token",data.data.token);
+                  axios.get(url+"/role",{headers:{Authorization:data.data.token}}).then((li)=>{
+                    localStorage.setItem("roles",JSON.stringify(li.data));
+                  });
+                }).catch((err)=>{
+                  alert("Error en login");
+                  console.log(err);
+                })
               
           }).catch((err)=>{
               localStorage.removeItem("IsLoggedIn");

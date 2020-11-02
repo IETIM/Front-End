@@ -14,6 +14,10 @@ function SidebarPage (){
 
     const logout = () => {    
         localStorage.removeItem("IsLoggedIn");
+        localStorage.removeItem("token");
+        localStorage.removeItem("roles");
+        localStorage.removeItem("user");
+        alert("Ha cerrado sesión exitosamente");
     }
     return( 
             <>

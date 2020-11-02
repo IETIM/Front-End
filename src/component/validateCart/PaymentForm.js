@@ -226,7 +226,7 @@ export class PaymentForm extends React.Component{
                                                 variant="outlined"
                                                 style = {{width: '100%'}}
                                                 onChange = {this.handleDescription}                                                
-                                                helperText="Rebaja de la compra"
+                                                helperText="Descripción de la compra"
                                             />
                                         </FormControl>
                                         <br></br>

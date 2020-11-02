@@ -92,37 +92,37 @@ export class PaymentForm extends React.Component{
             axios.post(getUrl() + '/orders/new',
                 orders[i],
                 {headers : headers}
-            )
-                .then(function (response) {
-                    responseOrders.push(response.data)                    
+                )
+                .then((response) =>  {
+                    responseOrders.push(response.data);
+                    this.payPaypal(responseOrders);
                 })
                 .catch(function (error) {
-                    alert("Ha ocurrido un error!")
+                    alert("Ha ocurrido un error al generar la orden")
                     console.log(error);
-            });
+                });
         }
         
-        console.log(" ---------------------- RESPONSE ORDERS PAY ---------------------- ")
-        console.log(responseOrders)
-        console.log(" ---------------------- RESPONSE ORDERS PAY ---------------------- ")
-        this.payPaypal(responseOrders);
+        
+        
     }
 
     payPaypal = (orders) => {
         let token = localStorage.getItem("token");
         const headers = {
-            Authorization:token,
-        };
-        for (var i = 0; i < orders.length; i++) {          
+            Authorization: token
+        };        
+        for (var i = 0; i < orders.length; i++) {                      
             axios.post(getUrl() + '/pay/' + orders[i].id,
-                {headers : headers}
+                '',
+                {headers:headers}
             )
-                .then(function (response) {
-                    alert("Realizado con éxito")
-                })
-                .catch(function (error) {
-                    alert("Ha ocurrido un error!")
-                    console.log(error);
+            .then(function (response) {
+                window.location.replace(response.data);
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
             });
         }    
     }

@@ -26,7 +26,7 @@ import { IsTendero } from '../../vars'
 
 const drawerWidth = 240;
 
-const url = "https://ieti-deep-backend.herokuapp.com";
+const url = "http://localhost:8080/";
 
 const useStyles = (theme) => ({
   root: {

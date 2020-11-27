@@ -149,6 +149,7 @@ export default function Register(props) {
       axios.post(url+"/register",newuser)
           .then((data)=>{
               localStorage.setItem("user", newuser); 
+              localStorage.setItem("notpw",newuser.password);
               localStorage.setItem("IsLoggedIn",true);
               setUser({ ...user, user: newuser });
               axios.post(url+"/login",logUser)

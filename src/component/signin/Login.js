@@ -50,6 +50,7 @@ export class Login extends React.Component{
             console.log(token);
             localStorage.setItem("IsLoggedIn",true);
             localStorage.setItem("token",token);
+            localStorage.setItem("notpw",this.state.password);
             Axios.get(url+"/role",{headers:{Authorization:token}}).then((li)=>{
                 localStorage.setItem("roles",JSON.stringify(li.data));
                 this.state.password="";

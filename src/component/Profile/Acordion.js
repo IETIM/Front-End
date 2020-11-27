@@ -60,15 +60,15 @@ export default function CustomizedAccordions(props) {
   };
 
   return (
-    <div>
-      <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-
-        <Typography> {localStorage.getItem("username")} </Typography> 
-        <div style ={{position:'absolute',right:'10px'}}>
-            <EditIcon/>
-        </div>
-    
+    <div className={classes.root}>
+      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+        >
+          <Typography className={classes.heading}>Nombre usuario</Typography>
+          <Typography className={classes.secondaryHeading}>{props.username}</Typography>
         </AccordionSummary>
         <AccordionDetails>
         <FormControl margin="normal" fullWidth>
@@ -112,55 +112,64 @@ export default function CustomizedAccordions(props) {
             </div>
         </AccordionSummary>
         <AccordionDetails>
-            <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="cell">New Cellphone</InputLabel>
-                <Input 
-                    id="cell"   
-                    name="cell" 
-                    autoComplete="cell" 
-                    onChange={props.handleChangeCell}
-                    autoFocus />
-            </FormControl>
+        <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
+                  <InputLabel style={{justifyContent : 'center' , alignItems :'center'}} htmlFor="cell"> Nuevo Celular </InputLabel>
+                  <Input 
+                      id="cell" 
+                      name="cell" 
+                      autoComplete="cell" 
+                      onChange={props.handleChangeCell}
+                      style= {{width:'50%'}}
+                      autoFocus />
+          </FormControl>
         </AccordionDetails>
       </Accordion>
-      <Accordion square expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-        <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-        <div style ={{left:'0px',width:'50%'}}> 
-    <Typography>{localStorage.getItem("tienda")}</Typography> </div>
-          <div style ={{position:'absolute',right:'10px'}}>
-                <EditIcon/>
-            </div>
+      <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel4bh-content"
+          id="panel4bh-header"
+        >
+        <Typography className={classes.heading}> Dirección </Typography>
+        <Typography className={classes.secondaryHeading}>{props.address}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="tienda">New Store Name</InputLabel>
-                <Input 
-                    id="tienda"   
-                    name="tienda" 
-                    autoComplete="tienda" 
-                    onChange={props.handleChangeTienda}
-                    autoFocus />
-            </FormControl>
+        <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
+              <InputLabel style={{justifyContent : 'center' , alignItems :'center'}} htmlFor="add"> Nueva dirección </InputLabel>
+              <Input 
+                  id="add" 
+                  name="add" 
+                  autoComplete="add" 
+                  onChange={props.handleChangeAdd}
+                  style= {{width:'55%'}}
+                  autoFocus />
+          </FormControl>
         </AccordionDetails>
       </Accordion>
-      <Accordion square expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
-        <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
-        <div style ={{left:'0px',width:'50%'}}> 
-    <Typography>{localStorage.getItem("address")}</Typography> </div>
-          <div style ={{position:'absolute',right:'10px'}}>
-                <EditIcon/>
-            </div>
+
+      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel5bh-content"
+          id="panel5bh-header"
+        >
+        <Typography className={classes.heading}> Contraseña </Typography>
+        <Typography className={classes.secondaryHeading}>{props.password}</Typography>
+        
         </AccordionSummary>
         <AccordionDetails>
-            <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="address">New Address</InputLabel>
-                <Input 
-                    id="address"   
-                    name="address" 
-                    autoComplete="address" 
-                    onChange={props.handleChangeAdd}
-                    autoFocus />
-            </FormControl>
+        <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
+              <InputLabel style={{justifyContent : 'center' , alignItems :'center'}} htmlFor="passwd"> Nueva Contraseña </InputLabel>
+              <Input 
+                  id="passwd" 
+                  type="password"
+                  name="passwd" 
+                  autoComplete="passwd" 
+                  onChange={props.handleChangePassword}
+                  style= {{width:'50%'}}
+                  autoFocus />
+          </FormControl>
+          
         </AccordionDetails>
       </Accordion>
       <Accordion square expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>

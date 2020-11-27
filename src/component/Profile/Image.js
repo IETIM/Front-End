@@ -48,12 +48,8 @@ export class Image extends React.Component{
         const {imagePreviewUrl} = this.state;
      
         return(
-            //<Input 
-            //autoComplete
-            //autoFocus
-            //type="file"
-            //onChange= {(e)=>this.handleImageChange(e)}>
-              
+        
+            
               <div style={{display:"flex", alignItems:"center",justifyContent:"center", width : "50%" }}>
                 <ImgUpload onChange={(e)=>this.handleImageChange(e)} src={imagePreviewUrl}/>
               </div>

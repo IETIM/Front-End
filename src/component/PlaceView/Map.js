@@ -9,11 +9,25 @@ import { getUrl } from '../../vars';
 class MapPlace extends React.Component{
     constructor(props){
         super(props);
-        this.state= {lat:0,lng:0,place:'',near:[],loadLocation:false};
+        this.state= {lat:0,lng:0,place:'',near:[],loadLocation:false,showInfo:false,marker:null,msg:null,url:null};
         this.updateCords=this.updateCords.bind(this);
         this.updatePlace = this.updatePlace.bind(this);
     }
+
+    clicMap=()=>{
+        this.setState({
+            showInfo:false,
+            marker:null
+        })
+    }
     
+    clicMarker=(prop,marker,e)=>{
+        this.setState({
+            showInfo:true,
+            marker:marker
+        })
+    }
+
     render() {
         console.log(this.state.loadLocation);
         var lat = this.state.lat;
@@ -23,38 +37,51 @@ class MapPlace extends React.Component{
         return (
         <React.Fragment>
           <Map google={this.props.google} style={{width:'100%',height:'50%'}}
+          onClick={this.clicMap}
           center={{
             lat: lat,
             lng: lng
           }}
           
-          zoom={20}>
+          zoom={10}>
      
             <Marker
+            icon={{
+                url:"https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+            }}
+            onClick={(prop,marker,e)=>{
+                this.clicMarker(prop,marker,e);
+                this.setState({
+                    msg:"Yo"
+                });
+            }}
                 position={{
                     lat: lat,
                     lng: lng
                 }}
                     name={'Current location'} />
 
-                <Marker
-                position={{
-                    lat: lat+0.0001,
-                    lng: lng
+                {this.state.near.map((place=><Marker
+                onClick={(prop,marker,e)=>{
+                    this.clicMarker(prop,marker,e);
+                    this.setState({
+                        msg:place.name
+                    });
                 }}
-                    name={'Current location'} />
-                <Marker
                 position={{
-                    lat: lat,
-                    lng: lng+0.0001
+                    lat:place.lat,
+                    lng:place.lng
                 }}
-                    name={'Current location'} />
-                <Marker
-                position={{
-                    lat: lat,
-                    lng: lng-0.0001
-                }}
-                    name={'Current location'} />
+
+                />))}
+                <InfoWindow
+                visible={this.state.showInfo}
+                marker={this.state.marker}
+                >
+                    <div>
+                        <h1>{this.state.msg}</h1>
+                    </div>
+                </InfoWindow>
           </Map>
           </React.Fragment>
         );
@@ -89,9 +116,10 @@ class MapPlace extends React.Component{
     async componentWillMount(){
         var fun = this.updateStores;
         var url = getUrl();
-        //const data = await Axios.get(url+"/shops")
-        //console.log(data);
-        //await fun(data.data);
+        const data = await Axios.get(url+"/shops");
+        console.log("ComponentWillMound");
+        console.log(data);
+        await fun(data.data);
         navigator.geolocation.getCurrentPosition((pos)=>this.updateCords(pos));
     }
 }

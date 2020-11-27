@@ -1,6 +1,4 @@
 import React from 'react';
-import {Mytext} from './Mytext';
-import {Image} from './Image';
 import './Image.css'
 import { Redirect } from 'react-router-dom';
 import Acordion from './Acordion';
@@ -10,6 +8,7 @@ import axios from 'axios';
 import { getUrl } from '../../vars';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+
 
 export default class UserProfile extends React.Component {
   constructor(props) {
@@ -42,6 +41,7 @@ export default class UserProfile extends React.Component {
   }
 
   handleChangeName = (e) =>{
+    console.log("are we here")
     this.setState({
       usern : e.target.value
     });
@@ -52,7 +52,6 @@ export default class UserProfile extends React.Component {
       tienda : e.target.value
     });
   }
-
 
   handleChangeMail = (e) =>{
     this.setState({
@@ -79,14 +78,7 @@ export default class UserProfile extends React.Component {
   }
 
   handleSave = () =>{
-      localStorage.setItem("username",this.state.username);
-      localStorage.setItem("email",this.state.email);
-      localStorage.setItem("password",this.state.password);
-      localStorage.setItem("cellphone",this.state.cellphone);
-      localStorage.setItem("address",this.state.address);
-      localStorage.setItem("tienda",this.state.tienda);
-      this.setState(this.state);
-      
+    this.setState(this.state);
   }
 
   handleClear = () => {
@@ -120,6 +112,7 @@ export default class UserProfile extends React.Component {
               alert("No se pudo actualizar su información con éxito");
           }); 
   }
+
   render(){
     if (!localStorage.getItem("IsLoggedIn")){
       return <Redirect to="/login"> </Redirect>
@@ -135,23 +128,29 @@ export default class UserProfile extends React.Component {
         </Typography>
           <br/>
           <br/>
+        <Typography variant="h2" gutterBottom>
+          Mis datos
+        </Typography>
+
+          <br/>
+          <br/>
+       
+            
             <Acordion
                 username = {this.state.username}
                 email = {this.state.email}
                 password = {this.state.password}
                 cellphone = {this.state.cellphone}
+                address = {this.state.address}
                 handleChangeName = {this.handleChangeName}
                 handleChangeMail = {this.handleChangeMail}
                 handleChangePassword = {this.handleChangePassword}
                 handleChangeCell = {this.handleChangeCell}
                 handleChangeAdd = {this.handleChangeAdd}
-                handleChangeTienda = {this.handleChangeTienda}
                 handleSave = {this.handleSave}
             > 
             </Acordion>
-
             <br/>
-
           <Button
                 variant="contained"
                 color="primary"
@@ -161,6 +160,7 @@ export default class UserProfile extends React.Component {
               >
                 Guardar
             </Button>
+
         </div>
       </div>
   

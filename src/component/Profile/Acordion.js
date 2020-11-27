@@ -41,7 +41,7 @@ export default function ControlledAccordions(props) {
           id="panel1bh-header"
         >
           <Typography className={classes.heading}>Nombre usuario</Typography>
-          <Typography className={classes.secondaryHeading}>{props.usernanme}</Typography>
+          <Typography className={classes.secondaryHeading}>{props.username}</Typography>
         </AccordionSummary>
         <AccordionDetails>
         <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
@@ -95,7 +95,7 @@ export default function ControlledAccordions(props) {
                       name="cell" 
                       autoComplete="cell" 
                       onChange={props.handleChangeCell}
-                      style= {{width:'20%'}}
+                      style= {{width:'50%'}}
                       autoFocus />
           </FormControl>
         </AccordionDetails>
@@ -107,6 +107,7 @@ export default function ControlledAccordions(props) {
           id="panel4bh-header"
         >
         <Typography className={classes.heading}> Dirección </Typography>
+        <Typography className={classes.secondaryHeading}>{props.address}</Typography>
         </AccordionSummary>
         <AccordionDetails>
         <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
@@ -116,7 +117,7 @@ export default function ControlledAccordions(props) {
                   name="add" 
                   autoComplete="add" 
                   onChange={props.handleChangeAdd}
-                  style= {{width:'25%'}}
+                  style= {{width:'55%'}}
                   autoFocus />
           </FormControl>
         </AccordionDetails>
@@ -129,6 +130,31 @@ export default function ControlledAccordions(props) {
           id="panel5bh-header"
         >
         <Typography className={classes.heading}> Contraseña </Typography>
+        <Typography className={classes.secondaryHeading}>{props.password}</Typography>
+        
+        </AccordionSummary>
+        <AccordionDetails>
+        <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
+              <InputLabel style={{justifyContent : 'center' , alignItems :'center'}} htmlFor="passwd"> Nueva Contraseña </InputLabel>
+              <Input 
+                  id="passwd" 
+                  type="password"
+                  name="passwd" 
+                  autoComplete="passwd" 
+                  onChange={props.handleChangePassword}
+                  style= {{width:'50%'}}
+                  autoFocus />
+          </FormControl>
+          
+        </AccordionDetails>
+      </Accordion>
+      <Accordion square expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
+        <AccordionSummary aria-controls="panel6d-content" id="panel6d-header">
+        <div style ={{left:'0px',width:'50%'}}>
+  <Typography type="password">{localStorage.getItem("password")}</Typography> </div>
+          <div style ={{position:'absolute',right:'10px'}}>
+                <EditIcon/>
+            </div>
         </AccordionSummary>
         <AccordionDetails>
         <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>

@@ -6,6 +6,7 @@ import { SidebarData } from './SidebarData';
 import './SidebarPage.css';
 import { IconContext } from 'react-icons';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 
 function SidebarPage (){
@@ -44,11 +45,19 @@ function SidebarPage (){
                                     </li>
                                 );
                             })}
+                      
+
                             <li key = "cerrarSesion" className = "nav-textV1">
+                            {localStorage.getItem("IsLoggedIn") == null ?
+                                <Link to = "/login">
+                                    <HowToRegIcon />  
+                                    <span> Login </span>
+                                </Link>
+                                : 
                                 <Link to = "/" onClick = {logout}>
                                     <ExitToAppIcon />  
                                     <span> Cerrar Sesión </span>
-                                </Link>
+                                </Link>}
                             </li>
                         </ul>
                     </nav>

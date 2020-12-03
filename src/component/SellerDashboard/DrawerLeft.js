@@ -18,11 +18,13 @@ import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Hidden } from '@material-ui/core';
 import RoomIcon from '@material-ui/icons/Room';
+import HomeOutlined from'@material-ui/icons/HomeOutlined';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Avatar from '@material-ui/core/Avatar';
 import logo from './../../logo.svg';
 import {Redirect} from 'react-router-dom';
 import { indigo } from '@material-ui/core/colors';
+import { Home } from '@material-ui/icons';
 
 
 const drawerWidth = 240;
@@ -109,6 +111,10 @@ class DrawerLeft extends React.Component{
           </List>
           <Divider />
           <List>
+              <ListItem button key={"Home"} onClick={()=>{this.props.handleRedirect("/")}}>
+                <ListItemIcon><HomeOutlined color="primary"/> </ListItemIcon>
+                <ListItemText primary={"Ir al inicio"} />
+              </ListItem>
               <ListItem button key={"Update"} onClick={()=>{this.props.handleRedirect("/userprofile")}}>
                 <ListItemIcon><SettingsApplicationsIcon color="primary"/> </ListItemIcon>
                 <ListItemText primary={"Actualizar datos"} />

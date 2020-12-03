@@ -128,14 +128,6 @@ export default class UserProfile extends React.Component {
         </Typography>
           <br/>
           <br/>
-        <Typography variant="h2" gutterBottom>
-          Mis datos
-        </Typography>
-
-          <br/>
-          <br/>
-       
-            
             <Acordion
                 username = {this.state.username}
                 email = {this.state.email}

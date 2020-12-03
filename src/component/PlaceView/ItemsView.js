@@ -48,8 +48,10 @@ export default class ItemsView extends React.Component{
                                 {[0,1,2,3].map((col)=>{
                                     console.log(row+" "+col+" ");
                                 return( <div style={{width:'100%',height:'100%'}}>
+            
                                     <div style={{width:'10%',height:'1px'}}/>
                                     {(4*row+col<this.state.data.length && <CardItem 
+                                    logo = {this.state.data[4*row+col].image}
                                     key={"Card-"+row+"-"+col}
                                     title={this.state.data[4*row+col].name.toUpperCase()}
                                     descripcion={this.state.data[4*row+col].location}

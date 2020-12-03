@@ -3,18 +3,13 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker
-  } from '@material-ui/pickers'
+import ImageIcon from '@material-ui/icons/Image';
+import Fab from '@material-ui/core/Fab';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -36,7 +31,34 @@ export default function AlertDialogSlide(props) {
         <DialogTitle id="alert-dialog-slide-title">{"Registre los datos de su tienda"}</DialogTitle>
         <DialogContent>
                 <form onSubmit={props.handleSubmit} className="todo-form" style = {{alignItems : 'center'}}>
-                 
+                <div>
+                <label htmlFor="upload-photo">
+                <input
+                    style={{ display: 'none' }}
+                    id="upload-photo"
+                    name="upload-photo"
+                    type="file"
+                    onChange={props.handleFileChange}
+                />
+
+                <Fab
+                    color="primary"
+                    size="small"
+                    component="span"
+                    aria-label="add"
+                    variant="extended"
+                >
+                    <ImageIcon /> Cargar Imagen
+                </Fab>  
+                
+                </label>
+                </div>
+
+                <br/>
+                <br/>
+  
+
+              
                     <label htmlFor="text"  className="right-margin">
                         Nombre:
                     </label>

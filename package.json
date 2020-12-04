@@ -7,7 +7,7 @@
     "@ant-design/icons": "^4.2.2",
     "@date-io/date-fns": "v1",
     "@date-io/moment": "^2.1.0",
-    "@material-ui/core": "latest",
+    "@material-ui/core": "^4.11.0",
     "@material-ui/data-grid": "^4.0.0-alpha.7",
     "@material-ui/icons": "latest",
     "@material-ui/pickers": "^3.2.10",

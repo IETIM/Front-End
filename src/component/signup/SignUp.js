@@ -20,7 +20,9 @@ import axios from 'axios'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from './ShopDialog';
-import SellerDashboard from '../SellerDashboard/SellerDashboard'
+import { v4 as uuidv4 } from 'uuid';
+import { storage } from "../../firebase";
+import { resolve } from 'path';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,7 +66,8 @@ export default function Register(props) {
     cellphone: '',
     address : '',
     passwd: '',
-    passwdConfirm: ''
+    passwdConfirm: '',
+    
   });
   
   const [state, setState] = React.useState({
@@ -74,6 +77,8 @@ export default function Register(props) {
     shopname : "",
     location : "",
     type : "",
+    image : null,
+    imagePreview : null
 
   });
 
@@ -106,32 +111,48 @@ export default function Register(props) {
                         type : "", });
   };
 
+
+  const handleUpload = (image) =>  {
+    return new Promise((resolve, reject) => {
+        if (image != null) {
+            const uuid=uuidv4()
+            const uploadTask = storage.ref(`images/${uuid+image.name}`).put(image);
+            uploadTask.on(
+                "state_changed",
+                snapshot => { },
+                error => { console.log(error) },
+                () => {
+                    storage
+                        .ref("images")
+                        .child(uuid+image.name)
+                        .getDownloadURL()
+                        .then(url => {
+                            resolve(url)
+                        })
+                }
+            )
+
+        }
+        else if(image!=null){
+            resolve(image)
+        }
+        else{
+            resolve("http://via.placeholder.com/350x150")//pendiente imagen por defecto
+        }
+
+    })
+
+    }
   
   const handleSubmit = (event) => {
       
       setState({ ...state, isOpen: !state.isOpen });    
   }
 
-  const registerUser = (event) => {
-    event.preventDefault();
-    verifyNoError();
-    console.log(formulario);
-    if (formulario.passwd !== formulario.passwdConfirm || (formulario.passwd === "" || formulario.passwdConfirm === "")) {
-      alert("Las contraseñas no coinciden o son vacias, intente nuevamente!");
-      return;
-    }
-    
-    if (state.tendero){
-
-      let newShop = {
-        name : state.shopname,
-        products :[],
-        location :state.location,
-        type : state.type,
-        apiClient : process.env.REACT_APP_CLIENT_ID,
-        apiSecret : process.env.REACT_APP_CLIENT_SECRET
-      }
-      console.log(process.env.REACT_APP_CLIENT_ID);
+  const registerSk = (newShop) => {
+    console.log("NUEVA TIENDA");
+      console.log(newShop)
+      
       let url = process.env.REACT_APP_BACKEND_URL;
       let newuser = {
         name: formulario.fullName,    
@@ -184,6 +205,37 @@ export default function Register(props) {
             console.log(err);
             alert("No se pudo registrar con éxito");
         }); 
+  }
+
+  const registerUser = (event) => {
+    event.preventDefault();
+    verifyNoError();
+    console.log(formulario);
+    if (formulario.passwd !== formulario.passwdConfirm || (formulario.passwd === "" || formulario.passwdConfirm === "")) {
+      alert("Las contraseñas no coinciden o son vacias, intente nuevamente!");
+      return;
+    }
+    
+    if (state.tendero){
+
+
+       handleUpload(state.image).then((url) => {
+        console.log("URL" + url);
+        var shop = {
+          name : state.shopname,
+          products :[],
+          image : url,
+          location :state.location,
+          type : state.type,
+          apiClient : process.env.REACT_APP_CLIENT_ID,
+          apiSecret : process.env.REACT_APP_CLIENT_SECRET
+        }
+
+        registerSk(shop);
+     
+      })
+
+      
       } else {
   
       let url = process.env.REACT_APP_BACKEND_URL;
@@ -253,6 +305,13 @@ export default function Register(props) {
   const handleClickShowPassword2 = () => {
     setValues2({ ...values2, showPassword: !values2.showPassword });
   };
+
+  const handleFileChange = (e) => {
+    if(e.target.files[0]){
+      setState({ ...state, image: e.target.files[0],imagePreview: URL.createObjectURL(e.target.files[0]) });   
+    }
+
+  }
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -354,6 +413,7 @@ export default function Register(props) {
                               label="Registrarme como tendero"
                         />
                             <br></br>
+                            <div style={{display:'flex'}}>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -363,6 +423,18 @@ export default function Register(props) {
                             >
                                 Registrarse
                             </Button>
+
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className="submit"   
+                                href ="/login"                             
+                            >
+                                Ingresar
+                            </Button>
+                            </div>
                             
                         </form>
 
@@ -372,6 +444,7 @@ export default function Register(props) {
                           handleTypeChange = {handleTypeChange}
                           handleSubmit = {handleSubmit}
                           handleOpen = {handleOpen}
+                          handleFileChange = {handleFileChange}
                           open = {state.isOpen}
                           state = {state}
                         > </Dialog>

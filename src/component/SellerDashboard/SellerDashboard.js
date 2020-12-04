@@ -56,7 +56,6 @@ class SellerDashboard extends React.Component {
 
             })
     }
-
     
 
     render() {

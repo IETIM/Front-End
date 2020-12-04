@@ -27,7 +27,7 @@ export default function CardItem(props){
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={logo}
+            image={props.logo}
             title="Contemplative Reptile"
           />
           <CardContent>

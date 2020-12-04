@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -148,29 +149,7 @@ export default function ControlledAccordions(props) {
           
         </AccordionDetails>
       </Accordion>
-      <Accordion square expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
-        <AccordionSummary aria-controls="panel6d-content" id="panel6d-header">
-        <div style ={{left:'0px',width:'50%'}}>
-  <Typography type="password">{localStorage.getItem("password")}</Typography> </div>
-          <div style ={{position:'absolute',right:'10px'}}>
-                <EditIcon/>
-            </div>
-        </AccordionSummary>
-        <AccordionDetails>
-        <FormControl margin="normal" fullWidth style={{justifyContent : 'center' , alignItems :'center'}}>
-              <InputLabel style={{justifyContent : 'center' , alignItems :'center'}} htmlFor="passwd"> Nueva Contraseña </InputLabel>
-              <Input 
-                  id="passwd" 
-                  type="password"
-                  name="passwd" 
-                  autoComplete="passwd" 
-                  onChange={props.handleChangePassword}
-                  style= {{width:'30%'}}
-                  autoFocus />
-          </FormControl>
-          
-        </AccordionDetails>
-      </Accordion>
+    
 
     </div>
   );

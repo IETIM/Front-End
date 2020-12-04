@@ -105,12 +105,16 @@ class MapPlace extends React.Component{
 
     updateStores = async (stores)=>{
         for(var i=0;i<stores.length;i++){
-            var data = await Axios.get("https://geocode.search.hereapi.com/v1/geocode?q="+stores[i].location+"&apiKey=0aizyNbKZY4J9HTyfyGWqiIltD1mmBqxngImkcvaBS8");
-            console.log(data.data);
-            stores[i].lng = data.data.items[0].position.lng;
-            stores[i].lat = data.data.items[0].position.lat;
+            try {
+                var data = await Axios.get("https://geocode.search.hereapi.com/v1/geocode?q="+stores[i].location+"&apiKey=0aizyNbKZY4J9HTyfyGWqiIltD1mmBqxngImkcvaBS8");
+                console.log(data.data);
+                stores[i].lng = data.data.items[0].position.lng;
+                stores[i].lat = data.data.items[0].position.lat;
+                this.state.near = stores;}
+            catch(e){
+                console.log(e);
+            }   
         }
-        this.state.near = stores;
     }
 
     async componentWillMount(){
